@@ -102,7 +102,7 @@ export function QuoteCtaSection() {
                         value={option}
                         className="peer sr-only"
                       />
-                      <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-3.5 py-2 text-sm font-medium text-foreground transition-colors hover:border-secondary/50 peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
+                      <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-3.5 py-2 text-sm font-medium text-foreground transition-colors hover:border-secondary/50 peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-secondary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
                         {option}
                       </span>
                     </label>

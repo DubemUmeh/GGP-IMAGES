@@ -46,7 +46,7 @@ export function ContactForm() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input id="name" name="name" placeholder="Jane Doe" className="h-auto rounded-xl bg-card py-4" required />
+            <Input id="name" name="name" placeholder="Jane Doe" className="h-auto text-primary rounded-xl bg-card py-4" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
@@ -55,7 +55,7 @@ export function ContactForm() {
               name="email"
               type="email"
               placeholder="jane@company.com"
-              className="h-auto rounded-xl bg-card py-4"
+              className="h-auto text-primary rounded-xl bg-card py-4"
               required
             />
           </div>
@@ -75,7 +75,7 @@ export function ContactForm() {
                   value={option.value}
                   className="peer sr-only"
                 />
-                <span className="inline-flex items-center rounded-full border border-card/30 bg-card/10 px-4 py-2 text-sm font-medium text-card transition-colors hover:border-card/50 peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
+                <span className="inline-flex items-center rounded-full border border-card/30 bg-card/10 px-4 py-2 text-sm font-medium text-card transition-colors hover:border-card/50 peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-secondary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
                   {option.label}
                 </span>
               </label>
@@ -90,7 +90,7 @@ export function ContactForm() {
             name="details"
             placeholder="Tell us about your goals, timeline, and any specific requirements..."
             rows={5}
-            className="resize-none rounded-xl bg-card py-4"
+            className="resize-none text-primary text-pretty rounded-xl bg-card py-4"
             required
           />
         </div>
