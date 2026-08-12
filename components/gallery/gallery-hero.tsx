@@ -1,22 +1,4 @@
-"use client";
-
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-
-const categories = ["All Projects", "Commercial", "Packaging", "Textiles", "Large Format"];
-
-interface GalleryHeroProps {
-  onFilterChange?: (category: string) => void;
-}
-
-export function GalleryHero({ onFilterChange }: GalleryHeroProps) {
-  const [active, setActive] = useState(categories[0]);
-
-  const handleClick = (category: string) => {
-    setActive(category);
-    onFilterChange?.(category);
-  };
-
+export function GalleryHero() {
   return (
     <section className="relative w-full h-full py-5 bg-secondary overflow-hidden p-3">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-b-[40px] bg-brand-tertiary bg-gradient-hero px-5 py-16 text-center md:rounded-[80px] md:px-10 md:py-24">

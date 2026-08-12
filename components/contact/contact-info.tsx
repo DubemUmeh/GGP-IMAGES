@@ -1,6 +1,4 @@
-import { label } from "framer-motion/client";
-import Image from "next/image";
-import { LuMail, LuPhone, LuMapPin, LuExternalLink } from "react-icons/lu";
+import { LuMail, LuPhone, LuMapPin } from "react-icons/lu";
 
 const cards = [
   {
