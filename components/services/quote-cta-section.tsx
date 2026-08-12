@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { LuCircleCheck, LuSend } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +22,28 @@ const serviceOptions = [
 ];
 
 export function QuoteCtaSection() {
+  const [status, setStatus] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      details: String(formData.get("details") || ""),
+      source: "Services quote CTA form",
+      services: formData.getAll("services").map(String),
+    };
+    const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    const data = await response.json().catch(() => ({ message: "Something went wrong." }));
+    setStatus(data.message);
+    setPending(false);
+    if (response.ok) form.reset();
+  }
+
   return (
     <section className="mx-auto mb-16 max-w-7xl px-6 py-16">
       <div className="relative overflow-hidden rounded-[32px] bg-brand-tertiary p-8 shadow-2xl md:p-12 lg:p-16">
@@ -44,11 +69,11 @@ export function QuoteCtaSection() {
 
           <div className="glass-panel rounded-2xl p-6 md:p-8">
             <h3 className="mb-6 text-xl font-semibold text-primary">Request a Custom Quote</h3>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-1">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" name="name" placeholder="John Doe" className="bg-card/80" />
+                  <Input id="name" name="name" placeholder="John Doe" className="bg-card/80" required />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="email">Email Address</Label>
@@ -58,6 +83,7 @@ export function QuoteCtaSection() {
                     type="email"
                     placeholder="john@company.com"
                     className="bg-card/80"
+                    required
                   />
                 </div>
               </div>
@@ -92,16 +118,19 @@ export function QuoteCtaSection() {
                   placeholder="Tell us about quantities, materials, timeline..."
                   rows={3}
                   className="resize-none bg-card/80"
+                  required
                 />
               </div>
 
               <Button
                 type="submit"
+                disabled={pending}
                 className="mt-4 w-full rounded-xl bg-brand-tertiary py-6 text-primary-foreground hover:bg-brand-purple-container"
               >
-                Submit Request
+                {pending ? "Sending..." : "Submit Request"}
                 <LuSend className="ml-1 h-4 w-4" />
               </Button>
+              {status && <p className="text-sm font-semibold text-primary" aria-live="polite">{status}</p>}
             </form>
           </div>
         </div>

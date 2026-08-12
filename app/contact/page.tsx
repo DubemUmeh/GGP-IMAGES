@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { ContactHero } from "@/components/contact/contact-hero";
 import { ContactForm } from "@/components/contact/contact-form";
 import { ContactInfo } from "@/components/contact/contact-info";
+
+export const metadata: Metadata = buildMetadata({ title: "Contact GGP Images | Request a Printing Quote", description: "Contact GGP Images for printing, branding, packaging, signage, apparel, and marketing material quotes.", path: "/contact" });
 
 export default function ContactPage() {
   return (

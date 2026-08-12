@@ -14,6 +14,7 @@ const links = [
   { label: "Services", href: "/services" },
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
+  { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -67,7 +68,7 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {links.map((link, i) => (
+          {links.map((link) => (
             <NavLink key={link.label} href={link.href}>
               {link.label}
             </NavLink>
