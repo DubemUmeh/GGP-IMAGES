@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon_io/favicon.ico", apple: "/favicon_io/apple-touch-icon.png" },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"

@@ -1,0 +1,3 @@
+import { redirect } from 'next/navigation';
+import { currentAdmin } from '@/lib/admin/auth';
+export default async function AdminPage(){ const admin=await currentAdmin(); if(admin) redirect('/admin/gallery'); return <main className="min-h-screen bg-brand-tertiary px-6 py-24 text-card"><div className="mx-auto max-w-md rounded-3xl border border-white/10 bg-white/10 p-8 text-center shadow-2xl"><h1 className="text-3xl font-bold">GGP Admin</h1><p className="mt-3 text-white/70">Sign in with an approved Google administrator account.</p><a href="/api/auth/google" className="mt-8 inline-flex rounded-xl bg-secondary px-5 py-3 font-semibold text-secondary-foreground hover:opacity-90">Login with Google</a></div></main>; }
