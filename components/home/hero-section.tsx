@@ -12,7 +12,7 @@ import { ArrowCta } from "../ui/motion-kit";
 const HEADLINE: { text: string; gradient?: boolean }[] = [
   { text: "Print. Brand" }, 
   { text: "&" },
-  { text: "Branding", gradient: true },
+  { text: "Shine", gradient: true },
 ];
 
 const badges = ["1,000+ Happy Clients", "500+ Brands Helped", "5-Star Rated Service"];
