@@ -1,3 +1,7 @@
-import { NextResponse } from 'next/server';
-import { destroySession } from '@/lib/admin/session';
-export async function POST(){ await destroySession(); return NextResponse.json({message:'Signed out'}); }
+import { NextResponse } from "next/server";
+import { destroySession } from "@/lib/admin/session";
+
+export async function POST(request: Request) {
+  await destroySession();
+  return NextResponse.redirect(new URL("/admin", request.url));
+}

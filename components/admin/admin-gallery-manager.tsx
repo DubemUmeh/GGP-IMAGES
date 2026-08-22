@@ -327,7 +327,7 @@ export function AdminGalleryManager({ initialItems }: { initialItems: Item[] }) 
                       )} />
                       <DropdownMenuItem
                         className="gap-2 text-destructive focus:text-destructive"
-                        onSelect={(e) => {
+                        onClick={(e) => {
                           e.preventDefault();
                           setDeleteTarget(i);
                         }}

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { AdminShell } from "@/components/admin/admin-shell";
 import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export default function AdminRootLayout({ children }: { children: React.ReactNod
     <html lang="en" className="h-full antialiased">
       <body className="min-h-screen w-full">
         <Toaster />
-        <AdminShell>{children}</AdminShell>
+        {children}
       </body>
     </html>
   );

@@ -153,7 +153,7 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
         <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
           Bookings
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-lg text-muted-foreground">
           Manage and view all booking requests from customers.
         </p>
       </div>
@@ -207,12 +207,12 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
                 <TableRow key={b.id}>
                   <TableCell>
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-sm font-medium">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-base font-medium">
                         {b.customer_name.charAt(0)}
                       </div>
                       <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold">{b.customer_name}</p>
-                        <p className="truncate text-xs text-muted-foreground">{b.customer_email}</p>
+                        <p className="truncate text-base font-semibold">{b.customer_name}</p>
+                        <p className="truncate text-sm text-muted-foreground">{b.customer_email}</p>
                       </div>
                     </div>
                   </TableCell>
@@ -277,7 +277,7 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
                         )} />
                         <DropdownMenuItem
                           className="gap-2 text-destructive focus:text-destructive"
-                          onSelect={(e) => {
+                          onClick={(e) => {
                             e.preventDefault();
                             setDeleteTarget(b);
                           }}
@@ -353,10 +353,10 @@ function StatCard({
         <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${accent}`}>
           <Icon className="h-5.5 w-5.5" />
         </div>
-        <div>
-          <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <div className="tracking-wide">
+          <p className="text-base font-medium text-muted-foreground">{label}</p>
           <p className="text-2xl font-bold tracking-tight">{value}</p>
-          <p className="text-xs text-muted-foreground">{description}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </CardContent>
     </Card>

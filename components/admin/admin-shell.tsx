@@ -7,6 +7,7 @@ import {
   Settings,
   LogOut,
   ChevronsUpDown,
+  LayoutDashboard,
 } from "lucide-react";
 import { currentAdmin } from "@/lib/admin/auth";
 import {
@@ -41,6 +42,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const NAV = [
+  { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
   { href: "/admin/bookings", label: "Booking", icon: CalendarCheck },
   { href: "/admin/settings", label: "Settings", icon: Settings },
@@ -82,14 +84,14 @@ export async function AdminShell({
 
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Manage</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-xl">Manage</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {NAV.map((item) => (
                   <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton tooltip={item.label} render={<Link href={item.href}>
                       <item.icon />
-                      <span>{item.label}</span>
+                      <span className="text-lg">{item.label}</span>
                     </Link>} />
                   </SidebarMenuItem>
                 ))}
@@ -110,10 +112,10 @@ export async function AdminShell({
                 <AvatarFallback className="text-xs">{initials}</AvatarFallback>
               </Avatar>
               <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-                <p className="truncate text-sm font-medium leading-tight">
+                <p className="truncate text-base font-medium leading-tight">
                   {admin.name ?? "Admin"}
                 </p>
-                <p className="truncate text-xs text-muted-foreground">
+                <p className="truncate text-sm text-muted-foreground">
                   {admin.email}
                 </p>
               </div>
@@ -127,10 +129,10 @@ export async function AdminShell({
             >
               <DropdownMenuGroup>
                 <DropdownMenuLabel className="font-normal">
-                  <p className="truncate text-sm font-medium">
+                  <p className="truncate text-base font-medium">
                     {admin.name ?? "Admin"}
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">
+                  <p className="truncate text-sm text-muted-foreground">
                     {admin.email}
                   </p>
                 </DropdownMenuLabel>
@@ -138,9 +140,9 @@ export async function AdminShell({
                   <form action="/api/auth/logout" method="post">
                     <DropdownMenuItem
                       variant="destructive"
-                      className="cursor-pointer"
+                      className="cursor-pointer w-full"
                       nativeButton
-                      render={<button type="submit" className="w-full">
+                      render={<button type="submit" className="w-full text-base">
                         <LogOut className="h-4 w-4" />
                         Log out
                       </button>}
@@ -153,10 +155,10 @@ export async function AdminShell({
       </Sidebar>
 
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur">
+        <header className="sticky top-0 z-10 flex h-14.25 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur">
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-5" />
-          <span className="text-sm font-medium text-muted-foreground">
+          <span className="text-xl font-medium text-muted-foreground">
             Admin
           </span>
         </header>

@@ -94,7 +94,13 @@ export function AdminSettingsManager() {
   const [roleDescription, setRoleDescription] = useState("");
   const [roleIsSuperAdmin, setRoleIsSuperAdmin] = useState(false);
   const [rolePermissions, setRolePermissions] = useState<string[]>([]);
-  const [savingRole, setSavingRole] = useState(false);
+  const [savingRole, setSavingRole] = useState(false);// add alongside your other useState calls
+  const [formValues, setFormValues] = useState<Settings>({});
+
+  // sync form values whenever settings loads/changes (initial load + after save)
+  useEffect(() => {
+    setFormValues(settings);
+  }, [settings]);
 
   const groupedPerms = useMemo(() => groupPermissions(perms), [perms]);
 
@@ -120,23 +126,27 @@ export function AdminSettingsManager() {
   async function saveSettings(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setSavingSettings(true);
-    const body = Object.fromEntries(new FormData(e.currentTarget));
     const r = await fetch("/api/admin/settings", {
       method: "PATCH",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
+      body: JSON.stringify(formValues),
     });
     setSavingSettings(false);
-    r.ok ? toast.add({
-      type: "success",
-      title: "Success",
-      description: "Settings saved successfully",
-    })
-      : toast.add({
+    if (r.ok) {
+      const j = await r.json();
+      setSettings(j.settings ?? formValues);
+      toast.add({
+        type: "success",
+        title: "Success",
+        description: "Settings saved successfully",
+      });
+    } else {
+      toast.add({
         type: "error",
         title: "Error",
         description: "Save failed",
       });
+    }
   }
 
   async function addAdmin(e: React.FormEvent<HTMLFormElement>) {
@@ -262,26 +272,26 @@ export function AdminSettingsManager() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
           Settings
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-base text-muted-foreground">
           Manage site details, administrators, and roles.
         </p>
       </div>
 
       <Tabs defaultValue="general">
         <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="admins">Administrators</TabsTrigger>
-          <TabsTrigger value="roles">Roles & permissions</TabsTrigger>
+          <TabsTrigger value="general" className="text-base">General</TabsTrigger>
+          <TabsTrigger value="admins" className="text-base">Administrators</TabsTrigger>
+          <TabsTrigger value="roles" className="text-base">Roles & permissions</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">General settings</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-xl">General settings</CardTitle>
+              <CardDescription className="text-base">
                 Shown across the public site and contact touchpoints.
               </CardDescription>
             </CardHeader>
@@ -289,17 +299,21 @@ export function AdminSettingsManager() {
               <form onSubmit={saveSettings} className="grid gap-4 sm:grid-cols-2">
                 {SETTINGS_FIELDS.map((f) => (
                   <div key={f.key} className="grid gap-1.5">
-                    <Label htmlFor={f.key}>{f.label}</Label>
+                    <Label htmlFor={f.key} className="text-base">{f.label}</Label>
                     <Input
                       id={f.key}
                       name={f.key}
-                      defaultValue={settings[f.key] ?? ""}
+                      value={formValues[f.key] ?? ""}
+                      onChange={(e) =>
+                        setFormValues((v) => ({ ...v, [f.key]: e.target.value }))
+                      }
                       placeholder={f.label}
+                      className="text-base"
                     />
                   </div>
                 ))}
                 <div className="sm:col-span-2">
-                  <Button type="submit" disabled={savingSettings} className="gap-2">
+                  <Button type="submit" disabled={savingSettings} className="gap-2 text-base">
                     <Save className="h-4 w-4" />
                     {savingSettings ? "Saving..." : "Save changes"}
                   </Button>
@@ -312,35 +326,35 @@ export function AdminSettingsManager() {
         <TabsContent value="admins">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Administrators</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-xl">Administrators</CardTitle>
+              <CardDescription className="text-base">
                 People with access to this admin panel.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <form onSubmit={addAdmin} className="flex flex-wrap items-end gap-3">
                 <div className="grid gap-1.5">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" name="email" placeholder="email@example.com" className="w-56" required />
+                  <Label htmlFor="email" className="text-base">Email</Label>
+                  <Input id="email" name="email" placeholder="email@example.com" className="w-56 text-base" required />
                 </div>
                 <div className="grid gap-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" name="name" placeholder="Name" className="w-48" />
+                  <Label htmlFor="name" className="text-base">Name</Label>
+                  <Input id="name" name="name" placeholder="Name" className="w-48 text-base" />
                 </div>
                 <div className="grid gap-1.5">
-                  <Label htmlFor="roleId">Role</Label>
+                  <Label htmlFor="roleId" className="text-base">Role</Label>
                   <Select name="roleId">
-                    <SelectTrigger id="roleId" className="w-44">
+                    <SelectTrigger id="roleId" className="w-44 text-base">
                       <SelectValue placeholder="Select role" />
                     </SelectTrigger>
                     <SelectContent>
                       {roles.map((r) => (
-                        <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>
+                        <SelectItem key={r.id} value={r.name} className="text-base">{r.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
-                <Button type="submit" disabled={addingAdmin} className="gap-2">
+                <Button type="submit" disabled={addingAdmin} className="gap-2 text-base">
                   <UserPlus className="h-4 w-4" />
                   Add
                 </Button>
@@ -352,23 +366,23 @@ export function AdminSettingsManager() {
                 {admins.map((a) => (
                   <li key={a.id} className="flex items-center justify-between gap-4 py-3">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">
-                        {a.name ?? a.email} <span className="text-muted-foreground">&lt;{a.email}&gt;</span>
+                      <p className="truncate text-base font-medium">
+                        {a.name ?? a.email} <span className="text-muted-foreground">({a.email})</span>
                       </p>
                       <div className="mt-1 flex items-center gap-2">
-                        <Badge variant="secondary">{a.role_name}</Badge>
-                        <Badge variant={a.is_active ? "outline" : "destructive"} className={a.is_active ? "border-emerald-200 bg-emerald-50 text-emerald-700" : ""}>
+                        <Badge variant="secondary" className="text-sm">{a.role_name}</Badge>
+                        <Badge variant={a.is_active ? "outline" : "destructive"} className={`text-sm ${a.is_active ? "border-emerald-200 bg-emerald-50 text-emerald-700" : ""}`}>
                           {a.is_active ? "Active" : "Revoked"}
                         </Badge>
                       </div>
                     </div>
-                    <Button variant="outline" size="sm" className="text-destructive hover:text-destructive" onClick={() => revoke(a.id)}>
+                    <Button variant="outline" size="sm" className="text-base text-destructive hover:text-destructive" onClick={() => revoke(a.id)}>
                       Revoke
                     </Button>
                   </li>
                 ))}
                 {admins.length === 0 && (
-                  <li className="py-6 text-center text-sm text-muted-foreground">No administrators yet</li>
+                  <li className="py-6 text-center text-base text-muted-foreground">No administrators yet</li>
                 )}
               </ul>
             </CardContent>
@@ -379,16 +393,16 @@ export function AdminSettingsManager() {
           <Card>
             <CardHeader className="flex flex-row items-start justify-between gap-4">
               <div>
-                <CardTitle className="flex items-center gap-2 text-lg">
+                <CardTitle className="flex items-center gap-2 text-xl">
                   <ShieldCheck className="h-5 w-5 text-brand-tertiary" />
                   Roles & permissions
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-base">
                   Permissions are database-backed. Super admin roles automatically
                   pass every backend permission check.
                 </CardDescription>
               </div>
-              <Button size="sm" className="gap-2" onClick={openCreateRole}>
+              <Button size="sm" className="gap-2 text-base" onClick={openCreateRole}>
                 <Plus className="h-4 w-4" />
                 New role
               </Button>
@@ -398,18 +412,18 @@ export function AdminSettingsManager() {
                 <div key={r.id} className="flex items-start justify-between gap-4 rounded-lg border p-3">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="font-medium">{r.name}</p>
+                      <p className="text-lg font-medium">{r.name}</p>
                       {r.is_super_admin && (
-                        <Badge variant="secondary" className="text-xs">Super admin</Badge>
+                        <Badge variant="secondary" className="text-sm">Super admin</Badge>
                       )}
                     </div>
                     {r.description && (
-                      <p className="mt-1 text-sm text-muted-foreground">{r.description}</p>
+                      <p className="mt-1 text-base text-muted-foreground">{r.description}</p>
                     )}
                     {!r.is_super_admin && r.permissions && r.permissions.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-1">
                         {r.permissions.map((p) => (
-                          <Badge key={p} variant="outline" className="text-xs font-normal">
+                          <Badge key={p} variant="outline" className="text-sm font-normal">
                             {p}
                           </Badge>
                         ))}
@@ -432,7 +446,7 @@ export function AdminSettingsManager() {
                 </div>
               ))}
               {roles.length === 0 && (
-                <p className="py-6 text-center text-sm text-muted-foreground">No roles yet</p>
+                <p className="py-6 text-center text-base text-muted-foreground">No roles yet</p>
               )}
             </CardContent>
           </Card>
@@ -443,8 +457,8 @@ export function AdminSettingsManager() {
         <DialogContent className="max-h-[85vh] w-full min-w-2xl max-w-4xl overflow-y-auto no-scrollbar">
           <form onSubmit={saveRole} className="w-full">
             <DialogHeader>
-              <DialogTitle>{editingRole ? "Edit role" : "Create role"}</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-xl">{editingRole ? "Edit role" : "Create role"}</DialogTitle>
+              <DialogDescription className="text-base">
                 Assign permissions grouped by feature area. Super admin roles
                 bypass individual permission checks entirely.
               </DialogDescription>
@@ -453,22 +467,24 @@ export function AdminSettingsManager() {
             <div className="space-y-4 py-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="grid gap-1.5">
-                  <Label htmlFor="role-name">Role name</Label>
+                  <Label htmlFor="role-name" className="text-base">Role name</Label>
                   <Input
                     id="role-name"
                     value={roleName}
                     onChange={(e) => setRoleName(e.target.value)}
                     placeholder="e.g. Booking Manager"
+                    className="text-base"
                     required
                   />
                 </div>
                 <div className="grid gap-1.5">
-                  <Label htmlFor="role-description">Description</Label>
+                  <Label htmlFor="role-description" className="text-base">Description</Label>
                   <Input
                     id="role-description"
                     value={roleDescription}
                     onChange={(e) => setRoleDescription(e.target.value)}
                     placeholder="Optional"
+                    className="text-base"
                   />
                 </div>
               </div>
@@ -480,10 +496,10 @@ export function AdminSettingsManager() {
                   onCheckedChange={setRoleIsSuperAdmin}
                 />
                 <div>
-                  <Label htmlFor="role-super-admin" className="font-medium">
+                  <Label htmlFor="role-super-admin" className="text-base font-medium">
                     Super admin
                   </Label>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Bypasses every permission check. Individual permissions below are ignored.
                   </p>
                 </div>
@@ -493,7 +509,7 @@ export function AdminSettingsManager() {
                 <div className="space-y-4">
                   {Object.entries(groupedPerms).map(([group, groupPerms]) => (
                     <div key={group}>
-                      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
                         {group}
                       </p>
                       <div className="grid gap-2 sm:grid-cols-2">
@@ -501,7 +517,7 @@ export function AdminSettingsManager() {
                           <label
                             key={p.name}
                             htmlFor={`perm-${p.name}`}
-                            className="flex items-start gap-2 rounded-md border p-2 text-sm hover:bg-muted/50"
+                            className="flex items-start gap-2 rounded-md border p-2 text-base hover:bg-muted/50"
                           >
                             <Checkbox
                               id={`perm-${p.name}`}
@@ -513,7 +529,7 @@ export function AdminSettingsManager() {
                             <span>
                               {permissionLabel(p.name)}
                               {p.description && (
-                                <span className="block text-xs text-muted-foreground">
+                                <span className="block text-sm text-muted-foreground">
                                   {p.description}
                                 </span>
                               )}
@@ -528,10 +544,10 @@ export function AdminSettingsManager() {
             </div>
 
             <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => setRoleDialogOpen(false)}>
+              <Button type="button" variant="outline" onClick={() => setRoleDialogOpen(false)} className="text-base">
                 Cancel
               </Button>
-              <Button type="submit" disabled={savingRole}>
+              <Button type="submit" disabled={savingRole} className="text-base">
                 {savingRole ? "Saving..." : editingRole ? "Save changes" : "Create role"}
               </Button>
             </DialogFooter>
