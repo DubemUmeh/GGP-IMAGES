@@ -349,7 +349,7 @@ export function AdminSettingsManager() {
                     </SelectTrigger>
                     <SelectContent>
                       {roles.map((r) => (
-                        <SelectItem key={r.id} value={r.name} className="text-base">{r.name}</SelectItem>
+                        <SelectItem key={r.id} value={r.id} className="text-base">{r.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
