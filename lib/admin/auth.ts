@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import { query } from "./db";
 import { sessionAdminId } from "./session";
 import type { AdminContext, PermissionName } from "./types";
+import { ZodError } from "zod";
+
 export class HttpError extends Error {
   constructor(
     public status: number,
@@ -64,4 +66,13 @@ export function apiError(error: unknown) {
 }
 export function hasPermission(admin: AdminContext, permission: PermissionName) {
   return admin.role.isSuperAdmin || admin.permissions.includes(permission);
+}
+
+export function apiError(error: unknown) {
+  if (error instanceof HttpError)
+    return NextResponse.json({ message: error.message }, { status: error.status });
+  if (error instanceof ZodError)
+    return NextResponse.json({ message: "Invalid input", issues: error.issues }, { status: 400 });
+  console.error(error);
+  return NextResponse.json({ message: "Internal server error" }, { status: 500 });
 }
