@@ -50,7 +50,7 @@ export function CompanyStory() {
                 <div className="text-sm text-card tracking-widest font-semibold">Prints Delivered</div>
               </div>
             </div>
-            <ArrowCta as="link" label="View Our Work" href="'/gallery" className="tracking-wide bg-brand-tertiary hover:bg-brand-tertiary/80" />
+            <ArrowCta as="link" label="View Our Work" href="/gallery" className="tracking-wide bg-brand-tertiary hover:bg-brand-tertiary/80" />
           </div>
         </div>
       </div>
