@@ -5,12 +5,12 @@ import { FaInstagram, FaTiktok, FaFacebook, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 
 const quickLinks = [
-  { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
+  { label: "Booking", href: "/booking" },
 ];
 
 const socials = [
@@ -37,7 +37,7 @@ export function SiteFooter() {
         </Reveal>
 
         <Reveal delay={0.06}>
-          <h4 className="my-5 md:mb-5 text-sm font-semibold uppercase tracking-widest text-card/70">
+          <h4 className="my-10 md:my-0 md:mb-5 text-sm font-semibold uppercase tracking-widest text-card/70">
             Quick Links
           </h4>
           <ul className="space-y-3">

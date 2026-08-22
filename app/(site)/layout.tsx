@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "../globals.css";
 import { Navbar } from "@/components/shared/site-navbar";
 import { SiteFooter } from "@/components/shared/site-footer";
 import { WhatsAppFab } from "@/components/shared/whatsapp-fab";

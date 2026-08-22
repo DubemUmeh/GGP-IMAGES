@@ -1,57 +1,81 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { LuArrowRight } from "react-icons/lu";
+import { Brush, Printer, Shirt, Package, Megaphone, Sparkles, Store, Box } from "lucide-react";
 
 const services = [
   {
-    key: "brand-identity",
+    key: "branding-design",
     span: "lg:col-span-2",
     badge: "Core Service",
-    title: "Brand Identity & Stationery",
+    title: "Branding & Design",
     description:
-      "Elevate your professional image with premium business cards, letterheads, envelopes, and complete brand kits crafted with precision.",
-    image: "/hero-image.webp",
+      "Create a unique brand identity that tells your story and connects with your audience.",
+    icon: Brush,
+    image:
+      "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=900&q=80",
     variant: "overlay-large" as const,
   },
   {
-    key: "commercial-printing",
-    title: "Commercial Printing",
-    description:
-      "High-volume brochures, flyers, posters, and catalogs with fast turnaround and consistent color accuracy.",
-    image: "/hero-image.webp",
+    key: "printing-services",
+    title: "Printing Services",
+    description: "High-quality printing for all your needs — fast, reliable, and affordable.",
+    icon: Printer,
+    image:
+      "https://images.unsplash.com/photo-1612831810543-7c0f3f3f8f24?auto=format&fit=crop&w=900&q=80",
     variant: "card" as const,
   },
   {
-    key: "custom-packaging",
-    title: "Custom Packaging",
-    description:
-      "Bespoke boxes, labels, and packaging solutions that protect your products and delight your customers.",
-    image: "/hero-image.webp",
+    key: "uniforms-apparel",
+    title: "Uniforms & Apparel",
+    description: "Custom uniforms and apparel that promote your brand professionally.",
+    icon: Shirt,
+    image:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80",
     variant: "card" as const,
   },
   {
-    key: "large-format",
-    span: "lg:row-span-2 lg:h-full h-[350px]",
-    title: "Large Format Printing",
-    description:
-      "Make a massive impact. We produce high-resolution banners, rigid signage, stunning backdrops, and exhibition graphics designed to command attention from any distance.",
-    image: "/hero-image.webp",
-    variant: "overlay-tall" as const,
-    cta: "View Specs",
-  },
-  {
-    key: "apparel",
-    title: "Apparel & Textiles",
-    description: "Custom t-shirts, uniforms, and tote bags using advanced screen printing and DTG technologies.",
-    image: "/hero-image.webp",
+    key: "packaging",
+    title: "Packaging",
+    description: "Creative packaging solutions that protect your products and elevate your brand.",
+    icon: Package,
+    image:
+      "https://images.unsplash.com/photo-1607166452427-7e4476eec0e9?auto=format&fit=crop&w=900&q=80",
     variant: "card" as const,
   },
   {
-    key: "corporate-gifting",
-    title: "Corporate Gifting",
-    description: "Branded merchandise and premium gifts that leave a lasting impression on clients and employees.",
-    image: '/hero-image.webp',
+    key: "promotional-items",
+    title: "Promotional Items",
+    description: "Branded giveaways and promotional products that keep your brand top of mind.",
+    icon: Megaphone,
+    image:
+      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=900&q=80",
+    variant: "card" as const,
+  },
+  {
+    key: "event-materials",
+    title: "Event Materials",
+    description: "Banners, backdrops, flyers and more to make your events unforgettable.",
+    icon: Sparkles,
+    image:
+      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=900&q=80",
+    variant: "card" as const,
+  },
+  {
+    key: "signage-displays",
+    title: "Signage & Displays",
+    description: "Eye-catching signage and displays that get your business noticed.",
+    icon: Store,
+    image:
+      "https://images.unsplash.com/photo-1561070791-36c11767b26a?auto=format&fit=crop&w=900&q=80",
+    variant: "card" as const,
+  },
+  {
+    key: "marketing-materials",
+    title: "Marketing Materials",
+    description: "Brochures, flyers, business cards and more to power your marketing.",
+    icon: Box,
+    image:
+      "https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=900&q=80",
     variant: "card" as const,
   },
 ];
@@ -71,17 +95,20 @@ export function ServicesGrid() {
 
       <div className="grid auto-rows-87.5 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => {
-          if (service.variant === "overlay-large" || service.variant === "overlay-tall") {
+          const Icon = service.icon;
+
+          if (service.variant === "overlay-large") {
             return (
               <div
                 key={service.key}
-                className={`card-shadow border-2 border-secondary group relative flex flex-col justify-end overflow-hidden rounded-2xl bg-secondary p-8 transition-transform duration-300 hover:-translate-y-2  ${service.span ?? ""}`}
+                className={`card-shadow border-2 border-secondary group relative flex flex-col justify-end overflow-hidden rounded-2xl bg-secondary p-8 transition-transform duration-300 hover:-translate-y-2 ${service.span ?? ""}`}
               >
                 <div className="absolute inset-0 z-0">
                   <Image
                     src={service.image}
                     alt={service.title}
                     fill
+                    sizes="(min-width: 1024px) 66vw, (min-width: 768px) 100vw, 100vw"
                     className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
@@ -92,17 +119,11 @@ export function ServicesGrid() {
                       {service.badge}
                     </Badge>
                   )}
+                  <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-sm">
+                    <Icon className="h-5 w-5" />
+                  </span>
                   <h3 className="mb-2 text-2xl font-bold text-white">{service.title}</h3>
                   <p className="max-w-md text-white/80">{service.description}</p>
-                  {service.cta && (
-                    <Button
-                      variant="link"
-                      className="mt-6 h-auto p-0 text-brand-orange-fixed-dim hover:text-white"
-                    >
-                      {service.cta}
-                      <LuArrowRight className="ml-1 h-4 w-4" />
-                    </Button>
-                  )}
                 </div>
               </div>
             );
@@ -118,8 +139,12 @@ export function ServicesGrid() {
                   src={service.image}
                   alt={service.title}
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-150"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
+                <span className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg bg-card text-secondary shadow-sm">
+                  <Icon className="h-4 w-4" />
+                </span>
               </div>
               <div className="mt-auto">
                 <h3 className="mb-2 text-xl font-semibold tracking-wide text-card">{service.title}</h3>

@@ -15,7 +15,7 @@ const cards = [
     iconColor: "text-secondary",
     title: "Call Us",
     description: "Mon-Fri from 9am to 6pm.",
-    action: { label: "+91 98765 43210", href: "tel:+919876543210" },
+    action: { label: "+233 (055) 995 6394", href: "tel:+233559956394" },
   },
   {
     icon: LuMapPin,

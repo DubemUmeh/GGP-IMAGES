@@ -30,7 +30,7 @@ export default function FaqPage() {
         </div>
         <div className="mt-10 space-y-4">
           {faqs.map((faq) => (
-            <details key={faq.question} className="group rounded-2xl border border-brand-tertiary/20 bg-card p-6 shadow-sm open:border-secondary">
+            <details key={faq.question} className="group rounded-2xl border border-brand-tertiary/20 bg-card p-6 shadow-sm">
               <summary className="cursor-pointer text-lg font-bold text-brand-tertiary marker:text-secondary">{faq.question}</summary>
               <p className="mt-4 leading-8 text-muted-foreground">{faq.answer}</p>
             </details>

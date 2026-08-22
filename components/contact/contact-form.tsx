@@ -8,10 +8,14 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 const serviceOptions = [
-  { value: "branding", label: "Branding & Identity" },
-  { value: "large-format", label: "Large Format Printing" },
+  { value: "branding", label: "Branding & Design" },
+  { value: "printing", label: "Printing Services" },
+  { value: "uniforms-apparel", label: "Uniforms & Apparel" },
   { value: "packaging", label: "Packaging Solutions" },
   { value: "marketing", label: "Marketing Materials" },
+  { value: "promotions", label: "Promotional Items" },
+  { value: "event-materials", label: "Event Materials" },
+  { value: "signage-displays", label: "Signage & Displays" },
   { value: "other", label: "Other" },
 ];
 
@@ -46,7 +50,7 @@ export function ContactForm() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
-            <Input id="name" name="name" placeholder="Jane Doe" className="h-auto text-primary rounded-xl bg-card py-4" required />
+            <Input id="name" name="name" placeholder="Jane Doe" className="h-auto text-primary text-base tracking-wide rounded-xl bg-card py-4" required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
@@ -55,7 +59,7 @@ export function ContactForm() {
               name="email"
               type="email"
               placeholder="jane@company.com"
-              className="h-auto text-primary rounded-xl bg-card py-4"
+              className="h-auto text-primary text-base tracking-wide rounded-xl bg-card py-4"
               required
             />
           </div>

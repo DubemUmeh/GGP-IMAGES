@@ -15,7 +15,7 @@ const links = [
   { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "FAQ", href: "/faq" },
-  { label: "Contact", href: "/contact" },
+  { label: "Booking", href: "/booking" },
 ];
 
 type NavType = {

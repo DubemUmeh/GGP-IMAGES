@@ -14,11 +14,15 @@ const highlights = [
 ];
 
 const serviceOptions = [
-  "Brand Identity & Stationery",
-  "Commercial Printing",
-  "Large Format & Signage",
-  "Custom Packaging",
-  "Promotional Products",
+  "Branding & Design",
+  "Printing Services",
+  "Uniforms & Apparel",
+  "Packaging",
+  "Promotional Items",
+  "Event Materials",
+  "Signage & Displays",
+  "Marketing Materials",
+  "Other / Custom Project",
 ];
 
 export function QuoteCtaSection() {

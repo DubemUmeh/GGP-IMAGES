@@ -1,4 +1,56 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect, @next/next/no-img-element */
-import { NextResponse } from 'next/server'; import { apiError, requirePermission } from '@/lib/admin/auth'; import { query } from '@/lib/admin/db'; import { galleryMetaSchema } from '@/lib/admin/validators'; import { uploadToCloudinary } from '@/lib/admin/cloudinary';
-export async function GET(){ try{ await requirePermission('GALLERY_VIEW'); const r=await query('select * from gallery_items order by sort_order, created_at desc'); return NextResponse.json({items:r.rows}); }catch(e){return apiError(e)} }
-export async function POST(req:Request){ try{ const admin=await requirePermission('GALLERY_UPLOAD'); const form=await req.formData(); const file=form.get('file'); if(!(file instanceof File)) return NextResponse.json({message:'File is required'},{status:400}); const meta=galleryMetaSchema.parse(Object.fromEntries(form)); const up=await uploadToCloudinary(file); const r=await query(`insert into gallery_items(title,description,alt_text,sort_order,is_published,type,cloudinary_public_id,cloudinary_resource_type,cloudinary_url,width,height,duration,format,bytes,created_by) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) returning *`,[meta.title,meta.description,meta.altText,meta.sortOrder,meta.isPublished,up.type,up.publicId,up.resourceType,up.secureUrl,up.width,up.height,up.duration,up.format,up.bytes,admin.id]); return NextResponse.json({item:r.rows[0]},{status:201}); }catch(e:any){ if(e?.status) return NextResponse.json({message:e.message},{status:e.status}); return apiError(e)} }
+import { NextResponse } from "next/server";
+import { apiError, requirePermission } from "@/lib/admin/auth";
+import { query } from "@/lib/admin/db";
+import { galleryMetaSchema } from "@/lib/admin/validators";
+import { uploadToCloudinary } from "@/lib/admin/cloudinary";
+export async function GET() {
+  try {
+    await requirePermission("GALLERY_VIEW");
+    const r = await query(
+      "select * from gallery_items order by sort_order, created_at desc",
+    );
+    return NextResponse.json({ items: r.rows });
+  } catch (e) {
+    return apiError(e);
+  }
+}
+export async function POST(req: Request) {
+  try {
+    const admin = await requirePermission("GALLERY_UPLOAD");
+    const form = await req.formData();
+    const file = form.get("file");
+    if (!(file instanceof File))
+      return NextResponse.json(
+        { message: "File is required" },
+        { status: 400 },
+      );
+    const meta = galleryMetaSchema.parse(Object.fromEntries(form));
+    const up = await uploadToCloudinary(file);
+    const r = await query(
+      `insert into gallery_items(title,description,alt_text,sort_order,is_published,type,cloudinary_public_id,cloudinary_resource_type,cloudinary_url,width,height,duration,format,bytes,created_by) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) returning *`,
+      [
+        meta.title,
+        meta.description,
+        meta.altText,
+        meta.sortOrder,
+        meta.isPublished,
+        up.type,
+        up.publicId,
+        up.resourceType,
+        up.secureUrl,
+        up.width ?? null,
+        up.height ?? null,
+        up.duration ?? null,
+        up.format ?? null,
+        up.bytes ?? null,
+        admin.id,
+      ],
+    );
+    return NextResponse.json({ item: r.rows[0] }, { status: 201 });
+  } catch (e: any) {
+    if (e?.status)
+      return NextResponse.json({ message: e.message }, { status: e.status });
+    return apiError(e);
+  }
+}
