@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
       [ident.sub, ident.name, ident.picture, admin.id],
     );
     await createSession(admin.id);
-    return NextResponse.redirect(new URL("/admin/dashbaord", req.url));
+    return NextResponse.redirect(new URL("/admin/dashboard", req.url));
   } catch (e) {
     console.error(e);
     return NextResponse.json(
