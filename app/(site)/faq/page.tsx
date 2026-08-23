@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { breadcrumbSchema, buildMetadata, faqSchema, JsonLd } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { ArrowCta } from "@/components/ui/motion-kit";
 
 const faqs = [
   { question: "What printing services does GGP Images provide?", answer: "We provide branding, business stationery, large format printing, apparel printing, packaging, labels, invitations, certificates, promotional items, photocopying, and finishing services." },
@@ -39,7 +40,7 @@ export default function FaqPage() {
         <div className="mt-10 rounded-3xl bg-secondary p-8 text-center text-primary">
           <h2 className="text-2xl font-black">Still have questions?</h2>
           <p className="mt-2">Send your project details and our team will guide you.</p>
-          <Link href="/contact" className="mt-5 inline-flex rounded-full bg-brand-tertiary px-6 py-3 font-bold text-white">Contact GGP Images</Link>
+          <ArrowCta label="Get in Touch" as="link" href="/contact" className="mt-5" />
         </div>
       </section>
     </main>

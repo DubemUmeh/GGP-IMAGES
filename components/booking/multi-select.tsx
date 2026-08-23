@@ -53,7 +53,7 @@ export function MultiSelectField({
               aria-expanded={open}
               className="h-auto min-h-11 w-full justify-between font-normal"
             >
-              <span className={cn("truncate text-left", values.length === 0 && "text-muted-foreground")}>
+              <span className={cn("truncate text-left text-black/80", values.length === 0 && "text-muted-foreground")}>
                 {values.length === 0
                   ? placeholder
                   : values.length === 1

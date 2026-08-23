@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
-import { apiError, requirePermission } from "@/lib/admin/auth";
+import { apiError, requireAdmin } from "@/lib/admin/auth";
 import { query } from "@/lib/admin/db";
 import { bookingStatusSchema } from "@/lib/admin/validators";
 
@@ -9,7 +9,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("BOOKINGS_VIEW");
+    await requireAdmin();
     const { id } = await params;
     const r = await query<any>("select * from bookings where id=$1", [id]);
     if (!r.rows[0])
@@ -25,7 +25,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("BOOKINGS_EDIT");
+    await requireAdmin();
     const { id } = await params;
     const { status } = bookingStatusSchema.parse(await req.json());
 
@@ -47,7 +47,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("BOOKINGS_DELETE");
+    await requireAdmin();
     const { id } = await params;
     const r = await query("delete from bookings where id=$1 returning id", [
       id,

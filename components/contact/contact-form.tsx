@@ -6,22 +6,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { MultiSelectField } from "@/components/booking/multi-select";
 
 const serviceOptions = [
-  { value: "branding", label: "Branding & Design" },
-  { value: "printing", label: "Printing Services" },
-  { value: "uniforms-apparel", label: "Uniforms & Apparel" },
-  { value: "packaging", label: "Packaging Solutions" },
-  { value: "marketing", label: "Marketing Materials" },
-  { value: "promotions", label: "Promotional Items" },
-  { value: "event-materials", label: "Event Materials" },
-  { value: "signage-displays", label: "Signage & Displays" },
-  { value: "other", label: "Other" },
+  "Branding & Design",
+  "Printing Services",
+  "Uniforms & Apparel",
+  "Packaging Solutions",
+  "Marketing Materials",
+  "Promotional Items",
+  "Event Materials",
+  "Signage & Displays",
+  "Other",
 ];
 
 export function ContactForm() {
   const [status, setStatus] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,13 +35,16 @@ export function ContactForm() {
       email: String(formData.get("email") || ""),
       details: String(formData.get("details") || ""),
       source: "Contact page form",
-      services: formData.getAll("services").map(String),
+      services: selectedServices,
     };
     const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
-    if (response.ok) form.reset();
+    if (response.ok) {
+      form.reset();
+      setSelectedServices([]);
+    }
   }
 
   return (
@@ -65,27 +70,13 @@ export function ContactForm() {
           </div>
         </div>
 
-        <fieldset className="space-y-2">
-          <legend className="mb-1 text-sm font-medium leading-none">
-            Services Needed
-          </legend>
-          <p className="text-xs text-card/60">Select all that apply.</p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {serviceOptions.map((option) => (
-              <label key={option.value} className="cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="services"
-                  value={option.value}
-                  className="peer sr-only"
-                />
-                <span className="inline-flex items-center rounded-full border border-card/30 bg-card/10 px-4 py-2 text-sm font-medium text-card transition-colors hover:border-card/50 peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-secondary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
-                  {option.label}
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <MultiSelectField
+          label="Services Needed"
+          placeholder="Select one or more services"
+          values={selectedServices}
+          onChange={setSelectedServices}
+          items={serviceOptions}
+        />
 
         <div className="space-y-2">
           <Label htmlFor="details">Project Details</Label>

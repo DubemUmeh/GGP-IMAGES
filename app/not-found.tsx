@@ -1,23 +1,30 @@
 // app/not-found.tsx
 "use client";
 
+import './globals.css'
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { LuPrinter, LuGhost, LuArrowUpRight } from "react-icons/lu";
+import { LuGhost, LuArrowUpRight } from "react-icons/lu";
 import { ArrowCta } from "@/components/ui/motion-kit";
+import { Navbar } from '@/components/shared/site-navbar';
+import { SiteFooter } from '@/components/shared/site-footer';
+import { WhatsAppFab } from '@/components/shared/whatsapp-fab';
 
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Book a Print", href: "/booking" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
 ];
 
 export default function NotFound() {
   return (
-    <section className="relative min-h-screen w-full bg-secondary p-3 py-5">
+    <>
+    <Navbar />
+    <section className="relative h-full w-full bg-secondary p-3 py-5">
       <div className="relative mx-auto max-h-none w-full max-w-7xl overflow-hidden rounded-b-[40px] bg-brand-tertiary bg-gradient-hero md:rounded-[80px]">
         {/* halftone dot texture */}
         <div
@@ -30,19 +37,7 @@ export default function NotFound() {
         <div className="pointer-events-none absolute right-10 top-1/4 h-64 w-64 animate-pulse rounded-full bg-brand-orange-fixed opacity-30 blur-3xl" />
         <div className="pointer-events-none absolute bottom-10 left-10 h-72 w-72 rounded-full bg-brand-purple-fixed opacity-30 blur-3xl" />
 
-        <div className="relative z-10 flex flex-col items-center px-5 py-20 text-center lg:px-10 lg:py-28">
-          <motion.div
-            initial={{ opacity: 0, y: -10, rotate: -8 }}
-            animate={{ opacity: 1, y: 0, rotate: -6 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm"
-          >
-            <LuPrinter className="h-3.5 w-3.5 text-secondary" />
-            <span className="text-sm font-semibold tracking-wide text-muted-foreground">
-              Print Job Failed
-            </span>
-          </motion.div>
-
+        <div className="relative z-10 flex flex-col items-center px-5 py-10 text-center lg:px-10">
           {/* misregistered 404 */}
           <motion.h1
             initial={{ opacity: 0, scale: 0.9 }}
@@ -79,7 +74,7 @@ export default function NotFound() {
             as="link"
             label="Back to Home"
             href="/"
-            className="w-fit bg-white/90 text-secondary hover:bg-white"
+            className="w-fit bg-secondary text-secondary hover:bg-secondary/90"
           />
 
           {/* quick links */}
@@ -110,5 +105,8 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+    <WhatsAppFab />
+    <SiteFooter />
+    </>
   );
 }

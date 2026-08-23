@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "../globals.css";
+// import "../globals.css";
 import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
@@ -11,11 +11,13 @@ export const metadata: Metadata = {
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-screen w-full">
+    <>
+    {/* <html lang="en" className="h-full antialiased">
+      <body className="min-h-screen w-full"> */}
         <Toaster />
         {children}
-      </body>
-    </html>
+      {/* </body>
+    </html> */}
+    </>
   );
 }

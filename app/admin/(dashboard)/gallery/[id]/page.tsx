@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { requirePermission } from "@/lib/admin/auth";
+import { requireAdmin } from "@/lib/admin/auth";
 import { query } from "@/lib/admin/db";
 import { GalleryEditForm } from "@/components/admin/gallery-edit-form";
 
@@ -19,7 +19,7 @@ export default async function GalleryEditPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  await requirePermission("GALLERY_EDIT");
+  await requireAdmin();
   const { id } = await params;
 
   const r = await query<GalleryRow>(

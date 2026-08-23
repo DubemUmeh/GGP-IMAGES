@@ -121,8 +121,8 @@ export function HeroSection() {
                 <div className="flex -space-x-2">
                   <div className="z-30 h-8 w-8 rounded-full border-2 border-primary bg-brand-purple-fixed" />
                   <div className="z-20 h-8 w-8 rounded-full border-2 border-primary bg-brand-orange-fixed" />
-                  <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-brand-purple-fixed-dim text-xs font-bold text-primary">
-                    +1k``
+                  <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-brand-purple-fixed-dim text-xs tracking-tighter font-bold text-primary">
+                    +1k
                   </div>
                 </div>
                 <div className="flex flex-col">

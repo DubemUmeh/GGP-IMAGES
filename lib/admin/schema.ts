@@ -6,53 +6,11 @@ import {
   jsonb,
   numeric,
   pgTable,
-  primaryKey,
   text,
   timestamp,
   uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
-
-export const permissions = pgTable("permissions", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  name: text("name").notNull().unique(),
-  description: text("description"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
-
-export const roles = pgTable(
-  "roles",
-  {
-    id: uuid("id").defaultRandom().primaryKey(),
-    name: text("name").notNull().unique(),
-    description: text("description"),
-    isSuperAdmin: boolean("is_super_admin").notNull().default(false),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-  },
-  (table: any) => ({ nameIdx: index("idx_roles_name").on(table.name) }),
-);
-
-export const rolePermissions = pgTable(
-  "role_permissions",
-  {
-    roleId: uuid("role_id")
-      .notNull()
-      .references(() => roles.id, { onDelete: "cascade" }),
-    permissionId: uuid("permission_id")
-      .notNull()
-      .references(() => permissions.id, { onDelete: "cascade" }),
-  },
-  (table: any) => ({
-    pk: primaryKey({ columns: [table.roleId, table.permissionId] }),
-  }),
-);
 
 export const admins = pgTable(
   "admins",
@@ -62,9 +20,6 @@ export const admins = pgTable(
     email: text("email").notNull().unique(),
     name: text("name"),
     avatarUrl: text("avatar_url"),
-    roleId: uuid("role_id")
-      .notNull()
-      .references(() => roles.id),
     isActive: boolean("is_active").notNull().default(true),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
@@ -145,24 +100,18 @@ export const bookings = pgTable(
   "bookings",
   {
     id: uuid("id").defaultRandom().primaryKey(),
-
     customerName: text("customer_name").notNull(),
     customerEmail: text("customer_email").notNull(),
     customerPhone: text("customer_phone").notNull(),
-
     services: jsonb("services").$type<string[]>().notNull(),
     project: text("project").notNull(),
     quantity: text("quantity"),
     description: text("description"),
-
     preferredDate: text("preferred_date"),
     preferredTime: text("preferred_time"),
-
     designUrls: jsonb("design_urls").$type<string[]>().notNull().default([]),
-
     status: text("status").notNull().default("new"),
     adminNotes: text("admin_notes"),
-
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

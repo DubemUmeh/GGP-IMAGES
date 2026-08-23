@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { PERMISSIONS } from "./types";
 
 export const emailSchema = z
   .email()
   .max(254)
   .transform((v) => v.toLowerCase());
+
 export const galleryMetaSchema = z.object({
   title: z.string().trim().min(1).max(120),
   description: z.string().trim().max(1000).optional().nullable().default(null),
@@ -31,20 +31,11 @@ export const galleryPatchSchema = z.object({
 export const adminCreateSchema = z.object({
   email: emailSchema,
   name: z.string().trim().max(120).optional(),
-  roleId: z.uuid(),
 });
 
 export const adminPatchSchema = z.object({
   name: z.string().trim().max(120).optional(),
-  roleId: z.uuid().optional(),
   isActive: z.boolean().optional(),
-});
-
-export const roleSchema = z.object({
-  name: z.string().trim().min(2).max(60),
-  description: z.string().trim().max(240).optional().nullable(),
-  isSuperAdmin: z.boolean().default(false),
-  permissions: z.array(z.enum(PERMISSIONS)).default([]),
 });
 
 export const settingsSchema = z.object({

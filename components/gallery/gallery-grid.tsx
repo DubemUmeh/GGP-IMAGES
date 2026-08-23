@@ -68,7 +68,7 @@ export async function VideoGallery() {
                   </Badge>
                   <a
                     href={item.cloudinary_url}
-                    target="_blank"
+                    target="_self"
                     rel="noreferrer"
                     aria-label={`View full ${isImage ? 'image' : 'video'}: ${item.title}`}
                     className="relative block aspect-4/3 overflow-hidden rounded-xl bg-muted"

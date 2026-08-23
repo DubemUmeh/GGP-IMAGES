@@ -8,6 +8,13 @@
       "when": 1787276658080,
       "tag": "0000_ambitious_shadow_king",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1787492712113,
+      "tag": "0001_pale_doomsday",
+      "breakpoints": true
     }
   ]
 }

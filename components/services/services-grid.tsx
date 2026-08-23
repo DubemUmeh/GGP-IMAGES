@@ -21,7 +21,7 @@ const services = [
     description: "High-quality printing for all your needs — fast, reliable, and affordable.",
     icon: Printer,
     image:
-      "https://images.unsplash.com/photo-1612831810543-7c0f3f3f8f24?auto=format&fit=crop&w=900&q=80",
+      "https://plus.unsplash.com/premium_photo-1682145497679-e9340895df09?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     variant: "card" as const,
   },
   {
@@ -39,7 +39,7 @@ const services = [
     description: "Creative packaging solutions that protect your products and elevate your brand.",
     icon: Package,
     image:
-      "https://images.unsplash.com/photo-1607166452427-7e4476eec0e9?auto=format&fit=crop&w=900&q=80",
+      "https://res.cloudinary.com/dcqwzsq26/image/upload/v1787494743/c50ea239-8102-4de8-a879-180e3fd857b6_ekppdc.png",
     variant: "card" as const,
   },
   {

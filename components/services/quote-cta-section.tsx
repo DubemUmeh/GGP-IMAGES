@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { MultiSelectField } from "@/components/booking/multi-select";
 
 const highlights = [
   "Fast turnaround times available",
@@ -28,6 +29,7 @@ const serviceOptions = [
 export function QuoteCtaSection() {
   const [status, setStatus] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,13 +41,16 @@ export function QuoteCtaSection() {
       email: String(formData.get("email") || ""),
       details: String(formData.get("details") || ""),
       source: "Services quote CTA form",
-      services: formData.getAll("services").map(String),
+      services: selectedServices,
     };
     const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
-    if (response.ok) form.reset();
+    if (response.ok) {
+      form.reset();
+      setSelectedServices([]);
+    }
   }
 
   return (
@@ -92,27 +97,13 @@ export function QuoteCtaSection() {
                 </div>
               </div>
 
-              <fieldset className="space-y-2">
-                <legend className="mb-1 text-sm font-medium leading-none text-foreground">
-                  Services Needed
-                </legend>
-                <p className="text-xs text-muted-foreground">Select all that apply.</p>
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {serviceOptions.map((option) => (
-                    <label key={option} className="cursor-pointer">
-                      <input
-                        type="checkbox"
-                        name="services"
-                        value={option}
-                        className="peer sr-only"
-                      />
-                      <span className="inline-flex items-center rounded-full border border-border bg-card/80 px-3.5 py-2 text-sm font-medium text-foreground transition-colors hover:border-secondary/50 peer-checked:border-secondary peer-checked:bg-secondary peer-checked:text-secondary-foreground peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2">
-                        {option}
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              </fieldset>
+              <MultiSelectField
+                label="Services Needed"
+                placeholder="Select one or more services"
+                values={selectedServices}
+                onChange={setSelectedServices}
+                items={serviceOptions}
+              />
 
               <div className="space-y-1">
                 <Label htmlFor="details">Project Details</Label>

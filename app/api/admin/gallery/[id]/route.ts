@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from "next/server";
-import { apiError, requirePermission } from "@/lib/admin/auth";
+import { apiError, requireAdmin } from "@/lib/admin/auth";
 import { query } from "@/lib/admin/db";
 import { galleryPatchSchema } from "@/lib/admin/validators";
 import { destroyCloudinary, uploadToCloudinary } from "@/lib/admin/cloudinary";
@@ -10,7 +10,7 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("GALLERY_VIEW");
+    await requireAdmin();
     const { id } = await params;
     const r = await query<any>("select * from gallery_items where id=$1", [id]);
     if (!r.rows[0])
@@ -26,7 +26,7 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("GALLERY_EDIT");
+    await requireAdmin();
     const { id } = await params;
 
     const contentType = req.headers.get("content-type") || "";
@@ -117,7 +117,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    await requirePermission("GALLERY_DELETE");
+    await requireAdmin();
     const { id } = await params;
     const found = await query<any>(
       "select cloudinary_public_id,cloudinary_resource_type from gallery_items where id=$1",

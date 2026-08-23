@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/set-state-in-effect, @next/next/no-img-element */
 import { NextResponse } from "next/server";
-import { apiError, requirePermission } from "@/lib/admin/auth";
+import { apiError, requireAdmin } from "@/lib/admin/auth";
 import { query } from "@/lib/admin/db";
 import { galleryMetaSchema } from "@/lib/admin/validators";
 import { uploadToCloudinary } from "@/lib/admin/cloudinary";
 export async function GET() {
   try {
-    await requirePermission("GALLERY_VIEW");
+    await requireAdmin();
     const r = await query(
       "select * from gallery_items order by sort_order, created_at desc",
     );
@@ -17,7 +17,7 @@ export async function GET() {
 }
 export async function POST(req: Request) {
   try {
-    const admin = await requirePermission("GALLERY_UPLOAD");
+    const admin = await requireAdmin();
     const form = await req.formData();
     const file = form.get("file");
     if (!(file instanceof File))
