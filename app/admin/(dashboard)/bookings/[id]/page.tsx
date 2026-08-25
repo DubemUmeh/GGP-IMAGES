@@ -9,6 +9,8 @@ type BookingRow = {
   customer_email: string;
   customer_phone: string;
   services: string[];
+  service: string | null;
+  subdivision: string | null;
   project: string;
   quantity: string | null;
   description: string | null;

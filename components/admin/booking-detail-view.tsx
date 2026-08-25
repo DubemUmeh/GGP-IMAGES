@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/toast";
 import Image from "next/image";
+import { getServiceBySlug, getSubdivision } from "@/lib/services";
 
 type BookingRow = {
   id: string;
@@ -22,6 +23,8 @@ type BookingRow = {
   customer_email: string;
   customer_phone: string;
   services: string[];
+  service: string | null;
+  subdivision: string | null;
   project: string;
   quantity: string | null;
   description: string | null;
@@ -35,6 +38,8 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
   const router = useRouter();
   const [status, setStatus] = useState(booking.status);
   const [saving, setSaving] = useState(false);
+  const serviceName = booking.service ? getServiceBySlug(booking.service)?.name : booking.services[0];
+  const subdivisionName = booking.service && booking.subdivision ? getSubdivision(booking.service, booking.subdivision)?.name : booking.subdivision;
 
   async function updateStatus(next: string) {
     setSaving(true);
@@ -79,13 +84,9 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
         <Separator />
 
         <DetailSection title="Services">
-          <div className="flex flex-wrap gap-2">
-            {booking.services.map((s) => (
-              <Badge key={s} variant="secondary">
-                {s}
-              </Badge>
-            ))}
-          </div>
+          <DetailRow label="Service" value={serviceName || "Not specified"} />
+          <DetailRow label="Subdivision" value={subdivisionName || "Not specified"} />
+          {booking.services.length > 1 && <div className="flex flex-wrap gap-2">{booking.services.map((s) => <Badge key={s} variant="secondary">{s}</Badge>)}</div>}
         </DetailSection>
 
         <Separator />

@@ -7,86 +7,14 @@ import {
   LuShirt,
   LuBuilding2,
   LuLayers,
-  LuUserRound,
-  LuScissors,
   LuImage,
-  LuGift,
-  LuIdCard,
-  LuCopy,
-  LuPackage,
-  LuMail,
-  LuBookOpen,
   LuPenTool,
 } from "react-icons/lu";
 import { Reveal, BG_GLOW_LIGHT } from "@/components/ui/motion-kit";
+import { coreServices } from "@/lib/services";
 
-const services = [
-  {
-    icon: LuShirt,
-    title: "Textile Printing",
-    desc: "School uniforms, church anniversary cloths, memorial & ceremonial cloths — screen printing and heat press.",
-  },
-  {
-    icon: LuBuilding2,
-    title: "SCAFF Printing",
-    desc: "Specialized scaffold wraps for construction site branding.",
-  },
-  {
-    icon: LuLayers,
-    title: "DTF & UV DTF Printing",
-    desc: "Durable, full-color printing on T-shirts, plastic, glass and more.",
-  },
-  {
-    icon: LuUserRound,
-    title: "T-Shirt Printing",
-    desc: "Custom printed T-shirts for events, teams and staff.",
-  },
-  {
-    icon: LuScissors,
-    title: "Cutting Plottering",
-    desc: "Precision sticker and lettering cutouts for branding.",
-  },
-  {
-    icon: LuImage,
-    title: "Large Format Printing",
-    desc: "Banners, billboards and backdrops in vivid resolution.",
-  },
-  {
-    icon: LuGift,
-    title: "Promotions & Souvenirs",
-    desc: "Branded mugs, pens, keyholders and event giveaways.",
-  },
-  {
-    icon: LuIdCard,
-    title: "ID Cards",
-    desc: "Durable, professional ID cards for institutions.",
-  },
-  {
-    icon: LuCopy,
-    title: "Photocopy & Document Services",
-    desc: "Fast, affordable photocopying, scanning and laminating.",
-  },
-  {
-    icon: LuPackage,
-    title: "Packaging & Labels",
-    desc: "Custom packaging and label branding for your product.",
-  },
-  {
-    icon: LuMail,
-    title: "Invitation Cards & Certificates",
-    desc: "Wedding and event cards, testimonials and certificates.",
-  },
-  {
-    icon: LuBookOpen,
-    title: "Magazines & Booklets",
-    desc: "High-quality printed magazines and brochures.",
-  },
-  {
-    icon: LuPenTool,
-    title: "Logo Design & Branding",
-    desc: "Full corporate identity design and development.",
-  },
-];
+const serviceIcons = [LuLayers, LuShirt, LuPenTool, LuImage, LuBuilding2, LuPenTool];
+
 
 export function ServiceHighlights() {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -160,11 +88,11 @@ export function ServiceHighlights() {
         ref={stageRef}
         className="relative mt-14 mx-auto my-auto flex h-[50dvh] w-full items-center justify-center"
       >
-        {services.map((s, i) => {
-          const Icon = s.icon;
+        {coreServices.map((s, i) => {
+          const Icon = serviceIcons[i] ?? LuLayers;
           return (
             <div
-              key={s.title}
+              key={s.slug}
               ref={(el) => {
                 cardRefs.current[i] = el;
               }}
@@ -175,10 +103,10 @@ export function ServiceHighlights() {
                 <Icon className="h-7 w-7" />
               </span>
               <h3 className="text-2xl tracking-widest font-bold text-card md:text-4xl">
-                {s.title}
+                {s.name}
               </h3>
               <p className="max-w-md text-sm lg:text-lg tracking-wide leading-relaxed text-card/80 md:text-base">
-                {s.desc}
+                {s.shortDescription}
               </p>
             </div>
           );

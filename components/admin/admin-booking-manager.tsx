@@ -47,6 +47,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/toast";
+import { getServiceBySlug, getSubdivision } from "@/lib/services";
 
 export type Booking = {
   id: string;
@@ -54,6 +55,8 @@ export type Booking = {
   customer_email: string;
   customer_phone: string;
   services: string[];
+  service: string | null;
+  subdivision: string | null;
   project: string;
   quantity: string | null;
   preferred_date: string | null;
@@ -68,6 +71,12 @@ const STATUS_STYLES: Record<string, string> = {
   confirmed: "bg-emerald-50 text-emerald-700 border-emerald-100",
   cancelled: "bg-neutral-100 text-neutral-500 border-neutral-200",
 };
+
+function serviceLabel(b: Pick<Booking, "service" | "subdivision" | "services">) {
+  const service = b.service ? getServiceBySlug(b.service) : null;
+  const subdivision = b.service && b.subdivision ? getSubdivision(b.service, b.subdivision) : null;
+  return { service: service?.name ?? b.services[0] ?? "Not specified", subdivision: subdivision?.name ?? (b.subdivision || "Not specified") };
+}
 
 function normalizeBookings(rows: Booking[]): Booking[] {
   return rows.map((b) => ({
@@ -104,7 +113,9 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
       const matchesSearch =
         b.customer_name.toLowerCase().includes(q) ||
         b.customer_email.toLowerCase().includes(q) ||
-        b.project.toLowerCase().includes(q);
+        b.project.toLowerCase().includes(q) ||
+        serviceLabel(b).service.toLowerCase().includes(q) ||
+        serviceLabel(b).subdivision.toLowerCase().includes(q);
       const matchesStatus = statusFilter === "all" || b.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -218,16 +229,8 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
                   </TableCell>
                   <TableCell>
                     <div className="flex max-w-[220px] flex-wrap gap-1">
-                      {b.services.slice(0, 2).map((s) => (
-                        <Badge key={s} variant="secondary" className="font-normal">
-                          {s}
-                        </Badge>
-                      ))}
-                      {b.services.length > 2 && (
-                        <Badge variant="secondary" className="font-normal">
-                          +{b.services.length - 2}
-                        </Badge>
-                      )}
+                      <Badge variant="secondary" className="font-normal">{serviceLabel(b).service}</Badge>
+                      <Badge variant="outline" className="font-normal">{serviceLabel(b).subdivision}</Badge>
                     </div>
                   </TableCell>
                   <TableCell>
