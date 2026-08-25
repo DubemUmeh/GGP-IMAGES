@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer";
 import { z } from "zod";
 import { absoluteUrl, siteConfig } from "@/lib/seo";
+import { getServiceBySlug, getSubdivision } from "@/lib/services";
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -92,6 +93,8 @@ export const bookingSchema = z.object({
   services: z
     .array(z.string().trim().max(80))
     .min(1, "Select at least one service"),
+  service: z.string().trim().max(80).optional().default(""),
+  subdivision: z.string().trim().max(120).optional().default(""),
   projectName: z.string().trim().min(2).max(160),
   quantity: z.string().trim().max(40).optional().default(""),
   description: z.string().trim().max(5000).optional().default(""),
@@ -119,6 +122,8 @@ function designsBlock(urls: string[]) {
 export async function sendBookingEmails(payload: BookingPayload) {
   const transporter = await getTransporter();
   const services = payload.services.join(", ");
+  const serviceLabel = payload.service ? (getServiceBySlug(payload.service)?.name ?? payload.service) : services;
+  const subdivisionLabel = payload.service && payload.subdivision ? (getSubdivision(payload.service, payload.subdivision)?.name ?? payload.subdivision) : "Not specified";
 
   if (!transporter) {
     console.info(
@@ -139,6 +144,8 @@ export async function sendBookingEmails(payload: BookingPayload) {
       ["Email", payload.email],
       ["Phone", payload.phone],
       ["Services", services],
+      ["Primary service", serviceLabel || "Not specified"],
+      ["Subdivision", subdivisionLabel],
       ["Project", payload.projectName],
       ["Quantity", payload.quantity || "Not specified"],
       ["Preferred date", payload.date || "Not specified"],
@@ -156,7 +163,7 @@ export async function sendBookingEmails(payload: BookingPayload) {
     replyTo: payload.email,
     subject: `New booking: ${payload.projectName} (${payload.name})`,
     html: adminHtml,
-    text: `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nServices: ${services}\nProject: ${payload.projectName}\nQuantity: ${payload.quantity}\nDate: ${payload.date}\nTime: ${payload.time}\nDescription: ${payload.description}\nDesigns: ${payload.designUrls.join(", ") || "None"}`,
+    text: `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nServices: ${services}\nPrimary service: ${serviceLabel}\nSubdivision: ${subdivisionLabel}\nProject: ${payload.projectName}\nQuantity: ${payload.quantity}\nDate: ${payload.date}\nTime: ${payload.time}\nDescription: ${payload.description}\nDesigns: ${payload.designUrls.join(", ") || "None"}`,
   });
 
   await transporter.sendMail({
@@ -169,6 +176,8 @@ export async function sendBookingEmails(payload: BookingPayload) {
       `Hi ${payload.name}, thank you for booking with GGP Images. We're reviewing your project and will confirm shortly.`,
       [
         ["Services", services],
+        ["Primary service", serviceLabel || "Not specified"],
+        ["Subdivision", subdivisionLabel],
         ["Project", payload.projectName],
         [
           "What happens next",

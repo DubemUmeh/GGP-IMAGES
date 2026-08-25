@@ -6,8 +6,6 @@ import {
   CalendarDays,
   Clock3,
   Lock,
-  Upload,
-  X,
 } from "lucide-react";
 import { Feature, FormSection, SummaryRow, Reason, SuccessMessage } from "@/components/booking/ui";
 import { MultiSelectField } from "@/components/booking/multi-select";
@@ -15,24 +13,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiFileDropzone } from "@/components/booking/media-drop-zone";
+import { coreServices, flattenSubdivisions, getServiceByName, serviceOptions } from "@/lib/services";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const services = [
-  "Branding & Design",
-  "Printing Services",
-  "Uniforms & Apparel",
-  "Packaging",
-  "Promotional Items",
-  "Event Materials",
-  "Signage & Displays",
-  "Marketing Materials",
-  "Other / Custom Project",
-];
 
 const MAX_FILES = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
 
 export default function BookingPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [subdivision, setSubdivision] = useState("");
   const [form, setForm] = useState({
     projectName: "",
     quantity: "",
@@ -62,11 +52,18 @@ export default function BookingPage() {
       setError("Please select at least one service.");
       return;
     }
+    const primaryService = getServiceByName(selectedServices[0]);
+    if (primaryService && !subdivision) {
+      setError("Please select a subdivision for your primary service.");
+      return;
+    }
 
     setSubmitting(true);
     try {
       const body = new FormData();
       selectedServices.forEach((s) => body.append("services", s));
+      if (primaryService) body.append("service", primaryService.slug);
+      if (subdivision) body.append("subdivision", subdivision);
       Object.entries(form).forEach(([key, value]) => body.append(key, value));
       files.forEach((file) => body.append("designs", file));
 
@@ -141,9 +138,25 @@ export default function BookingPage() {
                     placeholder="Select one or more services"
                     values={selectedServices}
                     onChange={setSelectedServices}
-                    items={services}
+                    items={serviceOptions}
                   />
                 </div>
+
+                {selectedServices[0] && getServiceByName(selectedServices[0]) && (
+                  <div className="mb-8 flex flex-col gap-2">
+                    <Label htmlFor="subdivision">Primary Service Subdivision</Label>
+                    <Select value={subdivision} onValueChange={(value) => value && setSubdivision(value)}>
+                      <SelectTrigger id="subdivision" className="w-full bg-card">
+                        <SelectValue placeholder="Select subdivision" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {flattenSubdivisions(getServiceByName(selectedServices[0]) ?? coreServices[0]).map((item) => (
+                          <SelectItem key={item.slug} value={item.slug}>{item.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
 
                 <FormSection number="2" title="Project Details" />
 

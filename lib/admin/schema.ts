@@ -104,6 +104,8 @@ export const bookings = pgTable(
     customerEmail: text("customer_email").notNull(),
     customerPhone: text("customer_phone").notNull(),
     services: jsonb("services").$type<string[]>().notNull(),
+    service: text("service"),
+    subdivision: text("subdivision"),
     project: text("project").notNull(),
     quantity: text("quantity"),
     description: text("description"),

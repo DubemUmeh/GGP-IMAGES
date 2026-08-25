@@ -5,7 +5,7 @@ import { ServicesGrid } from "@/components/services/services-grid";
 import { QuoteCtaSection } from "@/components/services/quote-cta-section";
 
 
-export const metadata: Metadata = buildMetadata({ title: "Printing Services | GGP Images", description: "Explore commercial printing, large format signage, packaging, apparel, stationery, and promotional products from GGP Images.", path: "/services" });
+export const metadata: Metadata = buildMetadata({ title: "Core Services | GGP Images", description: "Explore Digital Printing, Textile Printing, Embroidery, Large Format Printing, Branding, and Visual Production from GGP Images.", path: "/services" });
 
 export default function ServicesPage() {
   return (

@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelectField } from "@/components/booking/multi-select";
+import { serviceOptions } from "@/lib/services";
 
 const highlights = [
   "Fast turnaround times available",
@@ -14,17 +15,6 @@ const highlights = [
   "Nationwide shipping",
 ];
 
-const serviceOptions = [
-  "Branding & Design",
-  "Printing Services",
-  "Uniforms & Apparel",
-  "Packaging",
-  "Promotional Items",
-  "Event Materials",
-  "Signage & Displays",
-  "Marketing Materials",
-  "Other / Custom Project",
-];
 
 export function QuoteCtaSection() {
   const [status, setStatus] = useState<string | null>(null);
