@@ -60,8 +60,8 @@ export function Navbar() {
           <Image 
             src='/ggp-2-no-bg.png' 
             alt="GGP Image Logo" 
-            priority 
-            width={150} 
+            priority
+            width={150}
             height={0}
             className="relative top-0 -left-8"
           />
@@ -122,7 +122,7 @@ export function Navbar() {
                 ))}
                 
                 <div className="w-fit">
-                  <ArrowCta as='link' label="Get A Quote" href="/contact" className="bg-secondary hover:bg-secondary/80" />
+                  <ArrowCta onClick={() => setOpen(false)} as='link' label="Get A Quote" href="/contact" className="bg-secondary hover:bg-secondary/80" />
                 </div>
               </div>
             </motion.nav>

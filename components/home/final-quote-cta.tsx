@@ -24,7 +24,7 @@ export function FinalQuoteCta() {
               <ArrowCta
                 label="Request a Free Quote"
                 as="link"
-                href="/quote"
+                href="/contact"
                 className="bg-secondary hover:bg-secondary/90 tracking-wide"
               />
               <div className="glass-panel flex items-center gap-2 rounded-full tracking-wide border border-white/20 px-5 py-3 text-xs text-white">

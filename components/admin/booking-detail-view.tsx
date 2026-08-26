@@ -24,7 +24,7 @@ type BookingRow = {
   customer_phone: string;
   services: string[];
   service: string | null;
-  subdivision: string | null;
+  subdivision: string[];
   project: string;
   quantity: string | null;
   description: string | null;
@@ -39,7 +39,9 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
   const [status, setStatus] = useState(booking.status);
   const [saving, setSaving] = useState(false);
   const serviceName = booking.service ? getServiceBySlug(booking.service)?.name : booking.services[0];
-  const subdivisionName = booking.service && booking.subdivision ? getSubdivision(booking.service, booking.subdivision)?.name : booking.subdivision;
+  const subdivisionNames = booking.service && booking.subdivision.length
+    ? booking.subdivision.map((slug) => getSubdivision(booking.service!, slug)?.name ?? slug)
+    : booking.subdivision;
 
   async function updateStatus(next: string) {
     setSaving(true);
@@ -85,7 +87,18 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
 
         <DetailSection title="Services">
           <DetailRow label="Service" value={serviceName || "Not specified"} />
-          <DetailRow label="Subdivision" value={subdivisionName || "Not specified"} />
+          {subdivisionNames.length > 0 ? (
+            <div className="flex items-center justify-between gap-4 text-sm">
+              <span className="text-muted-foreground">Subdivision</span>
+              <div className="flex flex-wrap justify-end gap-1.5">
+                {subdivisionNames.map((name) => (
+                  <Badge key={name} variant="secondary">{name}</Badge>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <DetailRow label="Subdivision" value="Not specified" />
+          )}
           {booking.services.length > 1 && <div className="flex flex-wrap gap-2">{booking.services.map((s) => <Badge key={s} variant="secondary">{s}</Badge>)}</div>}
         </DetailSection>
 

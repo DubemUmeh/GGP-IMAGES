@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "GGP Images",
   legalName: "GGP Image and Printing",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://ggpimages.com",
-  phone: "+233548844321",
+  phone: "+233559956394",
   email: "hello@ggpimages.com",
   logo: "/favicon_io/android-chrome-512x512.png",
   ogImage: "/favicon_io/android-chrome-512x512.png",
@@ -17,13 +17,14 @@ type SeoInput = {
   path?: string;
   keywords?: string[];
   type?: "website" | "article";
+  ogImage?: string;
 };
 
 export function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
-export function buildMetadata({ title, description, path = "/", keywords = [], type = "website" }: SeoInput): Metadata {
+export function buildMetadata({ title, description, path = "/", keywords = [], type = "website", ogImage = siteConfig.ogImage }: SeoInput): Metadata {
   const canonical = path === "/" ? "/" : path;
   return {
     title,
@@ -36,7 +37,7 @@ export function buildMetadata({ title, description, path = "/", keywords = [], t
       description,
       url: canonical,
       siteName: siteConfig.name,
-      images: [{ url: siteConfig.ogImage, width: 512, height: 512, alt: `${siteConfig.name} logo` }],
+      images: [{ url: ogImage, width: 512, height: 512, alt: `${siteConfig.name} logo` }],
       locale: "en_GH",
       type,
     },

@@ -10,7 +10,7 @@ type BookingRow = {
   customer_phone: string;
   services: string[];
   service: string | null;
-  subdivision: string | null;
+  subdivision: string[]; // now an array
   project: string;
   quantity: string | null;
   description: string | null;
@@ -53,6 +53,7 @@ export default async function BookingDetailPage({
   const booking: BookingRow = {
     ...row,
     services: toArray(row.services),
+    subdivision: toArray(row.subdivision),
     design_urls: toArray(row.design_urls),
   };
 

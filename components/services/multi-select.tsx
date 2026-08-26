@@ -91,13 +91,13 @@ export function MultiSelectField({
       {values.length > 0 && (
         <div className="flex flex-wrap gap-1.5">
           {values.map((v) => (
-            <Badge key={v} variant="secondary" className="gap-1.5 pr-1.5 rounded-lga text-popover text-sm">
+            <Badge key={v} variant="brand" className="gap-1.5 pr-1.5 rounded-lga text-popover text-sm">
               {v}
               <button
                 type="button"
                 onClick={() => toggle(v)}
                 aria-label={`Remove ${v}`}
-                className="text-muted-foreground transition-colors hover:text-foreground"
+                className="text-popover transition-colors hover:text-popover/90"
               >
                 <X className="h-3 w-3" />
               </button>

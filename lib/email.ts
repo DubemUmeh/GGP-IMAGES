@@ -94,7 +94,9 @@ export const bookingSchema = z.object({
     .array(z.string().trim().max(80))
     .min(1, "Select at least one service"),
   service: z.string().trim().max(80).optional().default(""),
-  subdivision: z.string().trim().max(120).optional().default(""),
+  subdivisions: z
+    .array(z.string().trim().max(120))
+    .min(1, "Select at least one subdivision"),
   projectName: z.string().trim().min(2).max(160),
   quantity: z.string().trim().max(40).optional().default(""),
   description: z.string().trim().max(5000).optional().default(""),
@@ -122,8 +124,15 @@ function designsBlock(urls: string[]) {
 export async function sendBookingEmails(payload: BookingPayload) {
   const transporter = await getTransporter();
   const services = payload.services.join(", ");
-  const serviceLabel = payload.service ? (getServiceBySlug(payload.service)?.name ?? payload.service) : services;
-  const subdivisionLabel = payload.service && payload.subdivision ? (getSubdivision(payload.service, payload.subdivision)?.name ?? payload.subdivision) : "Not specified";
+  const serviceLabel = payload.service
+    ? (getServiceBySlug(payload.service)?.name ?? payload.service)
+    : services;
+  const subdivisionLabel =
+    payload.service && payload.subdivisions.length
+      ? payload.subdivisions
+          .map((slug) => getSubdivision(payload.service, slug)?.name ?? slug)
+          .join(", ")
+      : "Not specified";
 
   if (!transporter) {
     console.info(

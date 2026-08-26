@@ -88,13 +88,13 @@ export default function BookingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#111]">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
+          className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{
             backgroundImage:
               "url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=80')",
           }}
         />
-        <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/40 to-black/40" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
           <div className="max-w-3xl">

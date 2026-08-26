@@ -38,7 +38,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="c-glass-panel relative overflow-hidden rounded-3xl p-8 md:p-12">
+    <div className="c-glass-panel relative overflow-hidden rounded-3xl p-4 md:p-12">
       <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-purple-fixed-dim opacity-20 blur-[80px]" />
       <h2 className="mb-8 text-2xl font-bold text-card">Send a Message</h2>
       <form className="space-y-6 text-card" onSubmit={handleSubmit}>

@@ -44,8 +44,8 @@ export function QuoteCtaSection() {
   }
 
   return (
-    <section className="mx-auto mb-16 max-w-7xl px-6 py-16">
-      <div className="relative overflow-hidden rounded-[32px] bg-brand-tertiary p-8 shadow-2xl md:p-12 lg:p-16">
+    <section className="mx-auto mb-16 max-w-7xl px-3 md:px-6 py-16">
+      <div className="relative overflow-hidden rounded-[32px] bg-brand-tertiary p-4 shadow-2xl md:p-12 lg:p-16">
         <div className="relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
@@ -66,7 +66,7 @@ export function QuoteCtaSection() {
             </div>
           </div>
 
-          <div className="glass-panel rounded-2xl p-6 md:p-8">
+          <div className="glass-panel rounded-2xl p-3 md:p-6 md:p-8">
             <h3 className="mb-6 text-xl font-semibold text-primary">Request a Custom Quote</h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

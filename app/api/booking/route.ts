@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import { bookingSchema, sendBookingEmails } from "@/lib/email";
 import { uploadToCloudinary } from "@/lib/admin/cloudinary";
 import { query } from "@/lib/admin/db";
-import { getServiceByName, getServiceBySlug, isValidServiceSubdivision } from "@/lib/services";
+import {
+  getServiceByName,
+  getServiceBySlug,
+  isValidServiceSubdivision,
+} from "@/lib/services";
 
 const MAX_FILES = 5;
 
@@ -29,7 +33,7 @@ export async function POST(request: Request) {
   const raw = {
     services: form.getAll("services").map(String),
     service: String(form.get("service") ?? ""),
-    subdivision: String(form.get("subdivision") ?? ""),
+    subdivisions: form.getAll("subdivisions").map(String),
     projectName: String(form.get("projectName") ?? ""),
     quantity: String(form.get("quantity") ?? ""),
     description: String(form.get("description") ?? ""),
@@ -52,14 +56,26 @@ export async function POST(request: Request) {
     );
   }
 
-
-  const selectedServiceSlug = parsedBase.data.service || getServiceByName(parsedBase.data.services[0])?.slug || getServiceBySlug(parsedBase.data.services[0])?.slug || "";
+  const selectedServiceSlug =
+    parsedBase.data.service ||
+    getServiceByName(parsedBase.data.services[0])?.slug ||
+    getServiceBySlug(parsedBase.data.services[0])?.slug ||
+    "";
   if (selectedServiceSlug) {
     if (!getServiceBySlug(selectedServiceSlug)) {
-      return NextResponse.json({ message: "Please select a valid service." }, { status: 400 });
+      return NextResponse.json(
+        { message: "Please select a valid service." },
+        { status: 400 },
+      );
     }
-    if (!parsedBase.data.subdivision || !isValidServiceSubdivision(selectedServiceSlug, parsedBase.data.subdivision)) {
-      return NextResponse.json({ message: "Please select a valid subdivision for this service." }, { status: 400 });
+    const invalidSubdivision = parsedBase.data.subdivisions.find(
+      (slug) => !isValidServiceSubdivision(selectedServiceSlug, slug),
+    );
+    if (invalidSubdivision) {
+      return NextResponse.json(
+        { message: "Please select valid subdivisions for this service." },
+        { status: 400 },
+      );
     }
   }
 
@@ -79,7 +95,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ message }, { status: 400 });
   }
 
-  const payload = { ...parsedBase.data, service: selectedServiceSlug, designUrls };
+  const payload = {
+    ...parsedBase.data,
+    service: selectedServiceSlug,
+    designUrls,
+  };
 
   try {
     await query(
@@ -94,7 +114,7 @@ export async function POST(request: Request) {
         payload.phone,
         JSON.stringify(payload.services),
         payload.service || null,
-        payload.subdivision || null,
+        JSON.stringify(payload.subdivisions),
         payload.projectName,
         payload.quantity || null,
         payload.description || null,
