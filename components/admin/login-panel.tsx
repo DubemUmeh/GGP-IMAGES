@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Lock, ShieldCheck } from "lucide-react";
+import { Lock, ShieldCheck, AlertTriangle } from "lucide-react";
 
 const STATS = [
   { value: "10+", label: "Years in print & branding" },
@@ -10,7 +10,20 @@ const STATS = [
   { value: "Takoradi", label: "Ghana, Western Region" },
 ];
 
-export function LoginPanel() {
+const ERROR_MESSAGES: Record<string, string> = {
+  unauthorized:
+    "That Google account isn't approved for admin access. Try a different account, or contact a GGP Images administrator to request access.",
+  email_unverified:
+    "That Google account's email isn't verified with Google, so we can't confirm your identity. Verify your email with Google, then try again.",
+  invalid_state:
+    "Your sign-in session expired or was invalid. Please try signing in again.",
+  auth_failed:
+    "Something went wrong while signing you in. Please try again in a moment.",
+};
+
+export function LoginPanel({ error }: { error?: string }) {
+  const errorMessage = error ? ERROR_MESSAGES[error] ?? ERROR_MESSAGES.auth_failed : null;
+
   return (
     <main className="flex min-h-screen w-full flex-col bg-card md:flex-row">
       {/* Branding panel */}
@@ -115,12 +128,19 @@ export function LoginPanel() {
             </p>
           </div>
 
+          {errorMessage && (
+            <div className="mb-6 flex items-start gap-2.5 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
+
           <a
             href="/api/auth/google"
             className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3.5 text-sm font-semibold text-neutral-800 shadow-sm transition-all hover:border-neutral-300 hover:shadow-md active:scale-[0.99]"
           >
             <GoogleMark className="h-5 w-5" />
-            Continue with Google
+            {errorMessage ? "Try again with Google" : "Continue with Google"}
           </a>
 
           <div className="mt-8 flex items-center gap-2 rounded-lg bg-muted px-4 py-3 text-base text-muted-foreground">
