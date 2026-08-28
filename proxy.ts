@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const isPaid = false;
+const isPaid = true;
 
 export function proxy(request: NextRequest) {
   if (!isPaid) {
