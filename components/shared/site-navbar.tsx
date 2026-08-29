@@ -50,20 +50,22 @@ const NavLink = ({ href, children }: NavType) => {
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
   return (
-    <header className="sticky top-0 z-100 w-full border-b border-brand-tertiary bg-popover backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-none items-center justify-between px-3">
+    <header className="sticky top-0 z-100 w-full border-b border-brand-tertiary/20 bg-background/90 backdrop-blur-md transition-all duration-300">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="group flex items-center"
+          className="group flex items-center transition-transform hover:scale-105"
         >
           <Image 
             src='/ggp-2-no-bg.png' 
-            alt="GGP Image Logo" 
+            alt="GGP Images Logo"
             priority
-            width={150}
-            height={0}
-            className="relative top-0 -left-8"
+            width={160}
+            height={48}
+            className="h-12 w-auto object-contain"
           />
         </Link>
 
@@ -109,20 +111,28 @@ export function Navbar() {
               transition={{ duration: 0.2, ease: "easeOut" }}
               className="absolute inset-x-0 top-full z-50 border-t border-border bg-background shadow-lg md:hidden"
             >
-              <div className="flex flex-col gap-1 px-6 py-6">
-                {links.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="rounded-xl px-4 py-3 font-medium text-muted-foreground transition-colors hover:bg-secondary/10 hover:text-secondary"
-                    onClick={() => setOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div className="flex flex-col gap-2 px-6 py-6">
+                {links.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className={cn(
+                        "rounded-xl px-4 py-3 text-base font-semibold transition-colors",
+                        isActive
+                          ? "bg-secondary/20 text-secondary"
+                          : "text-foreground/80 hover:bg-secondary/10 hover:text-secondary"
+                      )}
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
                 
-                <div className="w-fit">
-                  <ArrowCta onClick={() => setOpen(false)} as='link' label="Get A Quote" href="/contact" className="bg-secondary hover:bg-secondary/80" />
+                <div className="mt-2 w-full pt-2">
+                  <ArrowCta onClick={() => setOpen(false)} as='link' label="Get A Quote" href="/contact" className="w-full justify-center bg-secondary hover:bg-secondary/80 shadow-md" />
                 </div>
               </div>
             </motion.nav>

@@ -117,7 +117,7 @@ export function HeroSection() {
               </Button> */}
               <ArrowCta label="Explore Services" as="link" href="/services" className="bg-secondary hover:bg-secondary/90 hover:transition-colors hover:duration-150" />
 
-              <div className="glass-panel flex cursor-pointer items-center gap-4 rounded-full border border-white/40 p-3 transition-colors hover:border-secondary">
+              <div className="glass-panel flex cursor-pointer items-center gap-4 rounded-full border border-white/40 bg-black/40 px-4 py-2.5 backdrop-blur-md transition-colors hover:border-secondary">
                 <div className="flex -space-x-2">
                   <div className="z-30 h-8 w-8 rounded-full border-2 border-primary bg-brand-purple-fixed" />
                   <div className="z-20 h-8 w-8 rounded-full border-2 border-primary bg-brand-orange-fixed" />
@@ -131,7 +131,7 @@ export function HeroSection() {
                       <LuStar key={i} className="h-3.5 w-3.5 fill-current" />
                     ))}
                   </div>
-                  <span className="text-xs text-gray-800 font-semibold mt-0.5">Happy Clients</span>
+                  <span className="text-xs text-white font-semibold mt-0.5">Happy Clients</span>
                 </div>
               </div>
             </motion.div>
