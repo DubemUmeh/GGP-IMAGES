@@ -38,10 +38,10 @@ function MarqueeCard({ p }: { p: (typeof projects)[number] }) {
       />
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-black/40 transition-opacity duration-300 opacity-100" />
       <div className="absolute inset-x-0 bottom-0 p-4 transition-all duration-300 translate-y-0 opacity-100">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-white/70">
+        <p className="text-[10px] font-semibold font-inter uppercase tracking-widest text-white/70">
           {p.tag}
         </p>
-        <p className="mt-1 text-sm font-semibold tracking-wide text-white">{p.title}</p>
+        <p className="mt-1 text-sm font-semibold font-manrope tracking-wide text-white">{p.title}</p>
       </div>
     </div>
   );
@@ -78,18 +78,18 @@ export function FeaturedProjectsGallery() {
         <div className="flex flex-wrap px-3 md:px-10 items-end justify-between gap-6 pl-3">
           <div>
             <Reveal>
-              <div className="inline-flex items-center gap-2 rounded-full border border-background/15 bg-secondary px-4 py-2 text-xs font-semibold uppercase tracking-widest text-background/70">
+              <div className="inline-flex items-center gap-2 rounded-full border border-background/15 bg-secondary px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-background/70">
                 Our Work
               </div>
             </Reveal>
             <Reveal delay={0.08} className="mt-6 max-w-xl">
-              <h2 className="text-3xl font-extrabold leading-tight tracking-wide text-background md:text-5xl">
+              <h2 className="text-3xl font-extrabold font-manrope leading-tight tracking-wide text-background md:text-5xl">
                 A few things we&apos;ve printed lately.
               </h2>
             </Reveal>
           </div>
           <Reveal delay={0.12}>
-            <p className="max-w-sm md:max-w-md 2xl:max-w-lg text-sm lg:text-lg tracking-wider leading-relaxed text-background/80">
+            <p className="max-w-sm md:max-w-md 2xl:max-w-lg text-sm lg:text-lg font-inter tracking-wider leading-relaxed text-background/80">
               A small slice of recent work across textile, large format and
               branding jobs — every job below started as a quote request.
             </p>

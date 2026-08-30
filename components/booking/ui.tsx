@@ -14,8 +14,8 @@ function Feature({ icon, title, text }: { icon: React.ReactNode; title: string; 
         {icon}
       </div>
       <div>
-        <p className="text-sm font-bold text-white">{title}</p>
-        <p className="text-xs text-white/60">{text}</p>
+        <p className="text-sm font-bold font-manrope text-white">{title}</p>
+        <p className="text-xs font-inter text-white/60">{text}</p>
       </div>
     </div>
   );
@@ -24,10 +24,10 @@ function Feature({ icon, title, text }: { icon: React.ReactNode; title: string; 
 function FormSection({ number, title }: { number: string; title: string }) {
   return (
     <div className="mb-4 flex items-center gap-3">
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-bold font-manrope text-primary-foreground">
         {number}
       </span>
-      <h2 className="text-lg font-bold text-card-foreground">{title}</h2>
+      <h2 className="text-lg font-bold font-manrope text-card-foreground">{title}</h2>
     </div>
   );
 }
@@ -86,8 +86,8 @@ function Reason({ title, text }: { title: string; text: string }) {
     <div className="flex gap-3">
       <CheckCircle2 size={19} className="mt-0.5 shrink-0 text-secondary" />
       <div>
-        <h3 className="text-sm font-semibold text-card-foreground">{title}</h3>
-        <p className="mt-1 text-xs leading-5 text-muted-foreground">{text}</p>
+        <h3 className="text-sm font-semibold font-manrope text-card-foreground">{title}</h3>
+        <p className="mt-1 text-xs font-inter leading-5 text-muted-foreground">{text}</p>
       </div>
     </div>
   );
@@ -99,14 +99,14 @@ function SuccessMessage() {
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
         <CheckCircle2 size={32} />
       </div>
-      <h2 className="mt-6 text-2xl font-black text-card-foreground">Booking Request Received</h2>
-      <p className="mt-3 max-w-md text-sm leading-6 text-muted-foreground">
+      <h2 className="mt-6 text-2xl font-black font-manrope text-card-foreground">Booking Request Received</h2>
+      <p className="mt-3 max-w-md text-sm font-inter leading-6 text-muted-foreground">
         Thank you. GGP Images has received your request and will contact you to confirm the
         details and provide your final quotation.
       </p>
       <Link
         href="/"
-        className="mt-7 inline-flex items-center gap-2 rounded-lg bg-secondary px-6 py-3 text-sm font-semibold text-secondary-foreground transition-colors hover:bg-secondary/90"
+        className="mt-7 inline-flex items-center gap-2 rounded-lg bg-secondary px-6 py-3 text-sm font-semibold font-manrope text-secondary-foreground transition-colors hover:bg-secondary/90"
       >
         Back to Home
         <ArrowRight size={16} />

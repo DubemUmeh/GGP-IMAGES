@@ -62,20 +62,20 @@ export function ServiceHighlights() {
       <div className={BG_GLOW_LIGHT} />
       <div className="mx-auto w-[min(100%,76rem)]">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-secondary shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-secondary shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
             What We Do
           </div>
         </Reveal>
 
         <Reveal delay={0.08} className="mt-6 max-w-2xl">
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-brand-tertiary-foreground md:text-5xl">
+          <h2 className="text-3xl font-extrabold font-manrope leading-tight tracking-tight text-brand-tertiary-foreground md:text-5xl">
             Every printing need, handled{" "}
             <span className="text-secondary">under one roof.</span>
           </h2>
         </Reveal>
 
         <Reveal delay={0.14} className="mt-4 max-w-xl">
-          <p className="text-base leading-relaxed text-brand-tertiary-foreground/70">
+          <p className="text-base font-inter leading-relaxed text-brand-tertiary-foreground/70">
             From a single business card to a full site of scaffold wraps —
             our workshop covers textile, large format, digital and
             finishing work end to end.
@@ -102,10 +102,10 @@ export function ServiceHighlights() {
               <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-card text-secondary">
                 <Icon className="h-7 w-7" />
               </span>
-              <h3 className="text-2xl tracking-widest font-bold text-card md:text-4xl">
+              <h3 className="text-2xl tracking-widest font-bold font-manrope text-card md:text-4xl">
                 {s.name}
               </h3>
-              <p className="max-w-md text-sm lg:text-lg tracking-wide leading-relaxed text-card/80 md:text-base">
+              <p className="max-w-md text-sm lg:text-lg font-inter tracking-wide leading-relaxed text-card/80 md:text-base">
                 {s.shortDescription}
               </p>
             </div>

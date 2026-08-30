@@ -57,7 +57,7 @@ export function ArrowCta({
           </div>
         </div>
       </div>
-      <span className="text-base leading-[1.2] font-medium text-center text-white">
+      <span className="text-base leading-[1.2] font-semibold font-manrope text-center text-white">
         {label}
       </span>
     </>

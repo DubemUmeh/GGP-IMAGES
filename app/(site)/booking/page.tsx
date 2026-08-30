@@ -98,16 +98,16 @@ export default function BookingPage() {
 
         <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
           <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-secondary backdrop-blur-sm">
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-secondary backdrop-blur-sm">
               <span className="h-2 w-2 rounded-full bg-secondary" />
               Book an Order
             </span>
 
-            <h1 className="mt-6 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+            <h1 className="mt-6 text-4xl font-extrabold font-manrope leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
               Let&apos;s Bring Your <span className="text-secondary">Project to Life.</span>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-base font-inter leading-relaxed text-white/70 sm:text-lg">
               Schedule your order with ease. Choose your service, provide your project details,
               and we&apos;ll handle the rest.
             </p>
@@ -252,7 +252,7 @@ export default function BookingPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-secondary px-6 py-4 text-sm font-bold text-secondary-foreground shadow-[0_10px_30px_rgba(253,139,0,0.25)] transition-colors hover:bg-secondary/90 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-secondary px-6 py-4 text-sm font-bold font-manrope text-secondary-foreground shadow-[0_10px_30px_rgba(253,139,0,0.25)] transition-colors hover:bg-secondary/90 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {submitting ? "Booking..." : "Book Now"}
                     <ArrowRight size={17} />

@@ -12,10 +12,10 @@ export function Philosophy() {
     <section className="bg-popover py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-primary md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold font-manrope tracking-tight text-primary md:text-4xl">
             Our Core Philosophy
           </h2>
-          <p className="text-muted-foreground text-lg font-serif font-semibold tracking-wider">The principles that guide every cut, fold, and print.</p>
+          <p className="text-muted-foreground text-lg font-inter font-semibold tracking-wider">The principles that guide every cut, fold, and print.</p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -24,8 +24,8 @@ export function Philosophy() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-purple-fixed text-primary">
                 <LuFlag className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold tracking-wide text-primary">Our Mission</h3>
-              <p className="text-foreground text-base tracking-wide">
+              <h3 className="mb-3 text-xl font-semibold font-manrope tracking-wide text-primary">Our Mission</h3>
+              <p className="text-foreground text-base font-inter tracking-wide">
                 To empower businesses by translating their unique identity into flawless physical
                 materials that leave a lasting, premium impression.
               </p>
@@ -37,8 +37,8 @@ export function Philosophy() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
                 <LuEye className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold">Our Vision</h3>
-              <p className="text-primary-foreground/80">
+              <h3 className="mb-3 text-xl font-semibold font-manrope">Our Vision</h3>
+              <p className="text-primary-foreground/80 font-inter">
                 To be the global benchmark for creative printing and branding solutions, setting the
                 standard for quality, sustainability, and innovation.
               </p>
@@ -50,8 +50,8 @@ export function Philosophy() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-orange-fixed text-secondary-foreground">
                 <LuHeart className="h-6 w-6" />
               </div>
-              <h3 className="mb-3 text-xl font-semibold text-card">Our Values</h3>
-              <ul className="space-y-2 text-popover tracking-wide text-base">
+              <h3 className="mb-3 text-xl font-semibold font-manrope text-card">Our Values</h3>
+              <ul className="space-y-2 text-popover tracking-wide text-base font-inter">
                 {values.map((value) => (
                   <li key={value} className="flex items-center gap-2">
                     <LuCircleCheck className="h-4 w-4 text-secondary" />

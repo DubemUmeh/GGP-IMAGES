@@ -5,13 +5,13 @@ export function ContactHero() {
       <div className="absolute bottom-0 left-0 -z-10 h-150 w-150 translate-y-1/3 -translate-x-1/4 rounded-full bg-brand-orange-fixed opacity-30 blur-[100px]" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 text-center">
-        <span className="mb-6 inline-block rounded-full border border-border bg-muted px-4 py-1.5 text-sm text-primary shadow-sm">
+        <span className="mb-6 inline-block rounded-full border border-border bg-muted px-4 py-1.5 text-sm font-inter text-primary shadow-sm">
           Get In Touch
         </span>
-        <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-extrabold leading-tight tracking-tight text-card md:text-6xl">
+        <h1 className="mx-auto mb-6 max-w-4xl text-4xl font-extrabold font-manrope leading-tight tracking-tight text-card md:text-6xl">
           Let&apos;s Bring Your Brand to <span className="gradient-text">Life</span>.
         </h1>
-        <p className="mx-auto mb-10 max-w-2xl text-lg text-popover">
+        <p className="mx-auto mb-10 max-w-2xl text-lg font-inter text-popover">
           Ready to elevate your visual identity? We&apos;re here to help. Reach out with your
           project details, and our experts will craft a tailored solution.
         </p>

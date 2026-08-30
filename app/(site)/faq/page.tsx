@@ -25,21 +25,21 @@ export default function FaqPage() {
       <Breadcrumbs items={crumbs} />
       <section className="mx-auto max-w-5xl px-6 py-16">
         <div className="rounded-[2rem] bg-brand-tertiary p-8 text-center text-white shadow-2xl md:p-12">
-          <p className="mx-auto mb-4 w-fit rounded-full bg-secondary px-4 py-2 text-sm font-bold uppercase tracking-widest text-primary">Printing help center</p>
-          <h1 className="text-4xl font-black md:text-6xl">Frequently Asked Questions</h1>
-          <p className="mx-auto mt-5 max-w-2xl text-white/80">Straight answers about artwork, materials, turnaround, quotes, delivery, and professional printing with GGP Images.</p>
+          <p className="mx-auto mb-4 w-fit rounded-full bg-secondary px-4 py-2 text-sm font-bold font-inter uppercase tracking-widest text-primary">Printing help center</p>
+          <h1 className="text-4xl font-black font-manrope md:text-6xl">Frequently Asked Questions</h1>
+          <p className="mx-auto mt-5 max-w-2xl font-inter text-white/80">Straight answers about artwork, materials, turnaround, quotes, delivery, and professional printing with GGP Images.</p>
         </div>
         <div className="mt-10 space-y-4">
           {faqs.map((faq) => (
             <details key={faq.question} className="group rounded-2xl border border-brand-tertiary/20 bg-card p-6 shadow-sm">
-              <summary className="cursor-pointer text-lg font-bold text-brand-tertiary marker:text-secondary">{faq.question}</summary>
-              <p className="mt-4 leading-8 text-muted-foreground">{faq.answer}</p>
+              <summary className="cursor-pointer text-lg font-bold font-manrope text-brand-tertiary marker:text-secondary">{faq.question}</summary>
+              <p className="mt-4 font-inter leading-8 text-muted-foreground">{faq.answer}</p>
             </details>
           ))}
         </div>
         <div className="mt-10 rounded-3xl bg-secondary p-8 text-center text-primary">
-          <h2 className="text-2xl font-black">Still have questions?</h2>
-          <p className="mt-2">Send your project details and our team will guide you.</p>
+          <h2 className="text-2xl font-black font-manrope">Still have questions?</h2>
+          <p className="mt-2 font-inter">Send your project details and our team will guide you.</p>
           <ArrowCta label="Get in Touch" as="link" href="/contact" className="mt-5" />
         </div>
       </section>

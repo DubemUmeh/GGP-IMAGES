@@ -37,17 +37,17 @@ export function SiteFooter() {
         </Reveal>
 
         <Reveal delay={0.06}>
-          <h4 className="my-10 md:my-0 md:mb-5 text-sm font-semibold uppercase tracking-widest text-card/70">
+          <h4 className="my-10 md:my-0 md:mb-5 text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope">
             Quick Links
           </h4>
-          <ul className="space-y-3">
+          <ul className="space-y-3 font-inter">
             {quickLinks.map((link) => (
               <li key={link.label}>
                 <Link
                   href={link.href}
                   className="group inline-flex items-center text-card/90 transition-colors duration-200 hover:text-secondary"
                 >
-                  <span className="transition-transform duration-200 group-hover:translate-x-1 text- tracking-wide font-semibold font-sans">
+                  <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide font-semibold">
                     {link.label}
                   </span>
                 </Link>
@@ -57,10 +57,10 @@ export function SiteFooter() {
         </Reveal>
 
         <Reveal delay={0.12}>
-          <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70">
+          <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope">
             Contact Us
           </h4>
-          <ul className="space-y-4 text-base">
+          <ul className="space-y-4 text-base font-inter">
             <li className="flex items-start gap-3 text-card/90">
               <LuPhone className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
               <a href="tel:+233548844321" className="hover:underline underline-offset-3">+233 (54) 884 4321</a>
@@ -81,7 +81,7 @@ export function SiteFooter() {
         </Reveal>
 
         <Reveal delay={0.18}>
-          <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70">
+          <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope">
             Socials
           </h4>
           <div className="flex gap-3">

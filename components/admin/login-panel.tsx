@@ -64,14 +64,14 @@ export function LoginPanel({ error }: { error?: string }) {
             transition={{ duration: 0.7, delay: 0.15, ease: "easeOut" }}
             className="max-w-lg"
           >
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-secondary">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold font-manrope uppercase tracking-widest text-secondary">
               Admin Portal
             </span>
-            <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-card lg:text-5xl">
+            <h1 className="mt-6 text-4xl font-bold font-manrope leading-tight tracking-tight text-card lg:text-5xl">
               Where every project gets a{" "}
               <span className="text-secondary">craftsman&apos;s finish.</span>
             </h1>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-white/60">
+            <p className="mt-5 max-w-md text-lg font-inter leading-relaxed text-white/60">
               Manage the gallery, bookings, and site settings that keep GGP
               Images running, built for the team behind the work.
             </p>
@@ -85,8 +85,8 @@ export function LoginPanel({ error }: { error?: string }) {
           >
             {STATS.map((s) => (
               <div key={s.label}>
-                <p className="text-2xl font-bold text-card">{s.value}</p>
-                <p className="mt-1 text-base leading-snug text-white/50">
+                <p className="text-2xl font-bold font-manrope text-card">{s.value}</p>
+                <p className="mt-1 text-base font-inter leading-snug text-white/50">
                   {s.label}
                 </p>
               </div>
@@ -115,14 +115,14 @@ export function LoginPanel({ error }: { error?: string }) {
           </div>
 
           <div className="mb-8 text-center md:text-left">
-            <span className="inline-flex items-center gap-1.5 text-base font-semibold uppercase tracking-widest text-secondary">
+            <span className="inline-flex items-center gap-1.5 text-base font-semibold font-inter uppercase tracking-widest text-secondary">
               <Lock className="h-3 w-3" />
               Restricted access
             </span>
-            <h2 className="mt-3 text-4xl font-bold tracking-tight text-card-foreground">
+            <h2 className="mt-3 text-4xl font-bold font-manrope tracking-tight text-card-foreground">
               Welcome back
             </h2>
-            <p className="mt-2 text-base text-muted-foreground">
+            <p className="mt-2 text-base font-inter text-muted-foreground">
               Sign in with an approved Google administrator account to
               continue.
             </p>
@@ -137,7 +137,7 @@ export function LoginPanel({ error }: { error?: string }) {
 
           <a
             href="/api/auth/google"
-            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3.5 text-sm font-semibold text-neutral-800 shadow-sm transition-all hover:border-neutral-300 hover:shadow-md active:scale-[0.99]"
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-border bg-white px-5 py-3.5 text-sm font-semibold font-manrope text-neutral-800 shadow-sm transition-all hover:border-neutral-300 hover:shadow-md active:scale-[0.99]"
           >
             <GoogleMark className="h-5 w-5" />
             {errorMessage ? "Try again with Google" : "Continue with Google"}
