@@ -1,22 +1,31 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  /* ============================================================
+     Typography
+     Manrope = primary / brand / headings
+     Inter   = secondary / body / utility text
+     ============================================================ */
+  --font-sans: "Manrope", sans-serif;
   --font-manrope: "Manrope", sans-serif;
   --font-inter: "Inter", sans-serif;
+}
 
 @theme inline {
-  /* --- core shadcn tokens (this was missing — bg-primary etc. depend on it) --- */
+  /* --- typography aliases --- */
+  --font-heading: var(--font-manrope);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* --- core shadcn tokens --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -25,15 +34,18 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -46,6 +58,8 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+
+  /* --- radius --- */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -54,7 +68,7 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* --- brand-only tokens, e.g. bg-brand-tertiary --- */
+  /* --- brand-only tokens --- */
   --color-brand-tertiary: var(--brand-tertiary);
   --color-brand-tertiary-foreground: var(--brand-tertiary-foreground);
   --color-brand-purple-fixed: var(--brand-purple-fixed);
@@ -73,33 +87,36 @@
 
 :root {
   /* --- shadcn core tokens, remapped to the GGP palette --- */
-  --background: #f8f9fa;              /* was "surface" */
-  --foreground: #191c1d;              /* was "on-surface" */
-  --card: #ffffff;                    /* was "surface-container-lowest" */
+  --background: #f8f9fa;
+  --foreground: #191c1d;
+
+  --card: #ffffff;
   --card-foreground: #191c1d;
+
   --popover: #d4d4d4;
   --popover-foreground: #191c1d;
 
-  --primary: #0f0023;                 /* deep purple/near-black brand ink */
+  --primary: #0f0023;
   --primary-foreground: #ffffff;
 
-  --secondary: #fd6500;               /* signature orange accent */
+  --secondary: #fd6500;
   --secondary-foreground: #603100;
 
-  --muted: #edeeef;                   /* was "surface-container" */
-  --muted-foreground: #4a454f;        /* was "on-surface-variant" */
+  --muted: #edeeef;
+  --muted-foreground: #4a454f;
 
-  --accent: #eaddff;                  /* light lilac accent surface */
+  --accent: #eaddff;
   --accent-foreground: #25005a;
 
   --destructive: #ba1a1a;
-  --border: #ccc3d0;                  /* was "outline-variant" */
+
+  --border: #ccc3d0;
   --input: #ccc3d0;
   --ring: #fd8b00;
 
   --radius: 0.625rem;
 
-  /* --- sidebar (kept from the default scaffold — adjust if you use a sidebar) --- */
+  /* --- sidebar --- */
   --sidebar: #f8f9fa;
   --sidebar-foreground: #191c1d;
   --sidebar-primary: #0f0023;
@@ -109,58 +126,91 @@
   --sidebar-border: #ccc3d0;
   --sidebar-ring: #fd8b00;
 
-  /* --- chart palette (kept from the default scaffold) --- */
+  /* --- chart palette --- */
   --chart-1: #dab9ff;
   --chart-2: #fd8b00;
   --chart-3: #0f0023;
   --chart-4: #7c7480;
   --chart-5: #2d0d4f;
 
-  /* --- brand-only extension tokens (no shadcn equivalent) --- */
-  --brand-tertiary: #6b004d;              /* darkest ink, used for footer/CTA bg */
+  /* --- brand-only extension tokens --- */
+  --brand-tertiary: #6b004d;
   --brand-tertiary-foreground: #ffffff;
-  --brand-purple-fixed: #efdbff;          /* pale purple chip/badge bg */
+
+  --brand-purple-fixed: #efdbff;
   --brand-purple-fixed-dim: #dab9ff;
   --brand-purple-container: #2d0d4f;
-  --brand-orange-fixed: #ffdcc3;          /* pale orange chip/badge bg */
+
+  --brand-orange-fixed: #ffdcc3;
   --brand-orange-fixed-dim: #ffb77d;
+
   --brand-surface-container-low: #f3f4f5;
   --brand-surface-container: #edeeef;
   --brand-surface-container-high: #e7e8e9;
   --brand-surface-container-lowest: #ffffff;
   --brand-surface-dim: #d9dadb;
+
   --brand-outline: #7c7480;
   --brand-whatsapp: #25d366;
 
-  /* --- gradients, built from the tokens above --- */
-  --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--brand-purple-container) 100%);
-  --gradient-cta: linear-gradient(135deg, var(--brand-tertiary) 0%, var(--brand-purple-container) 100%);
-  --gradient-sunrise: linear-gradient(135deg, var(--secondary) 0%, var(--brand-orange-fixed) 100%);
-  --gradient-hero: linear-gradient(135deg, color-mix(in srgb, var(--brand-purple-fixed) 30%, transparent) 0%, color-mix(in srgb, var(--brand-orange-fixed) 30%, transparent) 100%);
+  /* --- gradients --- */
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--brand-purple-container) 100%
+  );
+
+  --gradient-cta: linear-gradient(
+    135deg,
+    var(--brand-tertiary) 0%,
+    var(--brand-purple-container) 100%
+  );
+
+  --gradient-sunrise: linear-gradient(
+    135deg,
+    var(--secondary) 0%,
+    var(--brand-orange-fixed) 100%
+  );
+
+  --gradient-hero: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--brand-purple-fixed) 30%, transparent) 0%,
+    color-mix(in srgb, var(--brand-orange-fixed) 30%, transparent) 100%
+  );
 }
 
-/* Dark mode isn't used on this site today — kept as a neutral fallback
-   so nothing breaks if .dark ever gets toggled on. Safe to delete this
-   block entirely if you're certain you'll never need it. */
+/* ============================================================
+   Dark mode
+   ============================================================ */
+
 .dark {
   --background: #191c1d;
   --foreground: #f8f9fa;
+
   --card: #2e3132;
   --card-foreground: #f8f9fa;
+
   --popover: #2e3132;
   --popover-foreground: #f8f9fa;
+
   --primary: #dab9ff;
   --primary-foreground: #0f0023;
+
   --secondary: #fd8b00;
   --secondary-foreground: #2f1500;
+
   --muted: #2e3132;
   --muted-foreground: #ccc3d0;
+
   --accent: #2a0064;
   --accent-foreground: #dab9ff;
+
   --destructive: #ffb4ab;
+
   --border: rgb(255 255 255 / 10%);
   --input: rgb(255 255 255 / 15%);
   --ring: #fd8b00;
+
   --sidebar: #191c1d;
   --sidebar-foreground: #f8f9fa;
   --sidebar-primary: #dab9ff;
@@ -171,23 +221,49 @@
   --sidebar-ring: #fd8b00;
 }
 
+/* ============================================================
+   Base
+   ============================================================ */
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+
   html {
     @apply font-sans;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
 /* ============================================================
-   Utility classes used across the GGP pages
+   Typography utilities
    ============================================================ */
 
-   @layer utilities {
+@layer utilities {
+  .font-manrope {
+    font-family: var(--font-manrope);
+  }
+
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+}
+
+/* ============================================================
+   Glass panels
+   ============================================================ */
+
+@layer utilities {
   .glass-panel {
     background: color-mix(in srgb, var(--popover) 50%, transparent);
     backdrop-filter: blur(12px);
@@ -217,7 +293,11 @@
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, var(--secondary) 0%, var(--brand-outline) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--secondary) 0%,
+      var(--brand-outline) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -239,24 +319,67 @@
     background-image: var(--gradient-hero);
   }
 
-
   .card-shadow {
     box-shadow: 0 4px 20px rgb(0 0 0 / 0.04);
   }
 }
 
-/* Masonry gallery grid */
+/* ============================================================
+   Masonry gallery grid
+   ============================================================ */
+
 .masonry-grid {
   column-count: 1;
   column-gap: 24px;
 }
+
 @media (min-width: 768px) {
-  .masonry-grid { column-count: 2; }
+  .masonry-grid {
+    column-count: 2;
+  }
 }
+
 @media (min-width: 1024px) {
-  .masonry-grid { column-count: 3; }
+  .masonry-grid {
+    column-count: 3;
+  }
 }
+
 .masonry-item {
   break-inside: avoid;
   margin-bottom: 24px;
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+
+@keyframes scroll-up-desktop {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scroll-down-desktop {
+  from {
+    transform: translateY(-50%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll-up-mobile {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
 }
