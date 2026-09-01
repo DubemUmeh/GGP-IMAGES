@@ -35,23 +35,23 @@ export async function VideoGallery() {
     <section className="relative h-full w-full overflow-hidden bg-secondary p-3 py-5">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-brand-tertiary bg-gradient-hero px-5 py-16 md:px-10 md:py-24">
         <div className="relative z-10 mx-auto mb-12 max-w-3xl text-center">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
+          <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm font-inter">
             <span className="h-2 w-2 rounded-full bg-secondary" />
             <span className="text-sm font-semibold tracking-wide text-muted-foreground">
               Our Work
             </span>
           </span>
-          <h2 className="mb-4 text-3xl font-bold tracking-wider text-card md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold font-manrope tracking-wider text-card md:text-4xl">
             Recent Projects
           </h2>
-          <p className="text-lg leading-8 tracking-wide text-popover">
+          <p className="text-lg font-inter leading-8 tracking-wide text-popover">
             A closer look at print, signage, apparel, and brand builds managed
             through the GGP Images gallery.
           </p>
         </div>
 
         {items.length === 0 ? (
-          <div className="relative z-10 rounded-2xl border-2 border-dashed border-white/30 bg-white/5 p-12 text-center">
+          <div className="relative z-10 rounded-2xl border-2 border-dashed border-white/30 bg-white/5 p-12 text-center font-inter">
             <p className="text-popover">No published gallery items yet.</p>
           </div>
         ) : (
@@ -63,7 +63,7 @@ export async function VideoGallery() {
                   key={item.id}
                   className="card-shadow group flex flex-col overflow-hidden rounded-2xl border-2 border-secondary bg-card p-4 transition-transform duration-300 hover:-translate-y-2"
                 >
-                  <Badge className="mb-3 w-fit rounded-full bg-secondary text-secondary-foreground hover:bg-secondary">
+                  <Badge className="mb-3 w-fit rounded-full bg-secondary text-secondary-foreground hover:bg-secondary font-manrope">
                     {isImage ? 'Project Image' : 'Project Video'}
                   </Badge>
                   <a
@@ -93,11 +93,11 @@ export async function VideoGallery() {
                       />
                     )}
                   </a>
-                  <h3 className="mt-3 font-semibold text-card-foreground">
+                  <h3 className="mt-3 font-semibold font-manrope text-card-foreground">
                     {item.title}
                   </h3>
                   {item.description && (
-                    <p className="mt-1 line-clamp-2 text-sm text-card-foreground/70">
+                    <p className="mt-1 line-clamp-2 text-sm font-inter text-card-foreground/70">
                       {item.description}
                     </p>
                   )}

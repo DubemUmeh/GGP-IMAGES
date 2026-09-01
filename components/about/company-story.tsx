@@ -15,25 +15,23 @@ export function CompanyStory() {
             />
             <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
-              <div className="mb-2 text-2xl font-semibold">Innovation meets Tradition</div>
-              <div className="text-white/90">Crafting visual identities since 2010.</div>
+              <div className="mb-2 text-2xl font-semibold font-manrope">Innovation meets Tradition</div>
+              <div className="text-white/90 font-inter">Crafting visual identities since 2010.</div>
             </div>
           </div>
 
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold tracking-wide text-brand-tertiary md:text-4xl">
+            <h2 className="text-3xl font-bold font-manrope tracking-wide text-brand-tertiary md:text-4xl">
               A Decade of Visual Excellence
             </h2>
-            <div className="space-y-6 bg-brand-tertiary/80 p-4 rounded-2xl">
-              <p className="text-card tracking-wider font-normal leadi8">
-
+            <div className="space-y-6 bg-brand-tertiary/80 p-4 rounded-2xl font-inter">
+              <p className="text-card tracking-wider font-normal leading-8">
                 Founded on the belief that physical touchpoints matter more than ever in a digital
                 world, GGP Images started as a small boutique print shop. Today, we stand as a
                 comprehensive branding powerhouse, seamlessly blending high-end creative agency
                 aesthetics with industrial precision.
               </p>
-              <p className="text-card tracking-wider font-normal leadi8">
-
+              <p className="text-card tracking-wider font-normal leading-8">
                 Our state-of-the-art facility is equipped with the latest in print technology,
                 allowing us to deliver everything from intricate business stationery to massive
                 environmental graphics. We don&apos;t just print; we engineer tangible brand
@@ -42,12 +40,12 @@ export function CompanyStory() {
             </div>
             <div className="grid grid-cols-2 gap-6 border-t border-border pt-6">
               <div>
-                <div className="mb-1 text-3xl font-bold text-brand-tertiary">500+</div>
-                <div className="text-sm text-card tracking-widest font-semibold">Brands Trusted</div>
+                <div className="mb-1 text-3xl font-bold font-manrope text-brand-tertiary">500+</div>
+                <div className="text-sm font-inter text-card tracking-widest font-semibold">Brands Trusted</div>
               </div>
               <div>
-                <div className="mb-1 text-3xl font-bold text-brand-tertiary">1M+</div>
-                <div className="text-sm text-card tracking-widest font-semibold">Prints Delivered</div>
+                <div className="mb-1 text-3xl font-bold font-manrope text-brand-tertiary">1M+</div>
+                <div className="text-sm font-inter text-card tracking-widest font-semibold">Prints Delivered</div>
               </div>
             </div>
             <ArrowCta as="link" label="View Our Work" href="/gallery" className="tracking-wide bg-brand-tertiary hover:bg-brand-tertiary/80" />

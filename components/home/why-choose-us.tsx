@@ -48,12 +48,12 @@ export function WhyChooseUs() {
     <section className="relative bg-popover px-5 py-20 md:px-10 md:py-28">
       <div className="mx-auto w-[min(100%,76rem)]">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-muted-foreground shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
             Why GGP
           </div>
         </Reveal>
         <Reveal delay={0.08} className="mt-6 max-w-xl">
-          <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-foreground md:text-5xl">
+          <h2 className="text-3xl font-extrabold font-manrope leading-tight tracking-tight text-foreground md:text-5xl">
             Why businesses keep coming back.
           </h2>
         </Reveal>
@@ -67,8 +67,8 @@ export function WhyChooseUs() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-brand-purple-fixed/60 text-primary">
                     <Icon className="h-4.5 w-4.5" />
                   </span>
-                  <h3 className="font-semibold text-card-foreground">{r.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{r.desc}</p>
+                  <h3 className="font-semibold font-manrope text-card-foreground">{r.title}</h3>
+                  <p className="text-sm font-inter leading-relaxed text-muted-foreground">{r.desc}</p>
                 </div>
               </Reveal>
             );

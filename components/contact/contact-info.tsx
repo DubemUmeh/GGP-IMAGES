@@ -40,10 +40,10 @@ export function ContactInfo() {
               <Icon className={`h-5 w-5 ${iconColor}`} />
             </div>
             <div>
-              <h3 className="mb-1 text-lg font-semibold text-card tracking-wider">{title}</h3>
-              <p className="mb-2 text-popover tracking-wide">{title === 'Visit Studio' ? <a href={action.href} className="hover:underline underline-offset-2">{description}</a> : description}</p>
+              <h3 className="mb-1 text-lg font-semibold font-manrope text-card tracking-wider">{title}</h3>
+              <p className="mb-2 text-popover font-inter tracking-wide">{title === 'Visit Studio' ? <a href={action.href} className="hover:underline underline-offset-2">{description}</a> : description}</p>
               {action && (
-                <a href={action.href} className="text-sm font-semibold tracking-widest text-card hover:underline underline-offset-2">
+                <a href={action.href} className="text-sm font-semibold font-inter tracking-widest text-card hover:underline underline-offset-2">
                   {action.label}
                 </a>
               )}

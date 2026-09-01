@@ -69,10 +69,10 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
     <div id="book" className="rounded-[32px] border border-white/10 bg-card p-4 md:p-6 shadow-secondary shadow-sm md:p-8">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-bold uppercase tracking-widest text-secondary">Book this service</p>
-          <h2 className="mt-2 text-2xl font-black tracking-wide text-card-foreground">Request {service.name}</h2>
+          <p className="text-sm font-bold font-manrope uppercase tracking-widest text-secondary">Book this service</p>
+          <h2 className="mt-2 text-2xl font-black font-manrope tracking-wide text-card-foreground">Request {service.name}</h2>
         </div>
-        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-xl bg-whatsapp px-4 py-2 font-semibold text-white hover:bg-whatsapp/90"><FaWhatsapp className="mr-2" /> WhatsApp</a>
+        <a href={whatsappUrl} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center rounded-xl bg-whatsapp px-4 py-2 font-semibold font-manrope text-white hover:bg-whatsapp/90"><FaWhatsapp className="mr-2" /> WhatsApp</a>
       </div>
       <form className="grid gap-5" onSubmit={handleSubmit}>
         <div className="grid gap-5 md:grid-cols-2">
@@ -98,8 +98,8 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
         </div>
         <Input name="projectName" className="text-black text-base tracking-wide" placeholder="Project name" value={form.projectName} onChange={updateField} required />
         <Textarea name="description" className="text-black text-base tracking-wide" placeholder="Tell us about sizes, materials, deadline, artwork, and delivery needs..." rows={5} value={form.description} onChange={updateField} />
-        <button disabled={pending} className="rounded-xl bg-primary py-4 font-semibold text-primary-foreground hover:bg-brand-purple-container disabled:opacity-60">{pending ? "Sending..." : "Submit booking request"}</button>
-        {status && <p className="text-sm font-semibold text-card-foreground" aria-live="polite">{status}</p>}
+        <button disabled={pending} className="rounded-xl bg-primary py-4 font-semibold font-manrope text-primary-foreground hover:bg-brand-purple-container disabled:opacity-60">{pending ? "Sending..." : "Submit booking request"}</button>
+        {status && <p className="text-sm font-semibold font-inter text-card-foreground" aria-live="polite">{status}</p>}
       </form>
     </div>
   );

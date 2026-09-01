@@ -32,10 +32,10 @@ export function Team() {
     <section className="bg-popover py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight text-primary md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold font-manrope tracking-tight text-primary md:text-4xl">
             The Craftspeople
           </h2>
-          <p className="text-brand-tertiary text-[20px] md:text-lg tracking-wide leading-8">
+          <p className="text-brand-tertiary text-[20px] md:text-lg font-inter tracking-wide leading-8">
             Meet the dedicated team turning your concepts into tangible masterpieces.
           </p>
         </div>
@@ -53,8 +53,8 @@ export function Team() {
               </div>
               <div className="absolute inset-0 bg-linear-to-t from-brand-tertiary/90 via-braterfrom-brand-tertiary/20 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-100" />
               <div className="team-glass-panel absolute bottom-0 left-0 w-full translate-y-4 rounded-b-2xl p-6 transition-transform duration-300 group-hover:translate-y-0">
-                <div className="mb-1 text-xl font-semibold text-card">{member.name}</div>
-                <div className="text-xs uppercase tracking-widest text-card/70">{member.role}</div>
+                <div className="mb-1 text-xl font-semibold font-manrope text-card">{member.name}</div>
+                <div className="text-xs uppercase font-inter tracking-widest text-card/70">{member.role}</div>
               </div>
             </div>
           ))}

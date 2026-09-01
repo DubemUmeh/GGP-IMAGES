@@ -70,7 +70,7 @@ export function HeroSection() {
               initial="hidden"
               animate="show"
               variants={wordContainer}
-              className="mb-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-primary-foreground md:text-7xl"
+              className="mb-6 text-5xl font-extrabold font-manrope leading-[1.05] tracking-tight text-primary-foreground md:text-7xl"
             >
               {HEADLINE.map((word, i) => (
                 <span key={i} className="mr-4 inline-block overflow-hidden align-top">
@@ -92,7 +92,7 @@ export function HeroSection() {
               initial="hidden"
               animate="show"
               variants={fadeUp(0.9)}
-              className="mb-8 max-w-lg text-lg leading-relaxed text-white/90"
+              className="mb-8 max-w-lg text-lg font-inter leading-relaxed text-white/90"
             >
               Transforming brands and supporting startups from scratch with high-end, precise
               printing solutions.
@@ -121,11 +121,11 @@ export function HeroSection() {
                 <div className="flex -space-x-2">
                   <div className="z-30 h-8 w-8 rounded-full border-2 border-primary bg-brand-purple-fixed" />
                   <div className="z-20 h-8 w-8 rounded-full border-2 border-primary bg-brand-orange-fixed" />
-                  <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-brand-purple-fixed-dim text-xs tracking-tighter font-bold text-primary">
+                  <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-brand-purple-fixed-dim text-xs tracking-tighter font-bold font-manrope text-primary">
                     +1k
                   </div>
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col font-inter">
                   <div className="flex items-center gap-1 text-secondary">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <LuStar key={i} className="h-3.5 w-3.5 fill-current" />
@@ -146,7 +146,7 @@ export function HeroSection() {
               {badges.map((b) => (
                 <span
                   key={b}
-                  className="text-[10px] font-semibold uppercase tracking-widest text-white/60"
+                  className="text-[10px] font-semibold font-inter uppercase tracking-widest text-white/60"
                 >
                   {b}
                 </span>

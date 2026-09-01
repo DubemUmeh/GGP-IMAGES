@@ -11,10 +11,10 @@ export function FinalQuoteCta() {
         <div className="relative overflow-hidden rounded-[2rem] bg-brand-tertiary px-8 py-14 text-center md:px-16 md:py-20">
           <div className={BG_GLOW_DARK} />
           <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-5">
-            <h2 className="text-2xl font-extrabold leading-tight tracking-tight text-primary-foreground md:text-4xl">
+            <h2 className="text-2xl font-extrabold font-manrope leading-tight tracking-tight text-primary-foreground md:text-4xl">
               What will your job cost? Honestly — it depends.
             </h2>
-            <p className="text-base leading-relaxed text-white/70">
+            <p className="text-base font-inter leading-relaxed text-white/70">
               Material, quantity, finishing and turnaround all move the
               price, so we don&apos;t quote off a price list — we quote off
               your actual job. Tell us what you need and we&apos;ll come
@@ -27,7 +27,7 @@ export function FinalQuoteCta() {
                 href="/contact"
                 className="bg-secondary hover:bg-secondary/90 tracking-wide"
               />
-              <div className="glass-panel flex items-center gap-2 rounded-full tracking-wide border border-white/20 px-5 py-3 text-xs text-white">
+              <div className="glass-panel flex items-center gap-2 rounded-full font-inter tracking-wide border border-white/20 px-5 py-3 text-xs text-white">
                 <LuInfo className="h-3.5 w-3.5" />
                 No obligation, ever.
               </div>

@@ -43,7 +43,7 @@ export default function NotFound() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative select-none text-[6rem] font-black leading-none tracking-tight text-card sm:text-[9rem] md:text-[11rem]"
+            className="relative select-none text-[6rem] font-black font-manrope leading-none tracking-tight text-card sm:text-[9rem] md:text-[11rem]"
           >
             <span
               aria-hidden
@@ -62,10 +62,10 @@ export default function NotFound() {
             <span className="relative">404</span>
           </motion.h1>
 
-          <h2 className="mt-4 max-w-2xl text-2xl font-extrabold leading-tight tracking-tight text-card md:text-4xl">
+          <h2 className="mt-4 max-w-2xl text-2xl font-extrabold font-manrope leading-tight tracking-tight text-card md:text-4xl">
             This page didn&apos;t come off the press.
           </h2>
-          <p className="mb-8 mt-4 max-w-lg text-lg text-popover">
+          <p className="mb-8 mt-4 max-w-lg text-lg font-inter text-popover">
             The page you&apos;re looking for got lost somewhere between the design file
             and the final print. Let&apos;s get you back on track.
           </p>
@@ -79,7 +79,7 @@ export default function NotFound() {
 
           {/* quick links */}
           <div className="mt-16 w-full max-w-3xl rounded-[32px] bg-white/10 p-6 text-left backdrop-blur-sm md:p-8">
-            <div className="mb-6 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-popover">
+            <div className="mb-6 flex items-center gap-2 text-sm font-bold font-inter uppercase tracking-widest text-popover">
               <LuGhost className="h-4 w-4" />
               Where you might have meant to go
             </div>
@@ -93,7 +93,7 @@ export default function NotFound() {
                 >
                   <Link
                     href={link.href}
-                    className="group flex items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-card transition-colors hover:bg-secondary hover:text-primary"
+                    className="group flex items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold font-manrope text-card transition-colors hover:bg-secondary hover:text-primary"
                   >
                     {link.label}
                     <LuArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" />

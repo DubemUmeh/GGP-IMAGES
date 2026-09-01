@@ -76,10 +76,10 @@ export function AdminDashboard({
           <LayoutDashboard className="h-5.5 w-5.5" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+          <h1 className="text-2xl font-bold font-manrope tracking-tight sm:text-3xl">
             Welcome back, {adminName.split(" ")[0]}
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm font-inter text-muted-foreground">
             Here&apos;s how the site is doing right now.
           </p>
         </div>
@@ -266,9 +266,9 @@ function StatCard({
           <Icon className="h-5.5 w-5.5" />
         </div>
         <div>
-          <p className="text-sm font-medium text-muted-foreground">{label}</p>
-          <p className="text-2xl font-bold tracking-tight">{value}</p>
-          <p className="text-xs text-muted-foreground">{description}</p>
+          <p className="text-sm font-medium font-inter text-muted-foreground">{label}</p>
+          <p className="text-2xl font-bold font-manrope tracking-tight">{value}</p>
+          <p className="text-xs font-inter text-muted-foreground">{description}</p>
         </div>
       </CardContent>
     </Card>
