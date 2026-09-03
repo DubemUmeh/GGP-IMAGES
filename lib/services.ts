@@ -246,3 +246,32 @@ export function isValidServiceSubdivision(
 ) {
   return Boolean(getSubdivision(serviceSlug, subdivisionSlug));
 }
+
+export const SUBDIVISION_KEY_SEPARATOR = ":::";
+
+export function buildSubdivisionKey(
+  serviceSlug: string,
+  subdivisionSlug: string,
+) {
+  return `${serviceSlug}${SUBDIVISION_KEY_SEPARATOR}${subdivisionSlug}`;
+}
+
+export function parseSubdivisionKey(
+  key: string,
+): { serviceSlug: string; subdivisionSlug: string } | null {
+  const [serviceSlug, subdivisionSlug] = key.split(SUBDIVISION_KEY_SEPARATOR);
+  if (!serviceSlug || !subdivisionSlug) return null;
+  return { serviceSlug, subdivisionSlug };
+}
+
+export function resolveSubdivisionKey(key: string) {
+  const parsed = parseSubdivisionKey(key);
+  if (!parsed) return null;
+  const service = getServiceBySlug(parsed.serviceSlug);
+  const subdivision = getSubdivision(
+    parsed.serviceSlug,
+    parsed.subdivisionSlug,
+  );
+  if (!service || !subdivision) return null;
+  return { service, subdivision };
+}

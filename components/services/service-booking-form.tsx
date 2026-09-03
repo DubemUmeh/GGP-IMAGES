@@ -7,8 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelectField } from "./multi-select";
 import type { CoreService } from "@/lib/services";
-import { flattenSubdivisions } from "@/lib/services";
+import { flattenSubdivisions, buildSubdivisionKey } from "@/lib/services";
 import { siteConfig } from "@/lib/seo";
+import { todayUTCDateString } from "@/lib/date";
 
 export function ServiceBookingForm({ service }: { service: CoreService }) {
   const subdivisions = useMemo(() => flattenSubdivisions(service), [service]);
@@ -42,8 +43,9 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
     setPending(true);
     const body = new FormData();
     body.append("services", service.name);
-    body.append("service", service.slug);
-    selectedSubdivisions.forEach((slug) => body.append("subdivisions", slug));
+    selectedSubdivisions.forEach((slug) =>
+      body.append("subdivisions", buildSubdivisionKey(service.slug, slug))
+    );
     Object.entries(form).forEach(([key, value]) => body.append(key, value));
     const response = await fetch("/api/booking", { method: "POST", body });
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
@@ -94,7 +96,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
           <Input name="phone" placeholder="Phone / WhatsApp number" value={form.phone} onChange={updateField} required />
           <Input name="quantity" placeholder="Quantity (optional)" value={form.quantity} onChange={updateField} />
           <Input name="date" type="date" value={form.date} onChange={updateField} />
-          <Input name="time" type="time" value={form.time} onChange={updateField} />
+          <Input name="time" type="time" value={form.time} onChange={updateField} isToday={form.date === todayUTCDateString()} />
         </div>
         <Input name="projectName" className="text-black text-base tracking-wide" placeholder="Project name" value={form.projectName} onChange={updateField} required />
         <Textarea name="description" className="text-black text-base tracking-wide" placeholder="Tell us about sizes, materials, deadline, artwork, and delivery needs..." rows={5} value={form.description} onChange={updateField} />

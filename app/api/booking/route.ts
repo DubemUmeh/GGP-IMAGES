@@ -2,11 +2,7 @@ import { NextResponse } from "next/server";
 import { bookingSchema, sendBookingEmails } from "@/lib/email";
 import { uploadToCloudinary } from "@/lib/admin/cloudinary";
 import { query } from "@/lib/admin/db";
-import {
-  getServiceByName,
-  getServiceBySlug,
-  isValidServiceSubdivision,
-} from "@/lib/services";
+import { resolveSubdivisionKey } from "@/lib/services";
 
 const MAX_FILES = 5;
 
@@ -32,7 +28,6 @@ export async function POST(request: Request) {
 
   const raw = {
     services: form.getAll("services").map(String),
-    service: String(form.get("service") ?? ""),
     subdivisions: form.getAll("subdivisions").map(String),
     projectName: String(form.get("projectName") ?? ""),
     quantity: String(form.get("quantity") ?? ""),
@@ -56,28 +51,24 @@ export async function POST(request: Request) {
     );
   }
 
-  const selectedServiceSlug =
-    parsedBase.data.service ||
-    getServiceByName(parsedBase.data.services[0])?.slug ||
-    getServiceBySlug(parsedBase.data.services[0])?.slug ||
-    "";
-  if (selectedServiceSlug) {
-    if (!getServiceBySlug(selectedServiceSlug)) {
-      return NextResponse.json(
-        { message: "Please select a valid service." },
-        { status: 400 },
-      );
-    }
-    const invalidSubdivision = parsedBase.data.subdivisions.find(
-      (slug) => !isValidServiceSubdivision(selectedServiceSlug, slug),
+  // Each subdivision key is "serviceSlug:::subdivisionSlug" — validate every
+  // one against its own service, since a single booking can now span
+  // multiple core services rather than assuming one primary service.
+  const invalidSubdivision = parsedBase.data.subdivisions.find(
+    (key) => !resolveSubdivisionKey(key),
+  );
+  if (invalidSubdivision) {
+    return NextResponse.json(
+      { message: "Please select valid subdivisions for your chosen services." },
+      { status: 400 },
     );
-    if (invalidSubdivision) {
-      return NextResponse.json(
-        { message: "Please select valid subdivisions for this service." },
-        { status: 400 },
-      );
-    }
   }
+
+  // Kept for the `service` column / back-compat display only — full detail
+  // for every service+subdivision pair lives in the subdivisions array.
+  const primaryServiceSlug =
+    resolveSubdivisionKey(parsedBase.data.subdivisions[0])?.service.slug ??
+    null;
 
   let designUrls: string[] = [];
   try {
@@ -97,7 +88,6 @@ export async function POST(request: Request) {
 
   const payload = {
     ...parsedBase.data,
-    service: selectedServiceSlug,
     designUrls,
   };
 
@@ -113,7 +103,7 @@ export async function POST(request: Request) {
         payload.email,
         payload.phone,
         JSON.stringify(payload.services),
-        payload.service || null,
+        primaryServiceSlug,
         JSON.stringify(payload.subdivisions),
         payload.projectName,
         payload.quantity || null,

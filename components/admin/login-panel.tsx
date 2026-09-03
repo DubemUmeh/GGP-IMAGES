@@ -143,10 +143,9 @@ export function LoginPanel({ error }: { error?: string }) {
             {errorMessage ? "Try again with Google" : "Continue with Google"}
           </a>
 
-          <div className="mt-8 flex items-center gap-2 rounded-lg bg-muted px-4 py-3 text-base text-muted-foreground">
+          <div className="mt-8 flex items-center gap-2 rounded-lg bg-muted px-4 py-3 text-sm md:text-base text-muted-foreground">
             <ShieldCheck className="h-4 w-4 shrink-0 text-secondary" />
-            Access is limited to accounts approved by GGP Images
-            administrators.
+            Access is limited to GGP approved Accounts.
           </div>
         </motion.div>
       </div>

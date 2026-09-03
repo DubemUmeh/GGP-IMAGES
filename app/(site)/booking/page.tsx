@@ -1,6 +1,7 @@
 "use client";
 
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import Image from "next/image";
 import {
   ArrowRight,
   CalendarDays,
@@ -9,20 +10,20 @@ import {
 } from "lucide-react";
 import { Feature, FormSection, SummaryRow, Reason, SuccessMessage } from "@/components/booking/ui";
 import { MultiSelectField } from "@/components/booking/multi-select";
+import { GroupedMultiSelectField, type OptionGroup } from "@/components/booking/grouped-multi-select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiFileDropzone } from "@/components/booking/media-drop-zone";
-import { coreServices, flattenSubdivisions, getServiceByName, serviceOptions } from "@/lib/services";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
+import { flattenSubdivisions, getServiceByName, serviceOptions, buildSubdivisionKey, parseSubdivisionKey } from "@/lib/services";
+import { todayUTCDateString } from "@/lib/date";
 
 const MAX_FILES = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
 
 export default function BookingPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [subdivision, setSubdivision] = useState("");
+  const [selectedSubdivisions, setSelectedSubdivisions] = useState<string[]>([]);
   const [form, setForm] = useState({
     projectName: "",
     quantity: "",
@@ -40,6 +41,46 @@ export default function BookingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // One group per selected core service. GroupedMultiSelectField shows a
+  // service heading per group when there's more than one service selected,
+  // and falls back to a flat subdivision list when there's just one.
+  const subdivisionGroups: OptionGroup[] = useMemo(
+    () =>
+      selectedServices
+        .map((name) => getServiceByName(name))
+        .filter((service) => Boolean(service))
+        .map((service) => {
+          const slug: string = service!.slug;
+          return {
+            key: slug,
+            label: service!.name,
+            items: flattenSubdivisions(service!).map((sub) => ({
+              value: buildSubdivisionKey(slug, sub.slug),
+              label: sub.name,
+            })),
+          };
+        }),
+    [selectedServices]
+  );
+
+  // Drop any selected subdivisions that belonged to a service the user has
+  // since deselected, so stale selections can't linger and get submitted.
+  function handleServicesChange(names: string[]) {
+    setSelectedServices(names);
+    setSelectedSubdivisions((current) => {
+      const stillSelectedServiceSlugs = new Set<string>(
+        names
+          .map((n) => getServiceByName(n)?.slug)
+          .filter((s): s is NonNullable<typeof s> => Boolean(s))
+          .map((s) => String(s))
+      );
+      return current.filter((key) => {
+        const parsed = parseSubdivisionKey(key);
+        return parsed && stillSelectedServiceSlugs.has(parsed.serviceSlug);
+      });
+    });
+  }
+
   function updateField(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
   }
@@ -52,9 +93,8 @@ export default function BookingPage() {
       setError("Please select at least one service.");
       return;
     }
-    const primaryService = getServiceByName(selectedServices[0]);
-    if (primaryService && !subdivision) {
-      setError("Please select a subdivision for your primary service.");
+    if (subdivisionGroups.length > 0 && selectedSubdivisions.length === 0) {
+      setError("Please select at least one subdivision.");
       return;
     }
 
@@ -62,8 +102,7 @@ export default function BookingPage() {
     try {
       const body = new FormData();
       selectedServices.forEach((s) => body.append("services", s));
-      if (primaryService) body.append("service", primaryService.slug);
-      if (subdivision) body.append("subdivision", subdivision);
+      selectedSubdivisions.forEach((key) => body.append("subdivisions", key));
       Object.entries(form).forEach(([key, value]) => body.append(key, value));
       files.forEach((file) => body.append("designs", file));
 
@@ -83,16 +122,25 @@ export default function BookingPage() {
     }
   }
 
+  const subdivisionSummaryLabels = selectedSubdivisions.map((key) => {
+    const parsed = parseSubdivisionKey(key);
+    const group = parsed ? subdivisionGroups.find((g) => g.key === parsed.serviceSlug) : undefined;
+    const item = group?.items.find((i) => i.value === key);
+    const subLabel = item?.label ?? parsed?.subdivisionSlug ?? key;
+    return subdivisionGroups.length > 1 && group ? `${group.label} — ${subLabel}` : subLabel;
+  });
+
   return (
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden bg-[#111]">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=80')",
-          }}
+        <Image
+          src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=80"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-30"
         />
         <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
 
@@ -137,24 +185,21 @@ export default function BookingPage() {
                   <MultiSelectField
                     placeholder="Select one or more services"
                     values={selectedServices}
-                    onChange={setSelectedServices}
+                    onChange={handleServicesChange}
                     items={serviceOptions}
                   />
                 </div>
 
-                {selectedServices[0] && getServiceByName(selectedServices[0]) && (
-                  <div className="mb-8 flex flex-col gap-2">
-                    <Label htmlFor="subdivision">Primary Service Subdivision</Label>
-                    <Select value={subdivision} onValueChange={(value) => value && setSubdivision(value)}>
-                      <SelectTrigger id="subdivision" className="w-full bg-card">
-                        <SelectValue placeholder="Select subdivision" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {flattenSubdivisions(getServiceByName(selectedServices[0]) ?? coreServices[0]).map((item) => (
-                          <SelectItem key={item.slug} value={item.slug}>{item.name}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                {subdivisionGroups.length > 0 && (
+                  <div className="mb-8">
+                    <GroupedMultiSelectField
+                      label="Subdivision"
+                      placeholder="Select one or more subdivisions"
+                      values={selectedSubdivisions}
+                      onChange={setSelectedSubdivisions}
+                      groups={subdivisionGroups}
+                      itemLabel="subdivisions"
+                    />
                   </div>
                 )}
 
@@ -219,7 +264,7 @@ export default function BookingPage() {
                   </div>
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="time">Preferred Time</Label>
-                    <Input id="time" name="time" type="time" value={form.time} onChange={updateField} />
+                    <Input id="time" name="time" type="time" value={form.time} onChange={updateField} isToday={form.time === todayUTCDateString()} />
                   </div>
                 </div>
 
@@ -278,6 +323,7 @@ export default function BookingPage() {
 
               <div className="mt-6 space-y-5">
                 <SummaryRow label="Services" value={selectedServices.length ? selectedServices.join(", ") : "Not selected"} />
+                <SummaryRow label="Subdivisions" value={subdivisionSummaryLabels.length ? subdivisionSummaryLabels.join(", ") : "—"} />
                 <SummaryRow label="Quantity" value={form.quantity || "—"} />
                 <SummaryRow label="Date" value={form.date || "—"} />
                 <SummaryRow label="Time" value={form.time || "—"} />
