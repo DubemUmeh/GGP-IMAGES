@@ -19,7 +19,24 @@ function emailShell(
   rows: Array<[string, string]>,
 ) {
   const logo = absoluteUrl(siteConfig.logo);
-  return `<!doctype html><html><body style="margin:0;background:#f8f9fa;font-family:Arial,sans-serif;color:#191c1d"><div style="max-width:680px;margin:0 auto;padding:28px"><div style="background:#6b004d;border-radius:28px 28px 0 0;padding:28px;text-align:center"><img src="${logo}" width="72" height="72" alt="GGP Images" style="border-radius:16px;background:#fff;padding:8px"><h1 style="margin:16px 0 0;color:#fff;font-size:26px">${title}</h1></div><div style="background:#fff;border:1px solid #e7e8e9;border-top:0;padding:28px;border-radius:0 0 28px 28px"><p style="font-size:16px;line-height:1.7">${intro}</p><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="padding:14px;border-top:1px solid #edeeef;color:#6b004d;font-weight:700;width:35%">${k}</td><td style="padding:14px;border-top:1px solid #edeeef;line-height:1.6">${String(v).replaceAll("\n", "<br>")}</td></tr>`).join("")}</table><p style="margin-top:26px;color:#4a454f;font-size:13px;line-height:1.6">This message was sent from ${siteConfig.name}. You are receiving it because a website form was submitted or because you requested printing support.</p></div></div></body></html>`;
+  return `
+    <!doctype html>
+    <html>
+      <body style="margin:0;background:#f8f9fa;font-family:Arial,sans-serif;color:#191c1d">
+        <div style="max-width:740px;margin:0 auto;padding:5px">
+          <div style="background:#6b004d;border-radius:28px 28px 0 0;padding:10px;text-align:center">
+            <img src="${logo}" width="72" height="72" alt="GGP Images" style="border-radius:16px;background:#fff;padding:8px">
+            <h1 style="margin:16px 0 0;color:#fff;font-size:26px">${title}</h1>
+          </div>
+          <div style="background:#fff;border:1px solid #e7e8e9;border-top:0;padding:5px;border-radius:0 0 28px 28px">
+            <p style="font-size:16px;line-height:1.7">${intro}</p>
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="padding:3px;border-top:1px solid #edeeef;color:#6b004d;font-weight:700;width:35%">${k}</td><td style="padding:3px;border-top:1px solid #edeeef;line-height:1.6">${String(v).replaceAll("\n", "<br>")}</td></tr>`).join("")}</table>
+            <p style="margin-top:26px;color:#4a454f;font-size:13px;line-height:1.6">This message was sent from ${siteConfig.name}. You are receiving it because a website form was submitted or because you requested printing support.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
 }
 
 async function getTransporter() {

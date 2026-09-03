@@ -119,7 +119,11 @@ export async function POST(request: Request) {
     console.error("Failed to persist booking to DB", err);
   }
 
-  await sendBookingEmails(payload);
+  try {
+    await sendBookingEmails(payload);
+  } catch (err) {
+    console.error("Failed to send booking emails", err);
+  }
 
   return NextResponse.json({
     message: "Booking received. We'll be in touch shortly.",
