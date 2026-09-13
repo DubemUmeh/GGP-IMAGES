@@ -94,9 +94,9 @@ export function HeroSection() {
               variants={fadeUp(0.9)}
               className="mb-8 max-w-lg text-lg font-inter leading-relaxed text-white/90"
             >
-              {/*Transforming brands and supporting startups from scratch with high-end, precise
+              Transforming brands and supporting startups from scratch with high-end, precise
               printing solutions.
-              <br/>*/}
+              <br/>
               All your Printing Solutions are right here.
             </motion.p>
 
