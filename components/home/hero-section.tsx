@@ -10,9 +10,9 @@ import { ArrowCta } from "../ui/motion-kit";
 // MaybeHero using framer-motion instead, since that's what this repo
 // already ships (see the "use client" + `motion` import above).
 const HEADLINE: { text: string; gradient?: boolean }[] = [
-  { text: "Print. Brand" }, 
-  { text: "&" },
-  { text: "Shine", gradient: true },
+  { text: "Print. Brand." }, 
+  { text: "" },
+  { text: "Shine.", gradient: true },
 ];
 
 const badges = ["1,000+ Happy Clients", "500+ Brands Helped", "5-Star Rated Service"];
@@ -94,10 +94,10 @@ export function HeroSection() {
               variants={fadeUp(0.9)}
               className="mb-8 max-w-lg text-lg font-inter leading-relaxed text-white/90"
             >
-              Transforming brands and supporting startups from scratch with high-end, precise
+              {/*Transforming brands and supporting startups from scratch with high-end, precise
               printing solutions.
-              <br/>
-              All your Printing Solution are right here.
+              <br/>*/}
+              All your Printing Solutions are right here.
             </motion.p>
 
             <motion.div
