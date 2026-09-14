@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
-import { LuStar } from "react-icons/lu";
 import { ArrowCta } from "../ui/motion-kit";
 
 // Headline is split per-word so each word can be masked and revealed
