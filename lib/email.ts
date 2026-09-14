@@ -61,7 +61,7 @@ export async function sendContactEmails(payload: ContactPayload) {
     );
     return { skipped: true };
   }
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = siteConfig.email;
   const from = process.env.MAIL_FROM;
   const services = payload.services.length
     ? payload.services.join(", ")
@@ -164,7 +164,7 @@ export async function sendBookingEmails(payload: BookingPayload) {
     return { skipped: true };
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminEmail = siteConfig.email;
   const from = process.env.MAIL_FROM;
 
   const adminHtml = emailShell(

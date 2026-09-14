@@ -67,8 +67,12 @@ export function WhyChooseUs() {
                   <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-brand-purple-fixed/60 text-primary">
                     <Icon className="h-4.5 w-4.5" />
                   </span>
-                  <h3 className="font-semibold font-manrope text-card-foreground">{r.title}</h3>
-                  <p className="text-sm font-inter leading-relaxed text-muted-foreground">{r.desc}</p>
+                  <h3 className="font-semibold font-manrope text-card-foreground">
+                    {r.title}
+                  </h3>
+                  <p className="text-sm font-inter leading-relaxed text-muted-foreground">
+                    {r.desc}
+                  </p>
                 </div>
               </Reveal>
             );

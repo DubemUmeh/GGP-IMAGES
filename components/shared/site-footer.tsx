@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { LuMail, LuPhone, LuMapPin } from "react-icons/lu";
 import { Reveal } from "@/components/ui/motion-kit";
-import { FaInstagram, FaTiktok, FaFacebook, FaLinkedin } from "react-icons/fa";
+import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 import Image from "next/image";
+import { siteConfig } from "@/lib/seo";
 
 const quickLinks = [
   { label: "About", href: "/about" },
@@ -14,10 +15,9 @@ const quickLinks = [
 ];
 
 const socials = [
-  { label: "Instagram", href: "#", icon: FaInstagram },
-  { label: "FaceBook", href: "#", icon: FaFacebook },
-  { label: "LinkedIn", href: "#", icon: FaLinkedin },
-  { label: "Tiktok", href: "#", icon: FaTiktok },
+  { label: "Instagram", href: `${siteConfig.instagram}`, icon: FaInstagram },
+  { label: "FaceBook", href: `${siteConfig.facebook}`, icon: FaFacebook },
+  { label: "Tiktok", href: `${siteConfig.tiktok}`, icon: FaTiktok },
 ];
 
 export function SiteFooter() {
@@ -29,10 +29,18 @@ export function SiteFooter() {
       <div className="relative mx-auto grid max-w-7xl grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-12 px-6">
         <Reveal className="space-y-0">
           <div className="w-full h-full">
-            <Image src='/ggp-no-bg.png' alt="GGP Image Logo" priority width={250} height={50} className="drop-shadow-2xl drop-shadow-card" />
+            <Image
+              src="/ggp-no-bg.png"
+              alt="GGP Image Logo"
+              priority
+              width={250}
+              height={50}
+              className="drop-shadow-2xl drop-shadow-card"
+            />
           </div>
           <p className="max-w-xs md:relative md:left-0 md:-top-10 text-base leading-relaxed tracking-wider text-white/70">
-            Premium printing and branding solutions that make your business unforgettable.
+            Premium printing and branding solutions that make your business
+            unforgettable.
           </p>
         </Reveal>
 
@@ -63,19 +71,29 @@ export function SiteFooter() {
           <ul className="space-y-4 text-base font-inter">
             <li className="flex items-start gap-3 text-card/90">
               <LuPhone className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
-              <a href="tel:+233548844321" className="hover:underline underline-offset-3">+233 (54) 884 4321</a>
+              <a
+                href="tel:+233548844321"
+                className="hover:underline underline-offset-3"
+              >
+                +233 (54) 884 4321
+              </a>
             </li>
             <li className="flex items-start gap-3 text-card/70">
               <LuMail className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
-              <a href="mailto:hello@ggpimages.com" className="hover:underline underline-offset-3">hello@ggpimages.com</a>
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="hover:underline underline-offset-3"
+              >
+                {siteConfig.email}
+              </a>
             </li>
-            <Link href='https://maps.app.goo.gl/aKyiTKn95ta1YupU9' target="_blank" className="flex items-start gap-3 text-white/70 hover:underline underline-offset-3">
+            <Link
+              href="https://maps.app.goo.gl/aKyiTKn95ta1YupU9"
+              target="_blank"
+              className="flex items-start gap-3 text-white/70 hover:underline underline-offset-3"
+            >
               <LuMapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
-              <span>
-                ZEN Filling Station via Apremdo New Market, off Apllo,
-                <br />
-                Anaji Rd, Takoradi
-              </span>
+              <span>{siteConfig.address}</span>
             </Link>
           </ul>
         </Reveal>
@@ -103,7 +121,12 @@ export function SiteFooter() {
         <p className="text-sm text-white/50">
           © {new Date().getFullYear()} GGP Images. All rights reserved.
         </p>
-        <Link href='https://umeh.vercel.app' className="text-card/70 text-sm transition-colors hover:text-card">Built by DUBEM</Link>
+        <Link
+          href="https://umeh.vercel.app"
+          className="text-card/70 text-sm transition-colors hover:text-card"
+        >
+          Built by DUBEM
+        </Link>
         {/* <div className="flex gap-6 text-sm">
           <Link href="/privacy" className="text-white/50 transition-colors hover:text-white">
             Privacy Policy
