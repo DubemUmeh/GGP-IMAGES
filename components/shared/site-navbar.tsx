@@ -113,12 +113,22 @@ const NavDropdown = ({ label, href, items }: NavDropdownType) => {
             transition={{ duration: 0.18, ease: "easeOut" }}
             className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-2xl border border-brand-tertiary bg-popover p-2 shadow-lg"
           >
-            {items.map((item) => (
+            <Link
+              href={href}
+              className="block rounded-xl bg-secondary/10 px-4 py-2.5 text-sm font-semibold font-manrope text-secondary transition-colors hover:bg-secondary/20"
+            >
+              Explore {label}
+            </Link>
+            <div className="my-1 h-px bg-brand-tertiary/60" />
+            {items.map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="block rounded-xl px-4 py-2.5 text-sm font-medium font-manrope text-muted-foreground transition-colors hover:bg-secondary/10 hover:text-foreground"
+                className="group/child flex items-baseline gap-2.5 rounded-xl px-4 py-2.5 text-sm font-medium font-manrope text-muted-foreground transition-colors hover:bg-secondary/10 hover:text-foreground"
               >
+                <span className="text-xs font-semibold text-secondary">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 {item.label}
               </Link>
             ))}
@@ -235,13 +245,23 @@ export function Navbar() {
                             className="overflow-hidden"
                           >
                             <div className="flex flex-col gap-1 pl-6 pt-1 pb-2">
-                              {link.children.map((child) => (
+                              <Link
+                                href={link.href}
+                                className="rounded-xl bg-secondary/10 px-4 py-2.5 text-sm font-semibold font-manrope text-secondary transition-colors hover:bg-secondary/20"
+                                onClick={() => setOpen(false)}
+                              >
+                                Explore {link.label}
+                              </Link>
+                              {link.children.map((child, i) => (
                                 <Link
                                   key={child.href}
                                   href={child.href}
-                                  className="rounded-xl px-4 py-2.5 text-sm font-medium font-manrope text-muted-foreground transition-colors hover:bg-secondary/10 hover:text-secondary"
+                                  className="flex items-baseline gap-2.5 rounded-xl px-4 py-2.5 text-sm font-medium font-manrope text-muted-foreground transition-colors hover:bg-secondary/10 hover:text-secondary"
                                   onClick={() => setOpen(false)}
                                 >
+                                  <span className="text-xs font-semibold text-secondary">
+                                    {String(i + 1).padStart(2, "0")}
+                                  </span>
                                   {child.label}
                                 </Link>
                               ))}
