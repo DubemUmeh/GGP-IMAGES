@@ -247,7 +247,7 @@ export function Navbar() {
                             <div className="flex flex-col gap-1 pl-6 pt-1 pb-2">
                               <Link
                                 href={link.href}
-                                className="rounded-xl bg-secondary/10 px-4 py-2.5 text-sm font-semibold font-manrope text-secondary transition-colors hover:bg-secondary/20"
+                                className="rounded-xl bg-transparent px-4 py-2.5 text-sm font-semibold font-manrope text-secondary transition-colors hover:bg-secondary/10"
                                 onClick={() => setOpen(false)}
                               >
                                 Explore {link.label}
