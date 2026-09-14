@@ -72,10 +72,10 @@ export function SiteFooter() {
             <li className="flex items-start gap-3 text-card/90">
               <LuPhone className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
               <a
-                href="tel:+233548844321"
+                href={`tel:${siteConfig.phone}`}
                 className="hover:underline underline-offset-3"
               >
-                +233 (54) 884 4321
+                {siteConfig.phone}
               </a>
             </li>
             <li className="flex items-start gap-3 text-card/70">
