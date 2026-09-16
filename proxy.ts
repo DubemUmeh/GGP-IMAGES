@@ -6,7 +6,7 @@ const isPaid = true;
 export function proxy(request: NextRequest) {
   if (!isPaid) {
     return NextResponse.redirect(
-      "https://www.google.com/search?q=dubem+umeh&oq=dubem+umeh&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIJCAEQABgNGIAEMgkIAhAAGA0YgAQyCQgDEAAYDRiABDIJCAQQABgNGIAEMgYIBRBFGDwyBggGEEUYPDIGCAcQRRg8MgoICBAAGIAEGKIEMgcICRAAGO8FMgoIChAAGIAEGKIEMgoICxAAGIAEGKIEMgcIDBAAGO8FMgcIDRAhGI8CMgcIDhAhGI8C0gEIMzgwM2owajSoAgKwAgE&client=ms-android-xiaomi-rvo3&sourceid=chrome-mobile&source=chrome.ob&ie=UTF-8"
+      "https://www.google.com/search?q=dubem+umeh"
     );
   }
   return NextResponse.next();

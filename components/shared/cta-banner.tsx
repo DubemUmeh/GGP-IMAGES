@@ -20,8 +20,8 @@ export function CtaBanner({
         <div className="absolute bottom-0 left-0 h-64 w-64 -translate-x-1/3 translate-y-1/2 rounded-full bg-brand-purple-fixed/20 blur-3xl" />
 
         <div className="relative z-10 max-w-xl text-center md:text-left">
-          <h2 className="mb-4 text-3xl font-bold text-primary-foreground md:text-4xl">{title}</h2>
-          <p className="text-lg text-primary-foreground/80">{description}</p>
+          <h2 className="mb-4 text-3xl font-bold font-manrope text-primary-foreground md:text-4xl">{title}</h2>
+          <p className="text-lg font-inter text-primary-foreground/80">{description}</p>
         </div>
         {/* <Button
           size="lg"

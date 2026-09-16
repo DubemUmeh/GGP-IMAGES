@@ -9,10 +9,10 @@ export function ServicesGrid() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 scroll-smooth" id="services">
       <div className="mx-auto mb-12 max-w-3xl text-center">
-        <h2 className="mb-4 text-3xl font-bold tracking-wider text-card md:text-4xl">
+        <h2 className="mb-4 text-3xl font-bold font-manrope tracking-wider text-card md:text-4xl">
           Comprehensive Branding &amp; Printing
         </h2>
-        <p className="text-popover text-lg leading-8 tracking-wide">
+        <p className="text-popover text-lg font-inter leading-8 tracking-wide">
           We combine cutting-edge technology with artisanal craftsmanship to offer a full spectrum
           of printing services tailored to your specific needs.
         </p>
@@ -40,12 +40,12 @@ export function ServicesGrid() {
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                 </div>
                 <div className="relative z-10">
-                  <Badge className="mb-4 rounded-full bg-brand-purple-fixed text-primary hover:bg-brand-purple-fixed">Core Service</Badge>
+                  <Badge className="mb-4 rounded-full bg-brand-purple-fixed text-primary hover:bg-brand-purple-fixed font-manrope">Core Service</Badge>
                   <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 text-white backdrop-blur-sm">
                     <Icon className="h-5 w-5" />
                   </span>
-                  <h3 className="mb-2 text-2xl font-bold text-white">{service.name}</h3>
-                  <p className="max-w-md text-white/80">{service.shortDescription}</p>
+                  <h3 className="mb-2 text-2xl font-bold font-manrope text-white">{service.name}</h3>
+                  <p className="max-w-md text-white/80 font-inter">{service.shortDescription}</p>
                 </div>
               </Link>
             );
@@ -70,8 +70,8 @@ export function ServicesGrid() {
                 </span>
               </div>
               <div className="mt-auto">
-                <h3 className="mb-2 text-xl font-semibold tracking-wide text-card">{service.name}</h3>
-                <p className="text-sm text-popover">{service.shortDescription}</p>
+                <h3 className="mb-2 text-xl font-semibold font-manrope tracking-wide text-card">{service.name}</h3>
+                <p className="text-sm font-inter text-popover">{service.shortDescription}</p>
               </div>
             </Link>
           );

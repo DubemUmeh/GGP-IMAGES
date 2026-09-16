@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import { z } from "zod";
 import { absoluteUrl, siteConfig } from "@/lib/seo";
-import { getServiceBySlug, getSubdivision } from "@/lib/services";
+import { resolveSubdivisionKey } from "@/lib/services";
 
 export const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -19,7 +19,24 @@ function emailShell(
   rows: Array<[string, string]>,
 ) {
   const logo = absoluteUrl(siteConfig.logo);
-  return `<!doctype html><html><body style="margin:0;background:#f8f9fa;font-family:Arial,sans-serif;color:#191c1d"><div style="max-width:680px;margin:0 auto;padding:28px"><div style="background:#6b004d;border-radius:28px 28px 0 0;padding:28px;text-align:center"><img src="${logo}" width="72" height="72" alt="GGP Images" style="border-radius:16px;background:#fff;padding:8px"><h1 style="margin:16px 0 0;color:#fff;font-size:26px">${title}</h1></div><div style="background:#fff;border:1px solid #e7e8e9;border-top:0;padding:28px;border-radius:0 0 28px 28px"><p style="font-size:16px;line-height:1.7">${intro}</p><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="padding:14px;border-top:1px solid #edeeef;color:#6b004d;font-weight:700;width:35%">${k}</td><td style="padding:14px;border-top:1px solid #edeeef;line-height:1.6">${String(v).replaceAll("\n", "<br>")}</td></tr>`).join("")}</table><p style="margin-top:26px;color:#4a454f;font-size:13px;line-height:1.6">This message was sent from ${siteConfig.name}. You are receiving it because a website form was submitted or because you requested printing support.</p></div></div></body></html>`;
+  return `
+    <!doctype html>
+    <html>
+      <body style="margin:0;background:#f8f9fa;font-family:Arial,sans-serif;color:#191c1d">
+        <div style="max-width:740px;margin:0 auto;padding:5px">
+          <div style="background:#6b004d;border-radius:28px 28px 0 0;padding:10px;text-align:center">
+            <img src="${logo}" width="72" height="72" alt="GGP Images" style="border-radius:16px;background:#fff;padding:8px">
+            <h1 style="margin:16px 0 0;color:#fff;font-size:26px">${title}</h1>
+          </div>
+          <div style="background:#fff;border:1px solid #e7e8e9;border-top:0;padding:5px;border-radius:0 0 28px 28px">
+            <p style="font-size:16px;line-height:1.7">${intro}</p>
+            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top:20px;border-collapse:collapse">${rows.map(([k, v]) => `<tr><td style="padding:3px;border-top:1px solid #edeeef;color:#6b004d;font-weight:700;width:35%">${k}</td><td style="padding:3px;border-top:1px solid #edeeef;line-height:1.6">${String(v).replaceAll("\n", "<br>")}</td></tr>`).join("")}</table>
+            <p style="margin-top:26px;color:#4a454f;font-size:13px;line-height:1.6">This message was sent from ${siteConfig.name}. You are receiving it because a website form was submitted or because you requested printing support.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
 }
 
 async function getTransporter() {
@@ -28,9 +45,10 @@ async function getTransporter() {
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT || 587),
     secure: process.env.SMTP_SECURE === "true",
-    auth: process.env.SMTP_USER
-      ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
-      : undefined,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
   });
 }
 
@@ -43,8 +61,8 @@ export async function sendContactEmails(payload: ContactPayload) {
     );
     return { skipped: true };
   }
-  const adminEmail = process.env.ADMIN_EMAIL || siteConfig.email;
-  const from = process.env.MAIL_FROM || `GGP Images <${siteConfig.email}>`;
+  const adminEmail = siteConfig.email;
+  const from = process.env.MAIL_FROM;
   const services = payload.services.length
     ? payload.services.join(", ")
     : "Not specified";
@@ -93,9 +111,8 @@ export const bookingSchema = z.object({
   services: z
     .array(z.string().trim().max(80))
     .min(1, "Select at least one service"),
-  service: z.string().trim().max(80).optional().default(""),
   subdivisions: z
-    .array(z.string().trim().max(120))
+    .array(z.string().trim().max(160))
     .min(1, "Select at least one subdivision"),
   projectName: z.string().trim().min(2).max(160),
   quantity: z.string().trim().max(40).optional().default(""),
@@ -124,15 +141,20 @@ function designsBlock(urls: string[]) {
 export async function sendBookingEmails(payload: BookingPayload) {
   const transporter = await getTransporter();
   const services = payload.services.join(", ");
-  const serviceLabel = payload.service
-    ? (getServiceBySlug(payload.service)?.name ?? payload.service)
-    : services;
-  const subdivisionLabel =
-    payload.service && payload.subdivisions.length
-      ? payload.subdivisions
-          .map((slug) => getSubdivision(payload.service, slug)?.name ?? slug)
-          .join(", ")
-      : "Not specified";
+
+  const groupedSubdivisions = new Map<string, string[]>();
+  for (const key of payload.subdivisions) {
+    const resolved = resolveSubdivisionKey(key);
+    if (!resolved) continue;
+    const list = groupedSubdivisions.get(resolved.service.name) ?? [];
+    list.push(resolved.subdivision.name);
+    groupedSubdivisions.set(resolved.service.name, list);
+  }
+  const subdivisionLabel = groupedSubdivisions.size
+    ? [...groupedSubdivisions.entries()]
+        .map(([svc, subs]) => `${svc}: ${subs.join(", ")}`)
+        .join(" | ")
+    : "Not specified";
 
   if (!transporter) {
     console.info(
@@ -142,8 +164,8 @@ export async function sendBookingEmails(payload: BookingPayload) {
     return { skipped: true };
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL || siteConfig.email;
-  const from = process.env.MAIL_FROM || `GGP Images <${siteConfig.email}>`;
+  const adminEmail = siteConfig.email;
+  const from = process.env.MAIL_FROM;
 
   const adminHtml = emailShell(
     "New booking request",
@@ -153,8 +175,7 @@ export async function sendBookingEmails(payload: BookingPayload) {
       ["Email", payload.email],
       ["Phone", payload.phone],
       ["Services", services],
-      ["Primary service", serviceLabel || "Not specified"],
-      ["Subdivision", subdivisionLabel],
+      ["Subdivisions", subdivisionLabel],
       ["Project", payload.projectName],
       ["Quantity", payload.quantity || "Not specified"],
       ["Preferred date", payload.date || "Not specified"],
@@ -172,7 +193,7 @@ export async function sendBookingEmails(payload: BookingPayload) {
     replyTo: payload.email,
     subject: `New booking: ${payload.projectName} (${payload.name})`,
     html: adminHtml,
-    text: `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nServices: ${services}\nPrimary service: ${serviceLabel}\nSubdivision: ${subdivisionLabel}\nProject: ${payload.projectName}\nQuantity: ${payload.quantity}\nDate: ${payload.date}\nTime: ${payload.time}\nDescription: ${payload.description}\nDesigns: ${payload.designUrls.join(", ") || "None"}`,
+    text: `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nServices: ${services}\nSubdivisions: ${subdivisionLabel}\nProject: ${payload.projectName}\nQuantity: ${payload.quantity}\nDate: ${payload.date}\nTime: ${payload.time}\nDescription: ${payload.description}\nDesigns: ${payload.designUrls.join(", ") || "None"}`,
   });
 
   await transporter.sendMail({
@@ -185,8 +206,7 @@ export async function sendBookingEmails(payload: BookingPayload) {
       `Hi ${payload.name}, thank you for booking with GGP Images. We're reviewing your project and will confirm shortly.`,
       [
         ["Services", services],
-        ["Primary service", serviceLabel || "Not specified"],
-        ["Subdivision", subdivisionLabel],
+        ["Subdivisions", subdivisionLabel],
         ["Project", payload.projectName],
         [
           "What happens next",

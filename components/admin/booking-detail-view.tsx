@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/toast";
 import Image from "next/image";
-import { getServiceBySlug, getSubdivision } from "@/lib/services";
+import { resolveSubdivisionKey } from "@/lib/services";
 
 type BookingRow = {
   id: string;
@@ -38,10 +38,14 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
   const router = useRouter();
   const [status, setStatus] = useState(booking.status);
   const [saving, setSaving] = useState(false);
-  const serviceName = booking.service ? getServiceBySlug(booking.service)?.name : booking.services[0];
-  const subdivisionNames = booking.service && booking.subdivision.length
-    ? booking.subdivision.map((slug) => getSubdivision(booking.service!, slug)?.name ?? slug)
-    : booking.subdivision;
+  const groupedSubdivisions = new Map<string, string[]>();
+  for (const key of booking.subdivision) {
+    const resolved = resolveSubdivisionKey(key);
+    if (!resolved) continue;
+    const list = groupedSubdivisions.get(resolved.service.name) ?? [];
+    list.push(resolved.subdivision.name);
+    groupedSubdivisions.set(resolved.service.name, list);
+  }
 
   async function updateStatus(next: string) {
     setSaving(true);
@@ -86,20 +90,25 @@ export function BookingDetailView({ booking }: { booking: BookingRow }) {
         <Separator />
 
         <DetailSection title="Services">
-          <DetailRow label="Service" value={serviceName || "Not specified"} />
-          {subdivisionNames.length > 0 ? (
-            <div className="flex items-center justify-between gap-4 text-sm">
-              <span className="text-muted-foreground">Subdivision</span>
-              <div className="flex flex-wrap justify-end gap-1.5">
-                {subdivisionNames.map((name) => (
-                  <Badge key={name} variant="secondary">{name}</Badge>
-                ))}
+          <div className="flex flex-wrap gap-2">
+            {booking.services.length > 0 ? (
+              booking.services.map((s) => <Badge key={s} variant="secondary">{s}</Badge>)
+            ) : (
+              <span className="text-sm text-muted-foreground">Not specified</span>
+            )}
+          </div>
+          {groupedSubdivisions.size > 0 ? (
+            [...groupedSubdivisions.entries()].map(([svc, subs]) => (
+              <div key={svc} className="text-sm">
+                <p className="font-medium">{svc}</p>
+                <div className="mt-1 flex flex-wrap gap-1.5">
+                  {subs.map((name) => <Badge key={name} variant="outline">{name}</Badge>)}
+                </div>
               </div>
-            </div>
+            ))
           ) : (
             <DetailRow label="Subdivision" value="Not specified" />
           )}
-          {booking.services.length > 1 && <div className="flex flex-wrap gap-2">{booking.services.map((s) => <Badge key={s} variant="secondary">{s}</Badge>)}</div>}
         </DetailSection>
 
         <Separator />

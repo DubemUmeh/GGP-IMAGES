@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
-import { LuStar } from "react-icons/lu";
 import { ArrowCta } from "../ui/motion-kit";
 
 // Headline is split per-word so each word can be masked and revealed
@@ -10,12 +9,16 @@ import { ArrowCta } from "../ui/motion-kit";
 // MaybeHero using framer-motion instead, since that's what this repo
 // already ships (see the "use client" + `motion` import above).
 const HEADLINE: { text: string; gradient?: boolean }[] = [
-  { text: "Print. Brand" }, 
-  { text: "&" },
-  { text: "Shine", gradient: true },
+  { text: "Print. Brand." },
+  { text: "" },
+  { text: "Shine.", gradient: true },
 ];
 
-const badges = ["1,000+ Happy Clients", "500+ Brands Helped", "5-Star Rated Service"];
+const badges = [
+  "1,000+ Happy Clients",
+  "500+ Brands Helped",
+  "5-Star Rated Service",
+];
 
 const wordContainer: Variants = {
   hidden: {},
@@ -34,7 +37,11 @@ const wordItem: Variants = {
 
 const fadeUp = (delay = 0): Variants => ({
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut", delay } },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut", delay },
+  },
 });
 
 export function HeroSection() {
@@ -70,10 +77,13 @@ export function HeroSection() {
               initial="hidden"
               animate="show"
               variants={wordContainer}
-              className="mb-6 text-5xl font-extrabold leading-[1.05] tracking-tight text-primary-foreground md:text-7xl"
+              className="mb-6 text-5xl font-extrabold font-manrope leading-[1.05] tracking-tight text-primary-foreground md:text-7xl"
             >
               {HEADLINE.map((word, i) => (
-                <span key={i} className="mr-4 inline-block overflow-hidden align-top">
+                <span
+                  key={i}
+                  className="mr-4 inline-block overflow-hidden align-top"
+                >
                   <motion.span
                     variants={wordItem}
                     className={
@@ -92,48 +102,26 @@ export function HeroSection() {
               initial="hidden"
               animate="show"
               variants={fadeUp(0.9)}
-              className="mb-8 max-w-lg text-lg leading-relaxed text-white/90"
+              className="mb-8 max-w-lg text-lg font-inter leading-relaxed text-white/90"
             >
-              Transforming brands and supporting startups from scratch with high-end, precise
-              printing solutions.
-              <br/>
-              All your Printing Solution are right here.
+              Transforming brands and supporting startups from scratch with
+              high-end, precise printing solutions.
+              <br />
+              All your Printing Solutions are right here.
             </motion.p>
 
             <motion.div
               initial="hidden"
               animate="show"
               variants={fadeUp(1.05)}
-              className="mb-10 flex flex-wrap items-center gap-4"
+              className="mb-10 flex items-center gap-4"
             >
-              {/* <Button
-                size="lg"
-                className="orange-glow rounded-xl bg-secondary px-8 py-6 text-secondary-foreground transition-transform duration-300 hover:-translate-y-1 hover:bg-secondary/90"
-              >
-                <a href="#services" className="flex items-center gap-2">
-                  Explore Services
-                  <LuArrowRight className="h-4 w-4" />
-                </a>
-              </Button> */}
-              <ArrowCta label="Explore Services" as="link" href="/services" className="bg-secondary hover:bg-secondary/90 hover:transition-colors hover:duration-150" />
-
-              <div className="glass-panel flex cursor-pointer items-center gap-4 rounded-full border border-white/40 p-3 transition-colors hover:border-secondary">
-                <div className="flex -space-x-2">
-                  <div className="z-30 h-8 w-8 rounded-full border-2 border-primary bg-brand-purple-fixed" />
-                  <div className="z-20 h-8 w-8 rounded-full border-2 border-primary bg-brand-orange-fixed" />
-                  <div className="z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 border-primary bg-brand-purple-fixed-dim text-xs tracking-tighter font-bold text-primary">
-                    +1k
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-1 text-secondary">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <LuStar key={i} className="h-3.5 w-3.5 fill-current" />
-                    ))}
-                  </div>
-                  <span className="text-xs text-gray-800 font-semibold mt-0.5">Happy Clients</span>
-                </div>
-              </div>
+              <ArrowCta
+                label="Explore Services"
+                as="link"
+                href="/services"
+                className="bg-secondary hover:bg-secondary/90 hover:transition-colors hover:duration-150"
+              />
             </motion.div>
 
             {/* MaybeHero's small uppercase badge row */}
@@ -146,7 +134,7 @@ export function HeroSection() {
               {badges.map((b) => (
                 <span
                   key={b}
-                  className="text-[10px] font-semibold uppercase tracking-widest text-white/60"
+                  className="text-[10px] font-semibold font-inter uppercase tracking-widest text-white/60"
                 >
                   {b}
                 </span>

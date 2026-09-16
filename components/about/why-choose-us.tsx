@@ -26,10 +26,10 @@ export function WhyChooseUs() {
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <div className="order-2 space-y-8 md:order-1">
             <div>
-              <h2 className="mb-4 text-3xl font-bold tracking-tight text-card md:text-4xl">
+              <h2 className="mb-4 text-3xl font-bold font-manrope tracking-tight text-card md:text-4xl">
                 Why Brands Choose Us
               </h2>
-              <p className="text-popover text-base tracking-wide">
+              <p className="text-popover text-base font-inter tracking-wide">
                 We combine technical expertise with creative vision to deliver results that exceed
                 expectations.
               </p>
@@ -41,8 +41,8 @@ export function WhyChooseUs() {
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
-                    <h4 className="mb-1 text-xl font-semibold text-card tracking-wide">{title}</h4>
-                    <p className="text-popover tracking-wider text-base">{description}</p>
+                    <h4 className="mb-1 text-xl font-semibold font-manrope text-card tracking-wide">{title}</h4>
+                    <p className="text-popover font-inter tracking-wider text-base">{description}</p>
                   </div>
                 </div>
               ))}

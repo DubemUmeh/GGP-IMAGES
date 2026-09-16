@@ -39,10 +39,10 @@ export function CoreValues() {
     <section className="relative w-full bg-brand-tertiary py-10">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal className="mb-14 text-center">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-2 text-sm font-semibold uppercase tracking-widest text-card">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-2 text-sm font-semibold font-manrope uppercase tracking-widest text-card">
             What Drives Us
           </div>
-          <h2 className="text-3xl font-bold text-card tracking-wider md:text-4xl">Our Core Values</h2>
+          <h2 className="text-3xl font-bold font-manrope text-card tracking-wider md:text-4xl">Our Core Values</h2>
         </Reveal>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -55,8 +55,8 @@ export function CoreValues() {
                   <Icon className="h-7 w-7" />
                 </div>
                 <div>
-                  <h3 className="mb-2 text-lg font-bold text-card tracking-wide">{title}</h3>
-                  <p className="text-sm leading-relaxed text-popover tracking-card/80">{description}</p>
+                  <h3 className="mb-2 text-lg font-bold font-manrope text-card tracking-wide">{title}</h3>
+                  <p className="text-sm font-inter leading-relaxed text-popover tracking-card/80">{description}</p>
                 </div>
               </div>
             </Reveal>

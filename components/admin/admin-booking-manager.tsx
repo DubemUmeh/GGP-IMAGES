@@ -47,7 +47,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/toast";
-import { getServiceBySlug, getSubdivision } from "@/lib/services";
+import { resolveSubdivisionKey } from "@/lib/services";
 
 export type Booking = {
   id: string;
@@ -56,7 +56,7 @@ export type Booking = {
   customer_phone: string;
   services: string[];
   service: string | null;
-  subdivision: string | null;
+  subdivision: string[];
   project: string;
   quantity: string | null;
   preferred_date: string | null;
@@ -72,20 +72,38 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: "bg-neutral-100 text-neutral-500 border-neutral-200",
 };
 
+// Groups each subdivision under the service it belongs to (parsed from its
+// compound key), since a booking can span multiple core services.
 function serviceLabel(b: Pick<Booking, "service" | "subdivision" | "services">) {
-  const service = b.service ? getServiceBySlug(b.service) : null;
-  const subdivision = b.service && b.subdivision ? getSubdivision(b.service, b.subdivision) : null;
-  return { service: service?.name ?? b.services[0] ?? "Not specified", subdivision: subdivision?.name ?? (b.subdivision || "Not specified") };
+  const grouped = new Map<string, string[]>();
+  for (const key of b.subdivision) {
+    const resolved = resolveSubdivisionKey(key);
+    if (!resolved) continue;
+    const list = grouped.get(resolved.service.name) ?? [];
+    list.push(resolved.subdivision.name);
+    grouped.set(resolved.service.name, list);
+  }
+  return { services: b.services, grouped };
+}
+
+function toArray(value: unknown): string[] {
+  if (Array.isArray(value)) return value;
+  if (typeof value === "string") {
+    try {
+      const parsed = JSON.parse(value);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  return [];
 }
 
 function normalizeBookings(rows: Booking[]): Booking[] {
   return rows.map((b) => ({
     ...b,
-    services: Array.isArray(b.services)
-      ? b.services
-      : typeof b.services === "string"
-        ? JSON.parse(b.services)
-        : [],
+    services: toArray(b.services),
+    subdivision: toArray(b.subdivision),
   }));
 }
 
@@ -110,12 +128,13 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
   const filtered = useMemo(() => {
     const q = search.toLowerCase();
     return bookings.filter((b) => {
+      const label = serviceLabel(b);
       const matchesSearch =
         b.customer_name.toLowerCase().includes(q) ||
         b.customer_email.toLowerCase().includes(q) ||
         b.project.toLowerCase().includes(q) ||
-        serviceLabel(b).service.toLowerCase().includes(q) ||
-        serviceLabel(b).subdivision.toLowerCase().includes(q);
+        label.services.some((s) => s.toLowerCase().includes(q)) ||
+        [...label.grouped.values()].flat().some((s) => s.toLowerCase().includes(q));
       const matchesStatus = statusFilter === "all" || b.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
@@ -228,9 +247,22 @@ export function AdminBookingManager({ initialBookings }: { initialBookings: Book
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex max-w-[220px] flex-wrap gap-1">
-                      <Badge variant="secondary" className="font-normal">{serviceLabel(b).service}</Badge>
-                      <Badge variant="outline" className="font-normal">{serviceLabel(b).subdivision}</Badge>
+                    <div className="flex w-[220px] flex-col gap-1.5">
+                      <div className="flex flex-wrap gap-1">
+                        {serviceLabel(b).services.length > 0 ? (
+                          serviceLabel(b).services.map((s) => (
+                            <Badge key={s} variant="secondary" className="font-normal">{s}</Badge>
+                          ))
+                        ) : (
+                          <Badge variant="secondary" className="font-normal">Not specified</Badge>
+                        )}
+                      </div>
+                      {[...serviceLabel(b).grouped.entries()].map(([svc, subs]) => (
+                        <p key={svc} className="text-xs leading-snug text-muted-foreground">
+                          <span className="font-medium text-foreground">{svc}:</span>{" "}
+                          {subs.join(", ")}
+                        </p>
+                      ))}
                     </div>
                   </TableCell>
                   <TableCell>

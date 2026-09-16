@@ -84,14 +84,14 @@ export async function AdminShell({
 
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel className="text-xl">Manage</SidebarGroupLabel>
+            <SidebarGroupLabel className="text-xl font-manrope">Manage</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 {NAV.map((item) => (
                   <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton tooltip={item.label} render={<Link href={item.href}>
                       <item.icon />
-                      <span className="text-lg">{item.label}</span>
+                      <span className="text-lg font-manrope">{item.label}</span>
                     </Link>} />
                   </SidebarMenuItem>
                 ))}
@@ -158,7 +158,7 @@ export async function AdminShell({
         <header className="sticky top-0 z-10 flex h-14.25 items-center gap-3 border-b bg-background/90 px-4 backdrop-blur">
           <SidebarTrigger />
           <Separator orientation="vertical" className="h-5" />
-          <span className="text-xl font-medium text-muted-foreground">
+          <span className="text-xl font-medium font-manrope text-muted-foreground">
             Admin
           </span>
         </header>

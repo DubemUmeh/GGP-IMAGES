@@ -7,14 +7,14 @@ export function ServicesHero() {
       <div className="mx-auto max-w-7xl max-h-[85dvh] bg-brand-tertiary overflow-hidden rounded-b-[40px] bg-gradient-hero md:px-6 md:rounded-[80px]">
         <div className="relative w-full p-5 lg:p-0 h-full z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div className="max-w-2xl lg:p-10">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm font-inter">
               <span className="h-2 w-2 rounded-full bg-secondary" />
               <span className="text-sm tracking-wide font-semibold text-muted-foreground">Our Services</span>
             </div>
-            <h1 className="mb-6 text-4xl font-extrabold leading-tight tracking-tight text-card md:text-6xl">
+            <h1 className="mb-6 text-4xl font-extrabold font-manrope leading-tight tracking-tight text-card md:text-6xl">
               Creative Printing Solutions for Every Industry
             </h1>
-            <p className="mb-8 max-w-lg text-lg text-popover">
+            <p className="mb-8 max-w-lg text-lg font-inter text-popover">
               From high-end commercial prints to bespoke packaging and event branding, we deliver
               precision and quality that makes your brand stand out.
             </p>

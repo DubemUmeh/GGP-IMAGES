@@ -48,15 +48,15 @@ export function QuoteCtaSection() {
       <div className="relative overflow-hidden rounded-[32px] bg-brand-tertiary p-4 shadow-2xl md:p-12 lg:p-16">
         <div className="relative z-10 grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">
+            <h2 className="mb-6 text-3xl font-bold font-manrope text-white md:text-4xl">
               Ready to Bring Your Brand to Life?
             </h2>
-            <p className="mb-8 max-w-lg text-lg text-white/80">
+            <p className="mb-8 max-w-lg text-lg font-inter text-white/80">
               Get a custom quote tailored to your project&apos;s exact specifications. Our team of
               experts is ready to help you choose the right materials, finishes, and printing
               techniques to achieve flawless results.
             </p>
-            <div className="mb-8 space-y-4">
+            <div className="mb-8 space-y-4 font-inter">
               {highlights.map((item) => (
                 <div key={item} className="flex items-center gap-3 text-white/90">
                   <LuCircleCheck className="h-5 w-5 text-brand-orange-fixed-dim" />
@@ -67,7 +67,7 @@ export function QuoteCtaSection() {
           </div>
 
           <div className="glass-panel rounded-2xl p-3 md:p-6 md:p-8">
-            <h3 className="mb-6 text-xl font-semibold text-primary">Request a Custom Quote</h3>
+            <h3 className="mb-6 text-xl font-semibold font-manrope text-primary">Request a Custom Quote</h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-1">
@@ -110,12 +110,12 @@ export function QuoteCtaSection() {
               <Button
                 type="submit"
                 disabled={pending}
-                className="mt-4 w-full rounded-xl bg-brand-tertiary py-6 text-primary-foreground hover:bg-brand-purple-container"
+                className="mt-4 w-full rounded-xl bg-brand-tertiary py-6 font-manrope text-primary-foreground hover:bg-brand-purple-container"
               >
                 {pending ? "Sending..." : "Submit Request"}
                 <LuSend className="ml-1 h-4 w-4" />
               </Button>
-              {status && <p className="text-sm font-semibold text-primary" aria-live="polite">{status}</p>}
+              {status && <p className="text-sm font-semibold font-inter text-primary" aria-live="polite">{status}</p>}
             </form>
           </div>
         </div>
