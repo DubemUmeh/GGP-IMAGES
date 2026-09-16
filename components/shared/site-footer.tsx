@@ -47,7 +47,7 @@ export function SiteFooter() {
                   href={link.href}
                   className="group inline-flex items-center text-card/90 transition-colors duration-200 hover:text-secondary"
                 >
-                  <span className="transition-transform duration-200 group-hover:translate-x-1 text- tracking-wide font-semibold font-sans">
+                  <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide font-semibold font-sans">
                     {link.label}
                   </span>
                 </Link>
@@ -72,7 +72,7 @@ export function SiteFooter() {
             <Link href='https://maps.app.goo.gl/aKyiTKn95ta1YupU9' target="_blank" className="flex items-start gap-3 text-white/70 hover:underline underline-offset-3">
               <LuMapPin className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
               <span>
-                ZEN Filling Station via Apremdo New Market, off Apllo,
+                ZEN Filling Station via Apremdo New Market, off Apollo,
                 <br />
                 Anaji Rd, Takoradi
               </span>
@@ -103,15 +103,15 @@ export function SiteFooter() {
         <p className="text-sm text-white/50">
           © {new Date().getFullYear()} GGP Images. All rights reserved.
         </p>
-        <Link href='https://umeh.vercel.app' className="text-card/70 text-sm transition-colors hover:text-card">Built by DUBEM</Link>
-        {/* <div className="flex gap-6 text-sm">
-          <Link href="/privacy" className="text-white/50 transition-colors hover:text-white">
+        <div className="flex flex-wrap items-center gap-6 text-sm">
+          <Link href="/privacy" className="text-white/60 transition-colors hover:text-white hover:underline underline-offset-4">
             Privacy Policy
           </Link>
-          <Link href="/terms" className="text-white/50 transition-colors hover:text-white">
-            Terms &amp; Conditions
+          <Link href="/terms" className="text-white/60 transition-colors hover:text-white hover:underline underline-offset-4">
+            Terms of Service
           </Link>
-        </div> */}
+        </div>
+        <Link href='https://umeh.vercel.app' className="text-card/70 text-sm transition-colors hover:text-card">Built by DUBEM</Link>
       </div>
     </footer>
   );
