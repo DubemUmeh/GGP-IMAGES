@@ -205,20 +205,20 @@ All your printing Solutions are right here.
           <p className="text-sm text-white/50">
             © {new Date().getFullYear()} GGP Images. All rights reserved.
           </p>
-          <Link
-            href="https://umeh.vercel.app"
-            className="text-card/70 text-sm transition-colors hover:text-card"
-          >
-            Built by DUBEM
-          </Link>
-          {/* <div className="flex gap-6 text-sm">
+          <div className="flex gap-6 text-sm">
             <Link href="/privacy" className="text-white/50 transition-colors hover:text-white">
               Privacy Policy
             </Link>
             <Link href="/terms" className="text-white/50 transition-colors hover:text-white">
               Terms &amp; Conditions
             </Link>
-          </div> */}
+          </div>
+          <Link
+            href="https://umeh.vercel.app"
+            className="text-card/70 text-sm transition-colors hover:text-card"
+          >
+            Built by DUBEM
+          </Link>
         </div>
       </div>
     </footer>
