@@ -5,6 +5,15 @@ import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 import Image from "next/image";
 import { siteConfig } from "@/lib/seo";
 
+const quickLinks = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Booking", href: "/booking" },
+];
+
 const serviceColumns = [
   {
     heading: "Large Format Printing",
@@ -71,7 +80,7 @@ export function SiteFooter() {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-brand-purple-fixed-dim/10 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Top block: brand + service columns + contact, grid layout like Bechar footer */}
+        {/* Top block: brand + quick links + service columns + contact, grid layout like Bechar footer */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b border-white/10">
           {/* Brand + tagline + socials (untouched logo) */}
           <Reveal className="w-full md:col-span-3 space-y-0">
@@ -104,8 +113,29 @@ All your printing Solutions are right here.
             </div>
           </Reveal>
 
+          {/* Quick Links */}
+          <Reveal delay={0.06} className="mt-16 sm:mt-0 md:col-span-2">
+            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope">
+              Quick Links
+            </h4>
+            <ul className="space-y-3 font-inter">
+              {quickLinks.map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="group inline-flex items-center text-card/90 transition-colors duration-200 hover:text-secondary"
+                  >
+                    <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide font-semibold">
+                      {link.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
           {/* Service columns with subdivisions — directly under socials on small screens */}
-          <div className="mt-16 sm:mt-0 md:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 font-inter">
+          <div className="mt-4 sm:mt-0 md:col-span-4 grid grid-cols-2 gap-8 font-inter">
             {serviceColumns.map((col, i) => (
               <Reveal key={col.heading} delay={0.04 * (i + 1)} className="flex flex-col gap-3">
                 <Link
@@ -134,7 +164,7 @@ All your printing Solutions are right here.
           </div>
 
           {/* Contact */}
-          <Reveal delay={0.18} className="md:col-span-3">
+          <Reveal delay={0.18} className="mt-4 sm:mt-0 md:col-span-3">
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope">
               Contact Us
             </h4>
