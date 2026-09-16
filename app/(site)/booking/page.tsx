@@ -66,6 +66,11 @@ export default function BookingPage() {
     [selectedServices]
   );
 
+  const hasSubdivisionOptions = useMemo(
+    () => subdivisionGroups.some((g) => g.items.length > 0),
+    [subdivisionGroups]
+  );
+
   // Drop any selected subdivisions that belonged to a service the user has
   // since deselected, so stale selections can't linger and get submitted.
   function handleServicesChange(names: string[]) {
@@ -97,7 +102,7 @@ export default function BookingPage() {
       setError("Please select at least one service.");
       return;
     }
-    if (subdivisionGroups.length > 0 && selectedSubdivisions.length === 0) {
+    if (hasSubdivisionOptions && selectedSubdivisions.length === 0) {
       setError("Please select at least one subdivision.");
       return;
     }
@@ -198,7 +203,7 @@ export default function BookingPage() {
                   />
                 </div>
 
-                {subdivisionGroups.length > 0 && (
+                {hasSubdivisionOptions && (
                   <div className="mb-8">
                     <GroupedMultiSelectField
                       label="Subdivision"

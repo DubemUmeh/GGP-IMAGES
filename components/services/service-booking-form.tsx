@@ -55,7 +55,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setStatus(null);
-    if (selectedSubdivisions.length === 0) {
+    if (subdivisions.length > 0 && selectedSubdivisions.length === 0) {
       setStatus("Please select at least one subdivision.");
       return;
     }
@@ -138,13 +138,15 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
               className="bg-muted uppercase text-black tracking-wide font-semibold text-base"
             />
           </div>
-          <MultiSelectField
-            label="Subdivision"
-            placeholder="Select subdivisions"
-            values={subdivisionLabels}
-            onChange={handleSubdivisionChange}
-            items={subdivisionNameList}
-          />
+          {subdivisions.length > 0 && (
+            <MultiSelectField
+              label="Subdivision"
+              placeholder="Select subdivisions"
+              values={subdivisionLabels}
+              onChange={handleSubdivisionChange}
+              items={subdivisionNameList}
+            />
+          )}
         </div>
         <div className="grid gap-5 md:grid-cols-2 *:text-black">
           <Input
