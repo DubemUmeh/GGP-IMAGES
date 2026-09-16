@@ -17,7 +17,7 @@ export default function TermsOfServicePage() {
     { name: "Terms of Service", path: "/terms" },
   ];
 
-  const lastUpdated = "May 20, 2024";
+  const lastUpdated = "Sep 16, 2026";
 
   return (
     <main className="bg-popover min-h-screen">
