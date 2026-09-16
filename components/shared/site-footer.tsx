@@ -84,7 +84,7 @@ export function SiteFooter() {
         {/* Top block: brand + service columns + contact, grid layout like Bechar footer */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b border-white/10">
           {/* Brand + tagline + socials (untouched logo) */}
-          <Reveal className="md:col-span-3 space-y-0">
+          <Reveal className="w-full md:col-span-3 space-y-0">
             <div className="w-full h-full">
               <Image
                 src="/ggp-no-bg.png"
@@ -96,8 +96,9 @@ export function SiteFooter() {
               />
             </div>
             <p className="max-w-xs md:relative md:left-0 md:-top-10 text-base leading-relaxed tracking-wider text-white/70">
-              Premium printing and branding solutions that make your business
-              unforgettable.
+              {/* Premium printing and branding solutions that make your business
+              unforgettable. */}
+All your printing Solutions are right here.
             </p>
             <div className="flex items-center gap-3 md:relative md:left-0 md:-top-6">
               {socials.map(({ label, href, icon: Icon }) => (
