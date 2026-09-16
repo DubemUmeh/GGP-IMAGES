@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
     { name: "Privacy Policy", path: "/privacy" },
   ];
 
-  const lastUpdated = "May 20, 2024";
+  const lastUpdated = "Sep 16, 2026";
 
   return (
     <main className="bg-popover min-h-screen">
