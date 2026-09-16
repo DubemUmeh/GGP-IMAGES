@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiFileDropzone } from "@/components/booking/media-drop-zone";
+import { TermsPrivacyConsent } from "@/components/shared/terms-privacy-consent";
 import { flattenSubdivisions, getServiceByName, serviceOptions, buildSubdivisionKey, parseSubdivisionKey } from "@/lib/services";
 import { todayUTCDateString } from "@/lib/date";
 
@@ -24,6 +25,8 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
 export default function BookingPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedSubdivisions, setSelectedSubdivisions] = useState<string[]>([]);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [consentError, setConsentError] = useState<string | null>(null);
   const [form, setForm] = useState({
     projectName: "",
     quantity: "",
@@ -88,6 +91,7 @@ export default function BookingPage() {
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
+    setConsentError(null);
 
     if (selectedServices.length === 0) {
       setError("Please select at least one service.");
@@ -95,6 +99,10 @@ export default function BookingPage() {
     }
     if (subdivisionGroups.length > 0 && selectedSubdivisions.length === 0) {
       setError("Please select at least one subdivision.");
+      return;
+    }
+    if (!acceptedTerms) {
+      setConsentError("You must agree to the Privacy Policy and Terms of Service.");
       return;
     }
 
@@ -285,6 +293,18 @@ export default function BookingPage() {
                       <Input id="phone" name="phone" type="tel" placeholder="+233 20 123 4567" value={form.phone} onChange={updateField} required />
                     </div>
                   </div>
+                </div>
+
+                <div className="mt-8">
+                  <TermsPrivacyConsent
+                    checked={acceptedTerms}
+                    onCheckedChange={(checked) => {
+                      setAcceptedTerms(checked);
+                      if (checked) setConsentError(null);
+                    }}
+                    error={consentError}
+                    id="main-booking-terms-consent"
+                  />
                 </div>
 
                 {error && (
