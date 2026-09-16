@@ -9,61 +9,51 @@ const serviceColumns = [
   {
     heading: "Large Format Printing",
     href: "/services/large-format-printing",
-    links: [
-      { label: "Banners", href: "/services/large-format-printing/banners" },
-      { label: "Billboards", href: "/services/large-format-printing/billboards" },
-      { label: "Backdrops", href: "/services/large-format-printing/backdrops" },
-      { label: "Roll-up Banners", href: "/services/large-format-printing/roll-up-banners" },
-    ],
+    links: ["Banners", "Billboards", "Backdrops", "Roll-up Banners"],
   },
   {
     heading: "Textile Printing",
     href: "/services/textile-printing",
-    links: [
-      { label: "T-Shirt Printing", href: "/services/textile-printing/t-shirt-printing" },
-      { label: "DTF Printing", href: "/services/textile-printing/dtf-printing" },
-      { label: "UV DTF Printing", href: "/services/textile-printing/uv-dtf-printing" },
-      { label: "School Uniform Printing", href: "/services/textile-printing/school-uniform-printing" },
-    ],
+    links: ["T-Shirt Printing", "DTF Printing", "UV DTF Printing", "School Uniform Printing"],
   },
   {
     heading: "Embroidery",
     href: "/services/embroidery",
     links: [
-      { label: "Polo Shirt Embroidery", href: "/services/embroidery/polo-shirt-embroidery" },
-      { label: "Corporate Uniform Embroidery", href: "/services/embroidery/corporate-uniform-embroidery" },
-      { label: "School Uniform Embroidery", href: "/services/embroidery/school-uniform-embroidery" },
-      { label: "Jacket Embroidery", href: "/services/embroidery/jacket-embroidery" },
+      "Polo Shirt Embroidery",
+      "Corporate Uniform Embroidery",
+      "School Uniform Embroidery",
+      "Jacket Embroidery",
     ],
   },
   {
     heading: "Digital Printing",
     href: "/services/digital-printing",
     links: [
-      { label: "ID Cards & Access Cards", href: "/services/digital-printing/id-cards-and-access-cards" },
-      { label: "Invitation Cards", href: "/services/digital-printing/invitation-cards" },
-      { label: "Certificate & Testimonials", href: "/services/digital-printing/certificate-and-testimonials" },
-      { label: "Business Cards", href: "/services/digital-printing/business-cards" },
+      "ID Cards & Access Cards",
+      "Invitation Cards",
+      "Certificate & Testimonials",
+      "Business Cards",
     ],
   },
   {
     heading: "Branding",
     href: "/services/branding",
     links: [
-      { label: "Corporate Branding", href: "/services/branding/corporate-branding" },
-      { label: "Logo Design & Brand Identity", href: "/services/branding/logo-design-and-brand-identity" },
-      { label: "Business Rebranding", href: "/services/branding/business-rebranding" },
-      { label: "Packaging Branding", href: "/services/branding/packaging-branding" },
+      "Corporate Branding",
+      "Logo Design & Brand Identity",
+      "Business Rebranding",
+      "Packaging Branding",
     ],
   },
   {
     heading: "Visual Production",
     href: "/services/visual-production",
     links: [
-      { label: "Graphic Design", href: "/services/visual-production/graphic-design" },
-      { label: "Social Media Designs", href: "/services/visual-production/social-media-designs" },
-      { label: "Website Design & Development", href: "/services/visual-production/website-design-and-development" },
-      { label: "Digital Marketing", href: "/services/visual-production/digital-marketing" },
+      "Graphic Design",
+      "Social Media Designs",
+      "Website Design & Development",
+      "Digital Marketing",
     ],
   },
 ];
@@ -125,15 +115,15 @@ All your printing Solutions are right here.
                   {col.heading}
                 </Link>
                 <ul className="space-y-2">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
+                  {col.links.map((label) => (
+                    <li key={label}>
                       <Link
-                        href={link.href}
+                        href={col.href}
                         className="group inline-flex items-start gap-2 text-sm text-card/90 transition-colors duration-200 hover:text-secondary"
                       >
                         <span className="text-secondary leading-5">•</span>
                         <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide">
-                          {link.label}
+                          {label}
                         </span>
                       </Link>
                     </li>
