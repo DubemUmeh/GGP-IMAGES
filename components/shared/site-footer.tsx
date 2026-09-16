@@ -12,6 +12,7 @@ const quickLinks = [
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
   { label: "Booking", href: "/booking" },
+  
 ];
 
 const serviceColumns = [
