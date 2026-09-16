@@ -49,7 +49,7 @@ export function WhyChooseUs() {
       <div className="mx-auto w-[min(100%,76rem)]">
         <Reveal>
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-muted-foreground shadow-[0_8px_20px_rgba(15,23,42,0.05)]">
-            Why GGP
+            Why GGP IMAGES 
           </div>
         </Reveal>
         <Reveal delay={0.08} className="mt-6 max-w-xl">
