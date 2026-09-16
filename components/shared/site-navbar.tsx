@@ -16,13 +16,13 @@ const links = [
     label: "Services",
     href: "/services",
     children: [
-      { label: "Digital Printing", href: "/services/digital-printing" },
-      { label: "Textile Printing", href: "/services/textile-printing" },
-      { label: "Embroidery", href: "/services/embroidery" },
       {
         label: "Large Format Printing",
         href: "/services/large-format-printing",
       },
+      { label: "Textile Printing", href: "/services/textile-printing" },
+      { label: "Embroidery", href: "/services/embroidery" },
+      { label: "Digital Printing", href: "/services/digital-printing" },
       { label: "Visual Production", href: "/services/visual-production" },
       { label: "Branding & Design", href: "/services/branding" },
     ],
