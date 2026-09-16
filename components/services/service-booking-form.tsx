@@ -5,6 +5,7 @@ import { FaWhatsapp } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { TermsPrivacyConsent } from "@/components/shared/terms-privacy-consent";
 import { MultiSelectField } from "./multi-select";
 import type { CoreService } from "@/lib/services";
 import { flattenSubdivisions, buildSubdivisionKey } from "@/lib/services";
@@ -18,6 +19,8 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
   );
   const [status, setStatus] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [consentError, setConsentError] = useState<string | null>(null);
   const [form, setForm] = useState({
     projectName: service.name,
     quantity: "",
@@ -56,6 +59,11 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
       setStatus("Please select at least one subdivision.");
       return;
     }
+    if (!acceptedTerms) {
+      setConsentError("You must agree to the Privacy Policy and Terms of Service.");
+      return;
+    }
+    setConsentError(null);
     setPending(true);
     const body = new FormData();
     body.append("services", service.name);
@@ -69,7 +77,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
       .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
-    if (response.ok)
+    if (response.ok) {
       setForm({
         projectName: service.name,
         quantity: "",
@@ -80,6 +88,8 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
         email: "",
         phone: "",
       });
+      setAcceptedTerms(false);
+    }
   }
 
   // MultiSelectField works with display labels, so map slug<->name here
@@ -195,6 +205,17 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
           value={form.description}
           onChange={updateField}
         />
+
+        <TermsPrivacyConsent
+          checked={acceptedTerms}
+          onCheckedChange={(checked) => {
+            setAcceptedTerms(checked);
+            if (checked) setConsentError(null);
+          }}
+          error={consentError}
+          id="service-booking-terms-consent"
+        />
+
         <button
           disabled={pending}
           className="rounded-xl bg-primary py-4 font-semibold font-manrope text-primary-foreground hover:bg-brand-purple-container disabled:opacity-60"

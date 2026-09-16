@@ -7,16 +7,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiSelectField } from "@/components/booking/multi-select";
+import { TermsPrivacyConsent } from "@/components/shared/terms-privacy-consent";
 import { serviceOptions } from "@/lib/services";
-
 
 export function ContactForm() {
   const [status, setStatus] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [consentError, setConsentError] = useState<string | null>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (!acceptedTerms) {
+      setConsentError("You must agree to the Privacy Policy and Terms of Service.");
+      return;
+    }
+    setConsentError(null);
     setPending(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -27,13 +34,18 @@ export function ContactForm() {
       source: "Contact page form",
       services: selectedServices,
     };
-    const response = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
     if (response.ok) {
       form.reset();
       setSelectedServices([]);
+      setAcceptedTerms(false);
     }
   }
 
@@ -79,6 +91,18 @@ export function ContactForm() {
             required
           />
         </div>
+
+        <TermsPrivacyConsent
+          checked={acceptedTerms}
+          onCheckedChange={(checked) => {
+            setAcceptedTerms(checked);
+            if (checked) setConsentError(null);
+          }}
+          error={consentError}
+          id="contact-terms-consent"
+          textClassName="text-card/90"
+          linkClassName="text-card underline"
+        />
 
         <Button
           type="submit"
