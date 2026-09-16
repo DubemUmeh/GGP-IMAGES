@@ -95,7 +95,7 @@ export function SiteFooter() {
                 className="drop-shadow-2xl drop-shadow-card"
               />
             </div>
-            <p className="max-w-xs md:relative md:left-0 md:-top-10 text-base leading-relaxed tracking-wider text-white/70">
+            <p className="max-w-xs md:relative md:left-0 -top-10 text-base leading-relaxed tracking-wider text-white/70">
               {/* Premium printing and branding solutions that make your business
               unforgettable. */}
 All your printing Solutions are right here.
