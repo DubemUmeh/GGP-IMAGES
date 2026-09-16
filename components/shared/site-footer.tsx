@@ -115,7 +115,7 @@ All your printing Solutions are right here.
           </Reveal>
 
           {/* Service columns with subdivisions — directly under socials on small screens */}
-          <div className="mt-10 sm:mt-0 md:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 font-inter">
+          <div className="mt-16 sm:mt-0 md:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 font-inter">
             {serviceColumns.map((col, i) => (
               <Reveal key={col.heading} delay={0.04 * (i + 1)} className="flex flex-col gap-3">
                 <Link
