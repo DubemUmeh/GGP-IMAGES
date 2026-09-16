@@ -83,7 +83,7 @@ export function SiteFooter() {
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Top block: brand + service columns + contact, grid layout like Bechar footer */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b border-white/10">
-          {/* Brand + tagline (untouched) */}
+          {/* Brand + tagline + socials (untouched logo) */}
           <Reveal className="md:col-span-3 space-y-0">
             <div className="w-full h-full">
               <Image
@@ -113,13 +113,13 @@ export function SiteFooter() {
             </div>
           </Reveal>
 
-          {/* Service columns with subdivisions */}
+          {/* Service columns with subdivisions — directly under socials on small screens */}
           <div className="md:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8 font-inter">
             {serviceColumns.map((col, i) => (
               <Reveal key={col.heading} delay={0.04 * (i + 1)} className="flex flex-col gap-3">
                 <Link
                   href={col.href}
-                  className="text-sm font-semibold uppercase tracking-widest text-card/70 font-manrope hover:text-secondary transition-colors"
+                  className="text-sm font-semibold text-secondary font-manrope hover:underline underline-offset-3"
                 >
                   {col.heading}
                 </Link>
@@ -128,8 +128,9 @@ export function SiteFooter() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="group inline-flex items-center text-sm text-card/90 transition-colors duration-200 hover:text-secondary"
+                        className="group inline-flex items-start gap-2 text-sm text-card/90 transition-colors duration-200 hover:text-secondary"
                       >
+                        <span className="text-secondary leading-5">•</span>
                         <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide">
                           {link.label}
                         </span>
@@ -186,7 +187,7 @@ export function SiteFooter() {
             href="https://umeh.vercel.app"
             className="text-card/70 text-sm transition-colors hover:text-card"
           >
-            Built by <span className='font-semibold'>DUBEM</span>
+            Built by DUBEM
           </Link>
           {/* <div className="flex gap-6 text-sm">
             <Link href="/privacy" className="text-white/50 transition-colors hover:text-white">
