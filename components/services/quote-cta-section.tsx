@@ -26,7 +26,9 @@ export function QuoteCtaSection() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!acceptedTerms) {
-      setConsentError("You must agree to the Privacy Policy and Terms of Service.");
+      setConsentError(
+        "You must agree to the Privacy Policy and Terms of Service.",
+      );
       return;
     }
     setConsentError(null);
@@ -45,7 +47,9 @@ export function QuoteCtaSection() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    const data = await response.json().catch(() => ({ message: "Something went wrong." }));
+    const data = await response
+      .json()
+      .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
     if (response.ok) {
@@ -64,13 +68,17 @@ export function QuoteCtaSection() {
               Ready to Bring Your Brand to Life?
             </h2>
             <p className="mb-8 max-w-lg text-lg font-inter text-white/80">
-              Get a custom quote tailored to your project&apos;s exact specifications. Our team of
-              experts is ready to help you choose the right materials, finishes, and printing
-              techniques to achieve flawless results.
+              Get a custom quote tailored to your project&apos;s exact
+              specifications. Our team of experts is ready to help you choose
+              the right materials, finishes, and printing techniques to achieve
+              flawless results.
             </p>
             <div className="mb-8 space-y-4 font-inter">
               {highlights.map((item) => (
-                <div key={item} className="flex items-center gap-3 text-white/90">
+                <div
+                  key={item}
+                  className="flex items-center gap-3 text-white/90"
+                >
                   <LuCircleCheck className="h-5 w-5 text-brand-orange-fixed-dim" />
                   <span>{item}</span>
                 </div>
@@ -79,12 +87,20 @@ export function QuoteCtaSection() {
           </div>
 
           <div className="glass-panel rounded-2xl p-3 md:p-6 md:p-8">
-            <h3 className="mb-6 text-xl font-semibold font-manrope text-primary">Request a Custom Quote</h3>
+            <h3 className="mb-6 text-xl font-semibold font-manrope text-primary">
+              Request a Custom Quote
+            </h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-1">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" name="name" placeholder="John Doe" className="bg-card/80" required />
+                  <Input
+                    id="name"
+                    name="name"
+                    placeholder="John Doe"
+                    className="bg-card/80"
+                    required
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="email">Email Address</Label>
@@ -137,7 +153,14 @@ export function QuoteCtaSection() {
                 {pending ? "Sending..." : "Submit Request"}
                 <LuSend className="ml-1 h-4 w-4" />
               </Button>
-              {status && <p className="text-sm font-semibold font-inter text-primary" aria-live="polite">{status}</p>}
+              {status && (
+                <p
+                  className="text-sm font-semibold font-inter text-primary"
+                  aria-live="polite"
+                >
+                  {status}
+                </p>
+              )}
             </form>
           </div>
         </div>

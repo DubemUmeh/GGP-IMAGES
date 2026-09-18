@@ -48,8 +48,8 @@ export function HeroSection() {
   return (
     // possible_hero's idea: the hero is a framed card, not an edge-to-edge
     // section — a slim 10-30px gutter of the page background shows around it.
-    <section className="w-full bg-secondary p-2.5 sm:p-5">
-      <div className="relative max-h-[85dvh] w-full overflow-hidden rounded-[2rem] border border-white/30 shadow-2xl">
+    <section className="w-full bg-popover p-2.5 sm:p-5">
+      <div className="relative max-h-[85dvh] w-full overflow-hidden rounded-[2rem] border-2 border-secondary shadow-2xl">
         {/* MaybeHero's full-bleed background image, filling the card */}
         <div className="absolute inset-0 z-0">
           <Image

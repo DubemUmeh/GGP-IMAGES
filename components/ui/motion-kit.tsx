@@ -33,7 +33,7 @@ export function Reveal({
 }
 
 export function ArrowCta({
-  href,
+  href = "/booking",
   label,
   onClick,
   className = "",

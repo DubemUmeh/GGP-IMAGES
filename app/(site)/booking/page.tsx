@@ -2,21 +2,31 @@
 
 import { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import Image from "next/image";
+import { ArrowRight, CalendarDays, Clock3, Lock } from "lucide-react";
 import {
-  ArrowRight,
-  CalendarDays,
-  Clock3,
-  Lock,
-} from "lucide-react";
-import { Feature, FormSection, SummaryRow, Reason, SuccessMessage } from "@/components/booking/ui";
+  Feature,
+  FormSection,
+  SummaryRow,
+  Reason,
+  SuccessMessage,
+} from "@/components/booking/ui";
 import { MultiSelectField } from "@/components/booking/multi-select";
-import { GroupedMultiSelectField, type OptionGroup } from "@/components/booking/grouped-multi-select";
+import {
+  GroupedMultiSelectField,
+  type OptionGroup,
+} from "@/components/booking/grouped-multi-select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MultiFileDropzone } from "@/components/booking/media-drop-zone";
 import { TermsPrivacyConsent } from "@/components/shared/terms-privacy-consent";
-import { flattenSubdivisions, getServiceByName, serviceOptions, buildSubdivisionKey, parseSubdivisionKey } from "@/lib/services";
+import {
+  flattenSubdivisions,
+  getServiceByName,
+  serviceOptions,
+  buildSubdivisionKey,
+  parseSubdivisionKey,
+} from "@/lib/services";
 import { todayUTCDateString } from "@/lib/date";
 
 const MAX_FILES = 5;
@@ -24,7 +34,9 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
 
 export default function BookingPage() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedSubdivisions, setSelectedSubdivisions] = useState<string[]>([]);
+  const [selectedSubdivisions, setSelectedSubdivisions] = useState<string[]>(
+    [],
+  );
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
   const [form, setForm] = useState({
@@ -63,7 +75,7 @@ export default function BookingPage() {
             })),
           };
         }),
-    [selectedServices]
+    [selectedServices],
   );
 
   // Drop any selected subdivisions that belonged to a service the user has
@@ -75,7 +87,7 @@ export default function BookingPage() {
         names
           .map((n) => getServiceByName(n)?.slug)
           .filter((s): s is NonNullable<typeof s> => Boolean(s))
-          .map((s) => String(s))
+          .map((s) => String(s)),
       );
       return current.filter((key) => {
         const parsed = parseSubdivisionKey(key);
@@ -84,8 +96,13 @@ export default function BookingPage() {
     });
   }
 
-  function updateField(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+  function updateField(
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) {
+    setForm((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -102,7 +119,9 @@ export default function BookingPage() {
       return;
     }
     if (!acceptedTerms) {
-      setConsentError("You must agree to the Privacy Policy and Terms of Service.");
+      setConsentError(
+        "You must agree to the Privacy Policy and Terms of Service.",
+      );
       return;
     }
 
@@ -115,7 +134,9 @@ export default function BookingPage() {
       files.forEach((file) => body.append("designs", file));
 
       const res = await fetch("/api/booking", { method: "POST", body });
-      const data = await res.json().catch(() => ({ message: "Something went wrong." }));
+      const data = await res
+        .json()
+        .catch(() => ({ message: "Something went wrong." }));
 
       if (!res.ok) {
         setError(data.message || "Something went wrong. Please try again.");
@@ -132,10 +153,14 @@ export default function BookingPage() {
 
   const subdivisionSummaryLabels = selectedSubdivisions.map((key) => {
     const parsed = parseSubdivisionKey(key);
-    const group = parsed ? subdivisionGroups.find((g) => g.key === parsed.serviceSlug) : undefined;
+    const group = parsed
+      ? subdivisionGroups.find((g) => g.key === parsed.serviceSlug)
+      : undefined;
     const item = group?.items.find((i) => i.value === key);
     const subLabel = item?.label ?? parsed?.subdivisionSlug ?? key;
-    return subdivisionGroups.length > 1 && group ? `${group.label} — ${subLabel}` : subLabel;
+    return subdivisionGroups.length > 1 && group
+      ? `${group.label} — ${subLabel}`
+      : subLabel;
   });
 
   return (
@@ -148,9 +173,9 @@ export default function BookingPage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-30"
+          className="object-cover opacity-50"
         />
-        <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/25 via-black/15 to-black/10" />
 
         <div className="relative mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-28">
           <div className="max-w-3xl">
@@ -160,18 +185,31 @@ export default function BookingPage() {
             </span>
 
             <h1 className="mt-6 text-4xl font-extrabold font-manrope leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-              Let&apos;s Bring Your <span className="text-secondary">Project to Life.</span>
+              Let&apos;s Bring Your{" "}
+              <span className="text-secondary">Project to Life.</span>
             </h1>
 
             <p className="mt-5 max-w-2xl text-base font-inter leading-relaxed text-white/70 sm:text-lg">
-              Schedule your order with ease. Choose your service, provide your project details,
-              and we&apos;ll handle the rest.
+              Schedule your order with ease. Choose your service, provide your
+              project details, and we&apos;ll handle the rest.
             </p>
 
             <div className="mt-10 grid max-w-2xl gap-5 sm:grid-cols-3">
-              <Feature icon={<Clock3 size={18} />} title="Quick & Easy" text="Book in minutes" />
-              <Feature icon={<Lock size={18} />} title="Secure & Reliable" text="Your data is safe" />
-              <Feature icon={<CalendarDays size={18} />} title="On-time Delivery" text="We value your time" />
+              <Feature
+                icon={<Clock3 size={18} />}
+                title="Quick & Easy"
+                text="Book in minutes"
+              />
+              <Feature
+                icon={<Lock size={18} />}
+                title="Secure & Reliable"
+                text="Your data is safe"
+              />
+              <Feature
+                icon={<CalendarDays size={18} />}
+                title="On-time Delivery"
+                text="We value your time"
+              />
             </div>
           </div>
         </div>
@@ -238,7 +276,9 @@ export default function BookingPage() {
                   </div>
 
                   <div className="flex flex-col gap-2 sm:col-span-2">
-                    <Label htmlFor="description">Description / Requirements</Label>
+                    <Label htmlFor="description">
+                      Description / Requirements
+                    </Label>
                     <Textarea
                       id="description"
                       name="description"
@@ -268,11 +308,24 @@ export default function BookingPage() {
                 <div className="mt-8 grid gap-5 sm:grid-cols-2">
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="date">Preferred Date</Label>
-                    <Input id="date" name="date" type="date" value={form.date} onChange={updateField} />
+                    <Input
+                      id="date"
+                      name="date"
+                      type="date"
+                      value={form.date}
+                      onChange={updateField}
+                    />
                   </div>
                   <div className="flex flex-col gap-2">
                     <Label htmlFor="time">Preferred Time</Label>
-                    <Input id="time" name="time" type="time" value={form.time} onChange={updateField} isToday={form.time === todayUTCDateString()} />
+                    <Input
+                      id="time"
+                      name="time"
+                      type="time"
+                      value={form.time}
+                      onChange={updateField}
+                      isToday={form.time === todayUTCDateString()}
+                    />
                   </div>
                 </div>
 
@@ -282,15 +335,38 @@ export default function BookingPage() {
                   <div className="grid gap-5 sm:grid-cols-2">
                     <div className="flex flex-col gap-2">
                       <Label htmlFor="name">Full Name</Label>
-                      <Input id="name" name="name" placeholder="Your full name" value={form.name} onChange={updateField} required />
+                      <Input
+                        id="name"
+                        name="name"
+                        placeholder="Your full name"
+                        value={form.name}
+                        onChange={updateField}
+                        required
+                      />
                     </div>
                     <div className="flex flex-col gap-2">
                       <Label htmlFor="email">Email Address</Label>
-                      <Input id="email" name="email" type="email" placeholder="you@example.com" value={form.email} onChange={updateField} required />
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@example.com"
+                        value={form.email}
+                        onChange={updateField}
+                        required
+                      />
                     </div>
                     <div className="flex flex-col gap-2 sm:col-span-2">
                       <Label htmlFor="phone">Phone Number</Label>
-                      <Input id="phone" name="phone" type="tel" placeholder="+233 20 123 4567" value={form.phone} onChange={updateField} required />
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+233 20 123 4567"
+                        value={form.phone}
+                        onChange={updateField}
+                        required
+                      />
                     </div>
                   </div>
                 </div>
@@ -338,38 +414,75 @@ export default function BookingPage() {
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
                   <CalendarDays size={19} />
                 </div>
-                <h2 className="font-bold text-card-foreground">Booking Summary</h2>
+                <h2 className="font-bold text-card-foreground">
+                  Booking Summary
+                </h2>
               </div>
 
               <div className="mt-6 space-y-5">
-                <SummaryRow label="Services" value={selectedServices.length ? selectedServices.join(", ") : "Not selected"} />
-                <SummaryRow label="Subdivisions" value={subdivisionSummaryLabels.length ? subdivisionSummaryLabels.join(", ") : "—"} />
+                <SummaryRow
+                  label="Services"
+                  value={
+                    selectedServices.length
+                      ? selectedServices.join(", ")
+                      : "Not selected"
+                  }
+                />
+                <SummaryRow
+                  label="Subdivisions"
+                  value={
+                    subdivisionSummaryLabels.length
+                      ? subdivisionSummaryLabels.join(", ")
+                      : "—"
+                  }
+                />
                 <SummaryRow label="Quantity" value={form.quantity || "—"} />
                 <SummaryRow label="Date" value={form.date || "—"} />
                 <SummaryRow label="Time" value={form.time || "—"} />
-                <SummaryRow label="Files" value={files.length ? `${files.length} attached` : "None"} />
+                <SummaryRow
+                  label="Files"
+                  value={files.length ? `${files.length} attached` : "None"}
+                />
               </div>
 
               <div className="mt-6 border-t border-border pt-5">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-sm font-medium text-muted-foreground">Estimate</span>
-                  <span className="text-xl font-black text-secondary">GH₵ 0.00</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Estimate
+                  </span>
+                  <span className="text-xl font-black text-secondary">
+                    GH₵ 0.00
+                  </span>
                 </div>
               </div>
 
               <p className="mt-4 text-xs leading-5 text-muted-foreground">
-                Final pricing depends on the service, materials, quantity, specifications, and
-                delivery requirements.
+                Final pricing depends on the service, materials, quantity,
+                specifications, and delivery requirements.
               </p>
             </div>
 
             <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-              <h2 className="font-bold text-card-foreground">Why Book With Us?</h2>
+              <h2 className="font-bold text-card-foreground">
+                Why Book With Us?
+              </h2>
               <div className="mt-5 space-y-5">
-                <Reason title="Professional Support" text="We're here to help you every step of the way." />
-                <Reason title="Quality Guarantee" text="Top-notch quality on every order." />
-                <Reason title="Fast Turnaround" text="Quick production and timely delivery." />
-                <Reason title="Customer Satisfaction" text="We put your satisfaction first." />
+                <Reason
+                  title="Professional Support"
+                  text="We're here to help you every step of the way."
+                />
+                <Reason
+                  title="Quality Guarantee"
+                  text="Top-notch quality on every order."
+                />
+                <Reason
+                  title="Fast Turnaround"
+                  text="Quick production and timely delivery."
+                />
+                <Reason
+                  title="Customer Satisfaction"
+                  text="We put your satisfaction first."
+                />
               </div>
             </div>
           </aside>

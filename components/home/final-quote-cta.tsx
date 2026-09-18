@@ -15,16 +15,16 @@ export function FinalQuoteCta() {
               What will your job cost? Honestly — it depends.
             </h2>
             <p className="text-base font-inter leading-relaxed text-white/70">
-              Material, quantity, finishing and turnaround all move the
-              price, so we don&apos;t quote off a price list — we quote off
-              your actual job. Tell us what you need and we&apos;ll come
-              back with a number you can trust.
+              Material, quantity, finishing and turnaround all move the price,
+              so we don&apos;t quote off a price list — we quote off your actual
+              job. Tell us what you need and we&apos;ll come back with a number
+              you can trust.
             </p>
             <div className="mt-2 flex flex-wrap items-center justify-center gap-4">
               <ArrowCta
                 label="Request a Free Quote"
                 as="link"
-                href="/contact"
+                href="/booking"
                 className="bg-secondary hover:bg-secondary/90 tracking-wide"
               />
               <div className="glass-panel flex items-center gap-2 rounded-full font-inter tracking-wide border border-white/20 px-5 py-3 text-xs text-white">

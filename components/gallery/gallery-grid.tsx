@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import { Badge } from '@/components/ui/badge';
-import { query } from '@/lib/admin/db';
-import { optimizedImage, optimizedVideo, poster } from '@/lib/admin/cloudinary';
+import Image from "next/image";
+import { Badge } from "@/components/ui/badge";
+import { query } from "@/lib/admin/db";
+import { optimizedImage, optimizedVideo, poster } from "@/lib/admin/cloudinary";
 
 type PublicGalleryItem = {
   id: string;
@@ -19,11 +19,11 @@ async function getPublicGallery() {
   if (!process.env.DATABASE_URL) return [];
   try {
     const r = await query<PublicGalleryItem>(
-      'select id,title,description,type,cloudinary_public_id,cloudinary_url,width,height,alt_text from gallery_items where is_published=true order by sort_order, created_at desc',
+      "select id,title,description,type,cloudinary_public_id,cloudinary_url,width,height,alt_text from gallery_items where is_published=true order by sort_order, created_at desc",
     );
     return r.rows;
   } catch (error) {
-    console.error('Public gallery unavailable', error);
+    console.error("Public gallery unavailable", error);
     return [];
   }
 }
@@ -33,7 +33,7 @@ export async function VideoGallery() {
 
   return (
     <section className="relative h-full w-full overflow-hidden bg-secondary p-3 py-5">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-brand-tertiary bg-gradient-hero px-5 py-16 md:px-10 md:py-24">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-brand-tertiary px-5 py-16 md:px-10 md:py-24">
         <div className="relative z-10 mx-auto mb-12 max-w-3xl text-center">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm font-inter">
             <span className="h-2 w-2 rounded-full bg-secondary" />
@@ -57,20 +57,20 @@ export async function VideoGallery() {
         ) : (
           <div className="relative z-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {items.map((item) => {
-              const isImage = item.type.toLowerCase() === 'image';
+              const isImage = item.type.toLowerCase() === "image";
               return (
                 <article
                   key={item.id}
                   className="card-shadow group flex flex-col overflow-hidden rounded-2xl border-2 border-secondary bg-card p-4 transition-transform duration-300 hover:-translate-y-2"
                 >
                   <Badge className="mb-3 w-fit rounded-full bg-secondary text-secondary-foreground hover:bg-secondary font-manrope">
-                    {isImage ? 'Project Image' : 'Project Video'}
+                    {isImage ? "Project Image" : "Project Video"}
                   </Badge>
                   <a
                     href={item.cloudinary_url}
                     target="_self"
                     rel="noreferrer"
-                    aria-label={`View full ${isImage ? 'image' : 'video'}: ${item.title}`}
+                    aria-label={`View full ${isImage ? "image" : "video"}: ${item.title}`}
                     className="relative block aspect-4/3 overflow-hidden rounded-xl bg-muted"
                   >
                     {isImage ? (

@@ -178,7 +178,7 @@ export function Navbar() {
           <ArrowCta
             as="link"
             label="Get A Quote"
-            href="/contact"
+            href="/booking"
             className="bg-secondary hover:bg-secondary/80 shadow-[0_10px_30px_rgba(253,139,0,0.3)]"
           />
         </span>
@@ -287,7 +287,7 @@ export function Navbar() {
                     onClick={() => setOpen(false)}
                     as="link"
                     label="Get A Quote"
-                    href="/contact"
+                    href="/booking"
                     className="bg-secondary hover:bg-secondary/80"
                   />
                 </div>

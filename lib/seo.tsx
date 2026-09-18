@@ -29,6 +29,21 @@ export function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
+const extra_Keywords = [
+  "Printing brand in ghana",
+  "printing service in ghana",
+  "printing service in takoradi",
+  "printing brand in takoradi",
+  "cheap Printing brand in ghana",
+  "cheap printing service in ghana",
+  "cheap Printing brand in takoradi",
+  "cheap printing service in takoradi",
+  "cheap Printing brand in ghana near me",
+  "cheap printing service in ghana near me",
+  "cheap Printing brand in takoradi near me",
+  "cheap printing service in takoradi near me",
+];
+
 export function buildMetadata({
   title,
   description,
@@ -38,12 +53,14 @@ export function buildMetadata({
   ogImage = siteConfig.ogImage,
 }: SeoInput): Metadata {
   const canonical = path === "/" ? "/" : path;
+
+  const allKeywords = [...keywords, ...extra_Keywords];
   return {
     title,
     description,
     metadataBase: new URL(siteConfig.url),
     alternates: { canonical },
-    keywords,
+    keywords: allKeywords,
     openGraph: {
       title,
       description,

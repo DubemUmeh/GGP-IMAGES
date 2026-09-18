@@ -13,8 +13,14 @@ import {
 import { Reveal, BG_GLOW_LIGHT } from "@/components/ui/motion-kit";
 import { coreServices } from "@/lib/services";
 
-const serviceIcons = [LuLayers, LuShirt, LuPenTool, LuImage, LuBuilding2, LuPenTool];
-
+const serviceIcons = [
+  LuLayers,
+  LuShirt,
+  LuPenTool,
+  LuImage,
+  LuBuilding2,
+  LuPenTool,
+];
 
 export function ServiceHighlights() {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -46,7 +52,7 @@ export function ServiceHighlights() {
         tl.to(
           cards[i - 1],
           { scale: 0.94, yPercent: -3, duration: 1 },
-          i === 1 ? undefined : "<"
+          i === 1 ? undefined : "<",
         );
         // bring the next card in
         tl.from(cards[i], { yPercent: 70, opacity: 0, duration: 1 }, "<");
@@ -62,7 +68,7 @@ export function ServiceHighlights() {
       <div className={BG_GLOW_LIGHT} />
       <div className="mx-auto w-[min(100%,76rem)]">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-secondary shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-card shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
             What We Do
           </div>
         </Reveal>
@@ -76,9 +82,9 @@ export function ServiceHighlights() {
 
         <Reveal delay={0.14} className="mt-4 max-w-xl">
           <p className="text-base font-inter leading-relaxed text-brand-tertiary-foreground/70">
-            From a single business card to a full site of scaffold wraps —
-            our workshop covers textile, large format, digital and
-            finishing work end to end.
+            From a single business card to a full site of scaffold wraps — our
+            workshop covers textile, large format, digital and finishing work
+            end to end.
           </p>
         </Reveal>
       </div>
