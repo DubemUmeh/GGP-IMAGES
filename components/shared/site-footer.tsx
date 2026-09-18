@@ -96,7 +96,7 @@ export function SiteFooter() {
                 priority
                 width={250}
                 height={50}
-                className="drop-shadow-2xl drop-shadow-card"
+                className="drop-shadow-2xl drop-shadow-secondary"
               />
             </div>
             <p className="max-w-xs md:relative md:left-0 -top-10 text-base leading-relaxed tracking-wider text-foreground">
