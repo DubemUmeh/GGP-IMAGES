@@ -80,7 +80,7 @@ const socials = [
 
 export function SiteFooter() {
   return (
-    <footer className="relative w-full overflow-hidden bg-accent py-10 border-2 border-brand-tertiary">
+    <footer className="relative w-full overflow-hidden bg-popover py-10 border-2 border-brand-tertiary">
       <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-secondary/10 blur-[100px]" />
       <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-brand-purple-fixed-dim/10 blur-[100px]" />
 
