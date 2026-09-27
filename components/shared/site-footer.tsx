@@ -4,6 +4,7 @@ import { Reveal } from "@/components/ui/motion-kit";
 import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 import Image from "next/image";
 import { siteConfig } from "@/lib/seo";
+import { coreServices } from "@/lib/services";
 
 const quickLinks = [
   { label: "About", href: "/about" },
@@ -14,63 +15,17 @@ const quickLinks = [
   { label: "Booking", href: "/booking" },
 ];
 
-const serviceColumns = [
-  {
-    heading: "Large Format Printing",
-    href: "/services/large-format-printing",
-    links: ["Banners", "Billboards", "Backdrops", "Roll-up Banners"],
-  },
-  {
-    heading: "Textile Printing",
-    href: "/services/textile-printing",
-    links: [
-      "T-Shirt Printing",
-      "DTF Printing",
-      "UV DTF Printing",
-      "School Uniform Printing",
-    ],
-  },
-  {
-    heading: "Embroidery",
-    href: "/services/embroidery",
-    links: [
-      "Polo Shirt Embroidery",
-      "Corporate Uniform Embroidery",
-      "School Uniform Embroidery",
-      "Jacket Embroidery",
-    ],
-  },
-  {
-    heading: "Digital Printing",
-    href: "/services/digital-printing",
-    links: [
-      "ID Cards & Access Cards",
-      "Invitation Cards",
-      "Certificate & Testimonials",
-      "Business Cards",
-    ],
-  },
-  {
-    heading: "Branding",
-    href: "/services/branding",
-    links: [
-      "Corporate Branding",
-      "Logo Design & Brand Identity",
-      "Business Rebranding",
-      "Packaging Branding",
-    ],
-  },
-  {
-    heading: "Visual Production",
-    href: "/services/visual-production",
-    links: [
-      "Graphic Design",
-      "Social Media Designs",
-      "Website Design & Development",
-      "Digital Marketing",
-    ],
-  },
-];
+// Derived from services.ts so footer links stay in sync with the service data.
+// Subdivisions have no page of their own — every link in a column points back
+// to that column's core service page.
+const serviceColumns = coreServices.map((service) => ({
+  heading: service.name,
+  href: `/services/${service.slug}`,
+  links: service.subdivisions.map((subdivision) => ({
+    label: subdivision.name,
+    href: `/services/${service.slug}`,
+  })),
+}));
 
 const socials = [
   { label: "Instagram", href: `${siteConfig.instagram}`, icon: FaInstagram },
@@ -100,8 +55,6 @@ export function SiteFooter() {
               />
             </div>
             <p className="max-w-xs md:relative md:left-0 -top-10 text-base leading-relaxed tracking-wider text-foreground">
-              {/* Premium printing and branding solutions that make your business
-              unforgettable. */}
               All your printing Solutions are right here.
             </p>
             <div className="flex items-center gap-3 md:relative md:left-0 md:-top-6">
@@ -154,15 +107,15 @@ export function SiteFooter() {
                   {col.heading}
                 </Link>
                 <ul className="space-y-2">
-                  {col.links.map((label) => (
-                    <li key={label}>
+                  {col.links.map((link, j) => (
+                    <li key={`${col.heading}-${link.label}-${j}`}>
                       <Link
-                        href={col.href}
+                        href={link.href}
                         className="group inline-flex items-start gap-2 text-sm text-foreground/90 transition-colors duration-200 hover:text-secondary"
                       >
                         <span className="text-brand-tertiary leading-5">•</span>
                         <span className="transition-transform duration-200 group-hover:translate-x-1 tracking-wide">
-                          {label}
+                          {link.label}
                         </span>
                       </Link>
                     </li>
