@@ -50,7 +50,7 @@ export const coreServices = [
     shortDescription:
       "Custom garment and fabric printing for events, uniforms, churches, schools, and corporate teams.",
     description:
-      "We produce practical textile printing for T-shirts, DTF, UV DTF, uniforms, commemorative cloths, corporate apparel, and custom event wear with a focus on durability, clarity, and brand consistency.",
+      "We produce practical textile printing for T-shirts, DTF, uniforms, commemorative cloths, corporate apparel, scarves, and custom event wear with a focus on durability, clarity, and brand consistency.",
     image: "/service-image/textile-printing.png",
     benefits: [
       "Suitable for uniforms, campaigns, events, and groups",
@@ -65,12 +65,12 @@ export const coreServices = [
     subdivisions: [
       "T-Shirt Printing",
       "DTF Printing",
-      "UV DTF Printing",
       "School Uniform Printing",
       "Church Anniversary Cloths",
       "Memorial & Ceremonial Cloths",
       "Corporate Apparel Printing",
       "Custom Event Wear",
+      "Scarf Printing",
     ].map(toSubdivision),
   },
   {
@@ -107,7 +107,7 @@ export const coreServices = [
     shortDescription:
       "Sharp, dependable everyday print products for businesses, schools, churches, events, and institutions.",
     description:
-      "From business cards and invitation cards to certificates, booklets, photocopying, scanning, lamination, and promotional print materials, our digital printing service is built for clean detail, practical turnaround, and professional presentation.",
+      "From business cards and invitation cards to certificates, booklets, photocopying, scanning, lamination, UV DTF transfers, and promotional print materials, our digital printing service is built for clean detail, practical turnaround, and professional presentation.",
     image: "/service-image/digital-printing.png",
     benefits: [
       "Fast setup for short and medium runs",
@@ -129,6 +129,7 @@ export const coreServices = [
       "Photocopying & Document Printing",
       "Scanning & Lamination Services",
       "Promotional Print Materials",
+      "UV DTF Printing",
     ].map(toSubdivision),
   },
   {
