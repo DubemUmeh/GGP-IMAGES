@@ -9,10 +9,10 @@ export function ServicesGrid() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 scroll-smooth" id="services">
       <div className="mx-auto mb-12 max-w-3xl text-center">
-        <h2 className="mb-4 text-3xl font-bold font-manrope tracking-wider text-card md:text-4xl">
+        <h2 className="mb-4 text-3xl font-bold font-manrope tracking-wider text-popover-foreground md:text-4xl">
           Comprehensive Branding &amp; Printing
         </h2>
-        <p className="text-popover text-lg font-inter leading-8 tracking-wide">
+        <p className="text-muted-foreground text-lg font-inter leading-8 tracking-wide">
           We combine cutting-edge technology with artisanal craftsmanship to offer a full spectrum
           of printing services tailored to your specific needs.
         </p>
@@ -55,7 +55,7 @@ export function ServicesGrid() {
             <Link
               href={`/services/${service.slug}`}
               key={service.slug}
-              className="card-shadow border-2 border-secondary group flex flex-col overflow-hidden rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-2 bg-secondary/40"
+              className="card-shadow group flex flex-col overflow-hidden rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-2 bg-brand-tertiary"
             >
               <div className="relative mb-4 h-48 overflow-hidden rounded-xl bg-muted">
                 <Image
@@ -70,8 +70,8 @@ export function ServicesGrid() {
                 </span>
               </div>
               <div className="mt-auto">
-                <h3 className="mb-2 text-xl font-semibold font-manrope tracking-wide text-card">{service.name}</h3>
-                <p className="text-sm font-inter text-popover">{service.shortDescription}</p>
+                <h3 className="mb-2 text-xl font-semibold font-manrope tracking-wide text-brand-tertiary-foreground">{service.name}</h3>
+                <p className="text-sm font-inter text-brand-tertiary-foreground/80">{service.shortDescription}</p>
               </div>
             </Link>
           );

@@ -10,7 +10,7 @@ import {
   LuImage,
   LuPenTool,
 } from "react-icons/lu";
-import { Reveal, BG_GLOW_LIGHT } from "@/components/ui/motion-kit";
+import { Reveal } from "@/components/ui/motion-kit";
 import { coreServices } from "@/lib/services";
 
 const serviceIcons = [
@@ -64,24 +64,23 @@ export function ServiceHighlights() {
   }, []);
 
   return (
-    <section className="relative bg-[linear-gradient(40deg,#6b004d_0%,#6b004d_67%,#6b004d_100%)] px-5 py-15 md:px-10 md:py-20 lg:py-28">
-      <div className={BG_GLOW_LIGHT} />
+    <section className="relative bg-popover px-5 py-15 md:px-10 md:py-20 lg:py-28">
       <div className="mx-auto w-[min(100%,76rem)]">
         <Reveal>
-          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-card shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-secondary/40 bg-secondary/10 px-4 py-2 text-xs font-semibold font-manrope uppercase tracking-widest text-popover-foreground shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
             What We Do
           </div>
         </Reveal>
 
         <Reveal delay={0.08} className="mt-6 max-w-2xl">
-          <h2 className="text-3xl font-extrabold font-manrope leading-tight tracking-tight text-brand-tertiary-foreground md:text-5xl">
+          <h2 className="text-3xl font-extrabold font-manrope leading-tight tracking-tight text-popover-foreground md:text-5xl">
             Every printing need, handled{" "}
             <span className="text-secondary">under one roof.</span>
           </h2>
         </Reveal>
 
         <Reveal delay={0.14} className="mt-4 max-w-xl">
-          <p className="text-base font-inter leading-relaxed text-brand-tertiary-foreground/70">
+          <p className="text-base font-inter leading-relaxed text-muted-foreground">
             From a single business card to a full site of scaffold wraps — our
             workshop covers textile, large format, digital and finishing work
             end to end.

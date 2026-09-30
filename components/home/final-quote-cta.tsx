@@ -6,7 +6,7 @@ import { ArrowCta } from "@/components/ui/motion-kit";
 
 export function FinalQuoteCta() {
   return (
-    <section className="px-5 pb-24 pt-4 md:px-10 bg-secondary">
+    <section className="px-5 pb-24 pt-4 md:px-10">
       <Reveal className="mx-auto w-[min(100%,76rem)]">
         <div className="relative overflow-hidden rounded-[2rem] bg-brand-tertiary px-8 py-14 text-center md:px-16 md:py-20">
           <div className={BG_GLOW_DARK} />

@@ -86,14 +86,14 @@ export function QuoteCtaSection() {
             </div>
           </div>
 
-          <div className="glass-panel rounded-2xl p-3 md:p-6 md:p-8">
-            <h3 className="mb-6 text-xl font-semibold font-manrope text-primary">
+          <div className="bg-popover text-popover-foreground rounded-2xl p-3 md:p-6 md:p-8">
+            <h3 className="mb-6 text-xl font-semibold font-manrope text-popover-foreground">
               Request a Custom Quote
             </h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-1">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name" className="text-popover-foreground">Full Name</Label>
                   <Input
                     id="name"
                     name="name"
@@ -103,7 +103,7 @@ export function QuoteCtaSection() {
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor="email">Email Address</Label>
+                  <Label htmlFor="email" className="text-popover-foreground">Email Address</Label>
                   <Input
                     id="email"
                     name="email"
@@ -124,7 +124,7 @@ export function QuoteCtaSection() {
               />
 
               <div className="space-y-1">
-                <Label htmlFor="details">Project Details</Label>
+                <Label htmlFor="details" className="text-popover-foreground">Project Details</Label>
                 <Textarea
                   id="details"
                   name="details"
@@ -155,7 +155,7 @@ export function QuoteCtaSection() {
               </Button>
               {status && (
                 <p
-                  className="text-sm font-semibold font-inter text-primary"
+                  className="text-sm font-semibold font-inter text-popover-foreground"
                   aria-live="polite"
                 >
                   {status}
