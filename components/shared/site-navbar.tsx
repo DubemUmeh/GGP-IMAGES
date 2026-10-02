@@ -152,7 +152,7 @@ export function Navbar() {
             alt="GGP Images Logo"
             priority
             fill
-            className="object-contain relative top-0 -left-8"
+            className="object-contain"
           />
         </Link>
 
