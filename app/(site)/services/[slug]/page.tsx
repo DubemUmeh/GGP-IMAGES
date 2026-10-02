@@ -36,7 +36,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return (
     <main>
       <JsonLd data={[breadcrumbSchema(crumbs), { "@context": "https://schema.org", "@type": "Service", name: service.name, description: service.description, provider: { "@type": "LocalBusiness", name: siteConfig.name, url: siteConfig.url }, areaServed: "Ghana", url: absoluteUrl(`/services/${service.slug}`), serviceType: service.name }]} />
-      <section className="relative overflow-hidden bg-black/80 px-3 md:px-6 pt-20 text-white lg:py-28">
+      <section className="relative overflow-hidden bg-black/80 px-3 md:px-6 pt-20 pb-2 text-white lg:pt-28 lg:pb-5">
         <div className="absolute inset-0 opacity-25"><Image src={service.image} alt={`${service.name} service examples`} fill priority sizes="100vw" className="object-cover" /></div>
         {/* <div className="absolute inset-0 bg-linear-to-r from-black/80 via-brand-tertiary/80 to-brand-tertiary/50" /> */}
         <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
