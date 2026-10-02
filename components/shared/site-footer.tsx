@@ -41,13 +41,13 @@ export function SiteFooter() {
       <div className="pointer-events-none absolute -right-24 bottom-0 h-72 w-72 rounded-full bg-brand-purple-fixed-dim/10 blur-[100px]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        {/* Top block: brand + quick links + service columns + contact, grid layout like Bechar footer */}
+        {/* Top block: brand + quick links + contact on the first row, services as a full-width row beneath on md+ */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-14 border-b border-white/10">
           {/* Brand + tagline + socials (untouched logo) */}
-          <Reveal className="w-full md:col-span-3 space-y-0">
+          <Reveal className="w-full md:col-span-4 space-y-0">
             <div className="w-full h-full">
               <Image
-                src="/ggp-no-bg.png"
+                src="/new-ggp-logo.jpg"
                 alt="GGP Image Logo"
                 priority
                 width={250}
@@ -72,7 +72,7 @@ export function SiteFooter() {
           </Reveal>
 
           {/* Quick Links */}
-          <Reveal delay={0.06} className="mt-16 sm:mt-0 md:col-span-2">
+          <Reveal delay={0.06} className="mt-16 sm:mt-0 md:col-span-3">
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-foreground/70 font-manrope">
               Quick Links
             </h4>
@@ -92,8 +92,9 @@ export function SiteFooter() {
             </ul>
           </Reveal>
 
-          {/* Service columns with subdivisions — directly under socials on small screens */}
-          <div className="mt-4 sm:mt-0 md:col-span-4 grid grid-cols-2 gap-8 font-inter">
+          {/* Service columns with subdivisions — directly under socials on small screens,
+              full-width row beneath the other blocks on md+ */}
+          <div className="mt-4 sm:mt-0 grid grid-cols-2 gap-8 font-inter md:order-last md:col-span-12 md:grid-cols-[repeat(auto-fit,minmax(12rem,1fr))] md:border-t md:border-white/10 md:pt-12">
             {serviceColumns.map((col, i) => (
               <Reveal
                 key={col.heading}
@@ -126,7 +127,7 @@ export function SiteFooter() {
           </div>
 
           {/* Contact */}
-          <Reveal delay={0.18} className="mt-4 sm:mt-0 md:col-span-3">
+          <Reveal delay={0.18} className="mt-4 sm:mt-0 md:col-span-5">
             <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-foreground/70 font-manrope">
               Contact Us
             </h4>

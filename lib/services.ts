@@ -63,10 +63,10 @@ export const coreServices = [
       "Items are produced, inspected, sorted, and prepared for collection or delivery.",
     ],
     subdivisions: [
-      "T-Shirt Printing",
-      "DTF Printing",
       "School Uniform Printing",
       "Church Anniversary Cloths",
+      "T-Shirt Printing",
+      "DTF Printing",
       "Memorial & Ceremonial Cloths",
       "Corporate Apparel Printing",
       "Custom Event Wear",

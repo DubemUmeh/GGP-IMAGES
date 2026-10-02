@@ -46,7 +46,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
             <h1 className="mt-6 text-4xl font-black font-manrope tracking-tight md:text-6xl">{service.name}</h1>
             <p className="mt-6 max-w-2xl text-lg font-inter leading-8 text-white/80">{service.description}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#book" className="inline-flex items-center justify-center rounded-xl bg-white/10 px-5 py-3 font-semibold font-manrope text-white hover:bg-white/20 hover:transition-colors hover:ease-in-out duration-200">Request this service</a>
+              <a href="#book" className="inline-flex border border-brand-tertiary items-center justify-center rounded-xl bg-white/10 px-5 py-3 font-semibold font-manrope text-white hover:bg-white/20 hover:transition-colors hover:ease-in-out duration-200">Request this service</a>
               <ArrowCta label="Contact Sales" as="link" href="/contact" className="bg-secondary hover:bg-secondary/80" />
             </div>
           </div>
@@ -54,7 +54,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="bg-linear-to-b from-secondary via-secondary to-popover px-6 py-16">
+      <section className="bg-secondary px-6 py-16">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div><p className="text-sm font-bold font-manrope uppercase tracking-widest text-primary">What is included</p><h2 className="mt-3 text-3xl font-black font-manrope text-card">Everything under {service.name}</h2><p className="mt-4 text-sm md:text-base lg:text-lg font-inter leading-8 text-card/75">Choose the exact request type during booking so our team can recommend the right materials, production method, turnaround, and finishing path.</p></div>
           <div className="grid gap-4 sm:grid-cols-2">
