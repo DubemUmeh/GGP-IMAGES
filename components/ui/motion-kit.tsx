@@ -50,7 +50,7 @@ export function ArrowCta({
       <div className="flex justify-start items-center">
         <div className="flex justify-center items-center size-10 flex-none rounded-xl bg-white">
           <div
-            className="-rotate-45 group-hover:rotate-0 transition-transform duration-300 ease-in-out text-blue-600"
+            className="-rotate-45 group-hover:rotate-0 transition-transform duration-300 ease-in-out text-brand-tertiary"
             style={{ fontSize: "1rem", position: "relative" }}
           >
             <FaArrowRight />
