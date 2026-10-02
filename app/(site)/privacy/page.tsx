@@ -210,7 +210,7 @@ export default function PrivacyPolicyPage() {
         <div className="mt-10 rounded-3xl bg-secondary p-8 text-center text-primary shadow-lg">
           <h2 className="text-2xl font-black">Have questions about a project?</h2>
           <p className="mt-2 text-primary/90">Contact our team directly to discuss your printing or creative needs.</p>
-          <ArrowCta label="Get in Touch" as="link" href="/contact" className="mt-5" />
+          <ArrowCta label="Get in Touch" as="link" href="/contact" className="mt-5 bg-brand-tertiary" />
         </div>
       </section>
     </main>
