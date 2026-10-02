@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const siteConfig = {
   name: "GGP Images",
-  legalName: "GGP Image and Printing",
+  legalName: "GGP IMAGES",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://ggpimages.com",
   phone: "0200749306",
   whatsapp: "233243901264",
