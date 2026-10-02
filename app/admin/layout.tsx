@@ -1,23 +1,17 @@
 import type { Metadata } from "next";
-// import "../globals.css";
 import { Toaster } from "@/components/ui/toast";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://ggpimages.com"),
-  title: `Admin | GGP Images`,
-  description: "Professional Admin portal for printing, branding, packaging, signage, apparel, and marketing materials from GGP Images.",
-  icons: { icon: "/favicon_io/favicon.ico", apple: "/favicon_io/apple-touch-icon.png" },
+  title: "Admin | GGP Images",
+  description: "GGP Images administration portal.",
+  robots: { index: false, follow: false },
 };
 
 export default function AdminRootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-    {/* <html lang="en" className="h-full antialiased">
-      <body className="min-h-screen w-full"> */}
-        <Toaster />
-        {children}
-      {/* </body>
-    </html> */}
+      <Toaster />
+      {children}
     </>
   );
 }
