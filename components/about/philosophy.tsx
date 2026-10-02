@@ -28,7 +28,7 @@ export function Philosophy() {
                 Vision Statement
               </span>
               <div className="mb-4 border-t border-primary-foreground/20" />
-              <h3 className="mb-3 text-xl font-semibold font-manrope">Our Vision</h3>
+              <h3 className="mb-3 text-xl font-semibold font-manrope text-card">Our Vision</h3>
               <p className="text-primary-foreground/80 font-inter">
                 To become Ghana&apos;s leading innovative and trustworthy printing brand—recognized for premium quality, modern technology, and an exceptional customer experience.
               </p>
