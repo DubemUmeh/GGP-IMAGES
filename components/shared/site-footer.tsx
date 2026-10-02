@@ -47,7 +47,7 @@ export function SiteFooter() {
           <Reveal className="w-full md:col-span-4 space-y-0">
             <div className="w-full h-full">
               <Image
-                src="/main-new-logo.jpg"
+                src="/main-new-logo.png"
                 alt="GGP Image Logo"
                 priority
                 width={250}
