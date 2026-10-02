@@ -29,21 +29,6 @@ export function absoluteUrl(path = "/") {
   return new URL(path, siteConfig.url).toString();
 }
 
-const extra_Keywords = [
-  "Printing brand in ghana",
-  "printing service in ghana",
-  "printing service in takoradi",
-  "printing brand in takoradi",
-  "cheap Printing brand in ghana",
-  "cheap printing service in ghana",
-  "cheap Printing brand in takoradi",
-  "cheap printing service in takoradi",
-  "cheap Printing brand in ghana near me",
-  "cheap printing service in ghana near me",
-  "cheap Printing brand in takoradi near me",
-  "cheap printing service in takoradi near me",
-];
-
 export function buildMetadata({
   title,
   description,
@@ -52,28 +37,23 @@ export function buildMetadata({
   type = "website",
   ogImage = siteConfig.ogImage,
 }: SeoInput): Metadata {
-  const canonical = path === "/" ? "/" : path;
-
-  const allKeywords = [...keywords, ...extra_Keywords];
   return {
     title,
     description,
     metadataBase: new URL(siteConfig.url),
-    alternates: { canonical },
-    keywords: allKeywords,
+    alternates: { canonical: path === "/" ? "/" : path },
+    keywords: keywords.length ? keywords : undefined,
+    applicationName: siteConfig.name,
+    authors: [{ name: siteConfig.name, url: siteConfig.url }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
+    formatDetection: { telephone: true, email: true, address: false },
     openGraph: {
       title,
       description,
-      url: canonical,
+      url: absoluteUrl(path),
       siteName: siteConfig.name,
-      images: [
-        {
-          url: ogImage,
-          width: 512,
-          height: 512,
-          alt: `${siteConfig.name} logo`,
-        },
-      ],
+      images: [{ url: absoluteUrl(ogImage), width: 1200, height: 630, alt: `${siteConfig.name} — printing and branding in Takoradi` }],
       locale: "en_GH",
       type,
     },
@@ -81,7 +61,7 @@ export function buildMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [siteConfig.ogImage],
+      images: [absoluteUrl(ogImage)],
     },
     robots: {
       index: true,
@@ -91,6 +71,7 @@ export function buildMetadata({
         follow: true,
         "max-image-preview": "large",
         "max-snippet": -1,
+        "max-video-preview": -1,
       },
     },
   };
@@ -100,7 +81,9 @@ export function organizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    "@id": absoluteUrl("#organization"),
     name: siteConfig.legalName,
+    alternateName: siteConfig.name,
     url: siteConfig.url,
     logo: absoluteUrl(siteConfig.logo),
     image: absoluteUrl(siteConfig.ogImage),
@@ -110,9 +93,59 @@ export function organizationSchema() {
       "@type": "PostalAddress",
       streetAddress: siteConfig.address,
       addressLocality: "Takoradi",
+      addressRegion: "Western Region",
       addressCountry: "GH",
     },
+    areaServed: [
+      { "@type": "City", name: "Takoradi" },
+      { "@type": "AdministrativeArea", name: "Western Region" },
+      { "@type": "Country", name: "Ghana" },
+    ],
+    sameAs: [siteConfig.facebook, siteConfig.instagram, siteConfig.tiktok],
     priceRange: "$$",
+    knowsAbout: [
+      "commercial printing",
+      "large format printing",
+      "textile printing",
+      "embroidery",
+      "corporate branding",
+      "visual production",
+    ],
+  };
+}
+
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": absoluteUrl("#website"),
+    url: siteConfig.url,
+    name: siteConfig.name,
+    publisher: { "@id": absoluteUrl("#organization") },
+    inLanguage: "en-GH",
+  };
+}
+
+export function serviceSchema(service: {
+  name: string;
+  description: string;
+  image?: string;
+  path: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: service.name,
+    description: service.description,
+    url: absoluteUrl(service.path),
+    ...(service.image ? { image: absoluteUrl(service.image) } : {}),
+    provider: { "@id": absoluteUrl("#organization") },
+    areaServed: [
+      { "@type": "City", name: "Takoradi" },
+      { "@type": "AdministrativeArea", name: "Western Region" },
+      { "@type": "Country", name: "Ghana" },
+    ],
+    serviceType: service.name,
   };
 }
 
