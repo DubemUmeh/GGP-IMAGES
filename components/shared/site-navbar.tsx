@@ -148,7 +148,7 @@ export function Navbar() {
       <div className="mx-auto flex h-16 max-w-none items-center justify-between px-3">
         <Link href="/" className="group flex items-center">
           <Image
-            src="/main-new-logo.jpg"
+            src="/main-new-logo.png"
             alt="GGP Image Logo"
             priority
             width={150}
