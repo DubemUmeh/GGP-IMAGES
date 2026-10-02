@@ -17,34 +17,6 @@ export type CoreService = {
 
 export const coreServices = [
   {
-    slug: "large-format-printing",
-    name: "Large Format Printing",
-    shortDescription:
-      "High-impact banners, billboards, backdrops, roll-ups, scaffold wraps, and outdoor displays.",
-    description:
-      "Large format printing helps brands get seen at distance and at scale. We support indoor and outdoor display needs with practical material recommendations for visibility, durability, and installation context.",
-    image: "/service-image/large-format-printing.png",
-    benefits: [
-      "Built for visibility and scale",
-      "Material guidance for indoor and outdoor use",
-      "Strong options for events, construction, and campaigns",
-    ],
-    process: [
-      "Share dimensions, location, artwork, and installation requirements.",
-      "We confirm material, finishing, eyelets, hemming, or stand options.",
-      "Your display is printed, finished, and prepared for installation or pickup.",
-    ],
-    subdivisions: [
-      "Banners",
-      "Billboards",
-      "Backdrops",
-      "Roll-up Banners",
-      "Scaffold Wraps for Construction",
-      "Outdoor Advertising Prints",
-      "Event Display Materials",
-    ].map(toSubdivision),
-  },
-  {
     slug: "textile-printing",
     name: "Textile/Fabric Printing",
     shortDescription:
@@ -99,6 +71,34 @@ export const coreServices = [
       "Workwear Embroidery",
       "Hoodie Embroidery",
       "Towel Embroidery",
+    ].map(toSubdivision),
+  },
+  {
+    slug: "large-format-printing",
+    name: "Large Format Printing",
+    shortDescription:
+      "High-impact banners, billboards, backdrops, roll-ups, scaffold wraps, and outdoor displays.",
+    description:
+      "Large format printing helps brands get seen at distance and at scale. We support indoor and outdoor display needs with practical material recommendations for visibility, durability, and installation context.",
+    image: "/service-image/large-format-printing.png",
+    benefits: [
+      "Built for visibility and scale",
+      "Material guidance for indoor and outdoor use",
+      "Strong options for events, construction, and campaigns",
+    ],
+    process: [
+      "Share dimensions, location, artwork, and installation requirements.",
+      "We confirm material, finishing, eyelets, hemming, or stand options.",
+      "Your display is printed, finished, and prepared for installation or pickup.",
+    ],
+    subdivisions: [
+      "Banners",
+      "Billboards",
+      "Backdrops",
+      "Roll-up Banners",
+      "Scaffold Wraps for Construction",
+      "Outdoor Advertising Prints",
+      "Event Display Materials",
     ].map(toSubdivision),
   },
   {
