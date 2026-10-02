@@ -1,5 +1,8 @@
 import { siteConfig } from "@/lib/seo";
+import { formatGhPhone } from "@/lib/utils";
 import { LuMail, LuPhone, LuMapPin } from "react-icons/lu";
+
+const phoneContact = formatGhPhone(siteConfig.phone);
 
 const cards = [
   {
@@ -16,7 +19,7 @@ const cards = [
     iconColor: "text-secondary",
     title: "Call Us",
     description: "Mon-Fri from 9am to 6pm.",
-    action: { label: "+233 (020) 074 9306", href: `tel:+${siteConfig.phone}` },
+    action: { label: phoneContact.display, href: phoneContact.href },
   },
   {
     icon: LuMapPin,

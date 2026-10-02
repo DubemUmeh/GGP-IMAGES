@@ -19,6 +19,7 @@ export default function GalleryPage() {
       <VideoGallery />
       <div className="w-full h-full bg-popover">
         <CtaBanner
+          variant="secondary"
           title="Ready to bring your brand to life?"
           description="Let's create something remarkable together. Get a custom quote for your next big project."
           href="/booking"

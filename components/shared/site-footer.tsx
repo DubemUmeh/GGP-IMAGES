@@ -5,6 +5,7 @@ import { FaInstagram, FaTiktok, FaFacebook } from "react-icons/fa";
 import Image from "next/image";
 import { siteConfig } from "@/lib/seo";
 import { coreServices } from "@/lib/services";
+import { formatGhPhone } from "@/lib/utils";
 
 const quickLinks = [
   { label: "About", href: "/about" },
@@ -51,7 +52,6 @@ export function SiteFooter() {
                 priority
                 width={250}
                 height={50}
-                className="drop-shadow-2xl drop-shadow-secondary"
               />
             </div>
             <p className="max-w-xs md:relative md:left-0 -top-10 text-base leading-relaxed tracking-wider text-foreground">
@@ -127,18 +127,27 @@ export function SiteFooter() {
 
           {/* Contact */}
           <Reveal delay={0.18} className="mt-4 sm:mt-0 md:col-span-3">
-            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-foregroundaaaaaa/70 font-manrope">
+            <h4 className="mb-5 text-sm font-semibold uppercase tracking-widest text-foreground/70 font-manrope">
               Contact Us
             </h4>
             <ul className="space-y-4 text-base font-inter">
               <li className="flex items-start gap-3 text-foreground/90">
                 <LuPhone className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />
-                <a
-                  href={`tel:${siteConfig.phone}`}
-                  className="hover:underline underline-offset-3"
-                >
-                  {siteConfig.phone}
-                </a>
+                <span>
+                  <a
+                    href={formatGhPhone(siteConfig.phone).href}
+                    className="hover:underline underline-offset-3"
+                  >
+                    {formatGhPhone(siteConfig.phone).display}
+                  </a>
+                  {" / "}
+                  <a
+                    href={formatGhPhone(siteConfig.whatsapp).href}
+                    className="hover:underline underline-offset-3"
+                  >
+                    {formatGhPhone(siteConfig.whatsapp).display}
+                  </a>
+                </span>
               </li>
               <li className="flex items-start gap-3 text-foreground/70">
                 <LuMail className="mt-0.5 h-5 w-5 shrink-0 text-secondary" />

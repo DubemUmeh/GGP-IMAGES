@@ -32,7 +32,7 @@ export async function VideoGallery() {
   const items = await getPublicGallery();
 
   return (
-    <section className="relative h-full w-full overflow-hidden bg-secondary p-3 py-5">
+    <section className="relative h-full w-full overflow-hidden bg-popover p-3 py-5">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-brand-tertiary px-5 py-16 md:px-10 md:py-24">
         <div className="relative z-10 mx-auto mb-12 max-w-3xl text-center">
           <span className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm font-inter">

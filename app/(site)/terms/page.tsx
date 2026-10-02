@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { breadcrumbSchema, buildMetadata, siteConfig, JsonLd } from "@/lib/seo";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { formatGhPhone } from "@/lib/utils";
 import { ArrowCta } from "@/components/ui/motion-kit";
 
 export const metadata: Metadata = buildMetadata({
@@ -160,7 +161,22 @@ export default function TermsOfServicePage() {
             <div className="rounded-2xl bg-muted/50 p-6 text-sm space-y-2 text-foreground">
               <p><strong>Entity:</strong> {siteConfig.legalName}</p>
               <p><strong>Email:</strong> <a href={`mailto:${siteConfig.email}`} className="text-secondary hover:underline">{siteConfig.email}</a></p>
-              <p><strong>Phone:</strong> <a href="tel:+233548844321" className="text-secondary hover:underline">+233 (54) 884 4321</a> / <a href="tel:+233559956394" className="text-secondary hover:underline">+233 (55) 995 6394</a></p>
+              <p>
+                <strong>Phone:</strong>{" "}
+                <a
+                  href={formatGhPhone(siteConfig.phone).href}
+                  className="text-secondary hover:underline"
+                >
+                  {formatGhPhone(siteConfig.phone).display}
+                </a>{" "}
+                /{" "}
+                <a
+                  href={formatGhPhone(siteConfig.whatsapp).href}
+                  className="text-secondary hover:underline"
+                >
+                  {formatGhPhone(siteConfig.whatsapp).display}
+                </a>
+              </p>
               <p><strong>Location:</strong> {siteConfig.address}</p>
             </div>
           </section>

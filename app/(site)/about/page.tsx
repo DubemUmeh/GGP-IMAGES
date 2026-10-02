@@ -17,14 +17,13 @@ export default function AboutPage() {
       <Philosophy />
       <WhyChooseUs />
       <Team />
-      <div className="bg-secondary">
-        <CtaBanner
-          title="Ready to bring your brand to life?"
-          description="Let's create something remarkable together."
-          buttonLabel="Get In Touch"
-          href="/contact"
-        />
-      </div>
+      <CtaBanner
+        variant="tertiary"
+        title="Ready to bring your brand to life?"
+        description="Let's create something remarkable together."
+        buttonLabel="Get In Touch"
+        href="/contact"
+      />
     </>
   );
 }

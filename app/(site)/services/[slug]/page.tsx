@@ -54,7 +54,7 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="bg-secondary px-6 py-16">
+      <section className="bg-linear-to-b from-secondary via-secondary to-popover px-6 py-16">
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <div><p className="text-sm font-bold font-manrope uppercase tracking-widest text-primary">What is included</p><h2 className="mt-3 text-3xl font-black font-manrope text-card">Everything under {service.name}</h2><p className="mt-4 text-sm md:text-base lg:text-lg font-inter leading-8 text-card/75">Choose the exact request type during booking so our team can recommend the right materials, production method, turnaround, and finishing path.</p></div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -70,8 +70,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
         </div>
       </section>
 
-      <section className="bg-secondary px-6 py-16 text-white">
-        <div className="mx-auto max-w-7xl"><h2 className="text-3xl font-black font-manrope">Related services</h2><div className="mt-8 grid gap-5 md:grid-cols-3">{related.map((item) => <Link key={item.slug} href={`/services/${item.slug}`} className="group rounded-2xl border border-white/10 bg-brand-tertiary p-6 transition hover:-translate-y-1 hover:bg-brand-tertiary/80"><h3 className="text-xl font-bold font-manrope">{item.name}</h3><p className="mt-3 text-sm font-inter leading-6 text-white/70">{item.shortDescription}</p><span className="mt-4 inline-flex items-center gap-2 text-sm font-bold font-manrope text-secondary">View service <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>)}</div></div>
+      <section className="bg-popover px-6 py-16">
+        <div className="mx-auto max-w-7xl"><h2 className="text-3xl font-black font-manrope text-popover-foreground">Related services</h2><div className="mt-8 grid gap-5 md:grid-cols-3">{related.map((item) => <Link key={item.slug} href={`/services/${item.slug}`} className="group rounded-2xl border border-white/10 bg-brand-tertiary p-6 transition hover:-translate-y-1 hover:bg-brand-tertiary/80"><h3 className="text-xl font-bold font-manrope text-white">{item.name}</h3><p className="mt-3 text-sm font-inter leading-6 text-white/70">{item.shortDescription}</p><span className="mt-4 inline-flex items-center gap-2 text-sm font-bold font-manrope text-secondary">View service <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span></Link>)}</div></div>
       </section>
     </main>
   );

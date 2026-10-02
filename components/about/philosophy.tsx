@@ -24,10 +24,13 @@ export function Philosophy() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-purple-fixed text-primary">
                 <LuFlag className="h-6 w-6" />
               </div>
+              <span className="text-xs font-semibold font-manrope uppercase tracking-widest text-primary/70 block mb-1">
+                Mission Statement
+              </span>
+              <div className="mb-4 border-t border-primary/20" />
               <h3 className="mb-3 text-xl font-semibold font-manrope tracking-wide text-primary">Our Mission</h3>
               <p className="text-foreground text-base font-inter tracking-wide">
-                To empower businesses by translating their unique identity into flawless physical
-                materials that leave a lasting, premium impression.
+                To deliver fast, professional, and affordable printing services using advanced technology and a customer-first approach. Every project is executed with precision, creativity, and style, ensuring results that truly shine.
               </p>
             </CardContent>
           </Card>
@@ -37,10 +40,13 @@ export function Philosophy() {
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
                 <LuEye className="h-6 w-6" />
               </div>
+              <span className="text-xs font-semibold font-manrope uppercase tracking-widest text-primary-foreground/70 block mb-1">
+                Vision Statement
+              </span>
+              <div className="mb-4 border-t border-primary-foreground/20" />
               <h3 className="mb-3 text-xl font-semibold font-manrope">Our Vision</h3>
               <p className="text-primary-foreground/80 font-inter">
-                To be the global benchmark for creative printing and branding solutions, setting the
-                standard for quality, sustainability, and innovation.
+                To become Ghana&apos;s leading innovative and trustworthy printing brand—recognized for premium quality, modern technology, and an exceptional customer experience.
               </p>
             </CardContent>
           </Card>

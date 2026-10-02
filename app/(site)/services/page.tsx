@@ -15,7 +15,7 @@ export default function ServicesPage() {
   return (
     <>
       <ServicesHero />
-      <div className="w-full h-full bg-brand-tertiary">
+      <div className="w-full h-full bg-popover">
         <ServicesGrid />
       </div>
       <div className="w-full h-full bg-inherit">
