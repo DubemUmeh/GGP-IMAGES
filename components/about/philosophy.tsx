@@ -19,23 +19,7 @@ export function Philosophy() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <Card className="bg-secondary rounded-2xl border-brand-surface-container-low shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
-            <CardContent className="p-8">
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-purple-fixed text-primary">
-                <LuFlag className="h-6 w-6" />
-              </div>
-              <span className="text-xs font-semibold font-manrope uppercase tracking-widest text-primary/70 block mb-1">
-                Mission Statement
-              </span>
-              <div className="mb-4 border-t border-primary/20" />
-              <h3 className="mb-3 text-xl font-semibold font-manrope tracking-wide text-primary">Our Mission</h3>
-              <p className="text-foreground text-base font-inter tracking-wide">
-                To deliver fast, professional, and affordable printing services using advanced technology and a customer-first approach. Every project is executed with precision, creativity, and style, ensuring results that truly shine.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-2xl border-0 bg-gradient-brand text-primary-foreground shadow-lg md:-translate-y-4">
+          <Card className="bg-brand-tertiary rounded-2xl border-brand-surface-container-low shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
             <CardContent className="p-8">
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
                 <LuEye className="h-6 w-6" />
@@ -51,12 +35,29 @@ export function Philosophy() {
             </CardContent>
           </Card>
 
+          <Card className="bg-secondary rounded-2xl md:-translate-y-4 border-brand-surface-container-low shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+            <CardContent className="p-8">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-purple-fixed text-primary">
+                <LuFlag className="h-6 w-6" />
+              </div>
+              <span className="text-xs font-semibold font-manrope uppercase tracking-widest text-primary/70 block mb-1">
+                Mission Statement
+              </span>
+              <div className="mb-4 border-t border-primary/20" />
+              <h3 className="mb-3 text-xl font-semibold font-manrope tracking-wide text-primary">Our Mission</h3>
+              <p className="text-foreground text-base font-inter tracking-wide">
+                To deliver fast, professional, and affordable printing services using advanced technology and a customer-first approach. Every project is executed with precision, creativity, and style, ensuring results that truly shine.
+              </p>
+            </CardContent>
+          </Card>
+
           <Card className="bg-brand-tertiary rounded-2xl border-brand-surface-container-low shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
             <CardContent className="p-8">
               <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-orange-fixed text-secondary-foreground">
                 <LuHeart className="h-6 w-6" />
               </div>
               <h3 className="mb-3 text-xl font-semibold font-manrope text-card">Our Values</h3>
+              <div className="mb-4 border-t border-primary-foreground/20" />
               <ul className="space-y-2 text-popover tracking-wide text-base font-inter">
                 {values.map((value) => (
                   <li key={value} className="flex items-center gap-2">
