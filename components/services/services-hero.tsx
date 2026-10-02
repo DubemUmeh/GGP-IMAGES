@@ -39,8 +39,8 @@ export function ServicesHero() {
                 className="z-10 object-contain drop-shadow-2xl rounded-bl-[50px]"
               />
             </div>
-            <div className="absolute right-10 top-1/2 h-64 w-64 animate-pulse rounded-full bg-brand-orange-fixed opacity-30 blur-3xl" />
-            <div className="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-brand-purple-fixed opacity-30 blur-3xl" />
+            {/* <div className="absolute right-10 top-1/2 h-64 w-64 animate-pulse rounded-full bg-brand-orange-fixed opacity-30 blur-3xl" />
+            <div className="absolute bottom-10 left-10 h-72 w-72 rounded-full bg-brand-purple-fixed opacity-30 blur-3xl" /> */}
           </div>
         </div>
       </div>
