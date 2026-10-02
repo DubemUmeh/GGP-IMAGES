@@ -53,7 +53,7 @@ export function HeroSection() {
         {/* MaybeHero's full-bleed background image, filling the card */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/hero-image.webp"
+            src="https://res.cloudinary.com/dcqwzsq26/image/upload/f_webp,q_auto,w_auto,dpr_auto/v1790980895/ggp_images_zk1dfe.jpg"
             alt="Industrial printing press in operation"
             fill
             sizes="100vw"
