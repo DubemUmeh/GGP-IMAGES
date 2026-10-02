@@ -146,10 +146,10 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-100 w-full border-b border-brand-tertiary bg-popover backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-none items-center justify-between px-3">
-        <Link href="/" className="w-14 h-14 group flex items-center">
+        <Link href="/" className="w-14 h-14">
           <Image
             src="/main-new-logo.png"
-            alt="GGP Image Logo"
+            alt="GGP Images Logo"
             priority
             fill
             className="object-contain relative top-0 -left-8"
