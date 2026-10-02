@@ -4,7 +4,7 @@ export const siteConfig = {
   name: "GGP Images",
   legalName: "GGP Image and Printing",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://ggpimages.com",
-  phone: "0200749306",
+  phone: "0243901264",
   whatsapp: "233500411538",
   email: "info@ggpimages.com",
   logo: "/favicon_io/android-chrome-512x512.png",
