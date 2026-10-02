@@ -21,7 +21,7 @@ export function Philosophy() {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <Card className="bg-brand-tertiary rounded-2xl border-brand-surface-container-low shadow-[0_4px_20px_rgba(0,0,0,0.04)] transition-shadow duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
             <CardContent className="p-8">
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-orange-fixed backdrop-blur-sm">
                 <LuEye className="h-6 w-6" />
               </div>
               <span className="text-xs font-semibold font-manrope uppercase tracking-widest text-primary-foreground/70 block mb-1">
