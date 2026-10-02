@@ -16,7 +16,7 @@ export function CompanyStory() {
             <div className="absolute inset-0 bg-linear-to-t from-primary/80 to-transparent" />
             <div className="absolute bottom-8 left-8 right-8 text-white">
               <div className="mb-2 text-2xl font-semibold font-manrope">Innovation meets Tradition</div>
-              <div className="text-white/90 font-inter">Crafting visual identities since 2010.</div>
+              <div className="text-white/90 font-inter">Crafting visual identities since 2015.</div>
             </div>
           </div>
 
