@@ -36,12 +36,12 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   return (
     <main>
       <JsonLd data={[breadcrumbSchema(crumbs), { "@context": "https://schema.org", "@type": "Service", name: service.name, description: service.description, provider: { "@type": "LocalBusiness", name: siteConfig.name, url: siteConfig.url }, areaServed: "Ghana", url: absoluteUrl(`/services/${service.slug}`), serviceType: service.name }]} />
-      <section className="relative overflow-hidden bg-black/80 px-3 md:px-6 py-20 text-white lg:py-28">
+      <section className="relative overflow-hidden bg-black/80 px-3 md:px-6 pt-20 text-white lg:py-28">
         <div className="absolute inset-0 opacity-25"><Image src={service.image} alt={`${service.name} service examples`} fill priority sizes="100vw" className="object-cover" /></div>
         {/* <div className="absolute inset-0 bg-linear-to-r from-black/80 via-brand-tertiary/80 to-brand-tertiary/50" /> */}
         <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
         <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
+          <div className="w-full h-full relative top-0 left-0">
             <Badge className="rounded-full p-3 bg-secondary text-sm md:text-base text-card hover:bg-secondary font-bold font-manrope">Core service</Badge>
             <h1 className="mt-6 text-4xl font-black font-manrope tracking-tight md:text-6xl">{service.name}</h1>
             <p className="mt-6 max-w-2xl text-lg font-inter leading-8 text-white/80">{service.description}</p>
