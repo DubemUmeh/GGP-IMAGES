@@ -186,7 +186,7 @@ export default function TermsOfServicePage() {
         <div className="mt-10 rounded-3xl bg-secondary p-8 text-center text-primary shadow-lg">
           <h2 className="text-2xl font-black">Ready to discuss your project?</h2>
           <p className="mt-2 text-primary/90">Get a custom quote or talk directly with our production specialists.</p>
-          <ArrowCta label="Contact GGP Images" as="link" href="/contact" className="mt-5" />
+          <ArrowCta label="Contact GGP Images" as="link" href="/contact" className="mt-5 bg-brand-tertiary" />
         </div>
       </section>
     </main>
