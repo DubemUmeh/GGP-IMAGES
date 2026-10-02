@@ -8,7 +8,7 @@ export const siteConfig = {
   whatsapp: "233243901264",
   email: "info@ggpimages.com",
   logo: "/favicon_io/android-chrome-512x512.png",
-  ogImage: "/favicon_io/android-chrome-512x512.png",
+  ogImage: "/new-ggp-logo.jpg",
   address:
     "ZEN Filling Station Apremdo, Abenbebom Off Apollo - Anaji Rd, Takoradi, Ghana",
   facebook: "https://www.facebook.com/share/19c5xzaheu/",
