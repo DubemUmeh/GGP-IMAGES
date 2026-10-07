@@ -1,7 +1,9 @@
-import { SiteMediaRenderer } from "@/components/media/site-media-renderer";\nimport { getSiteMedia } from "@/lib/site-media";
+import { SiteMediaRenderer } from "@/components/media/site-media-renderer";
+import { getSiteMedia } from "@/lib/site-media";
 import { ArrowCta } from "../ui/motion-kit";
 
-export async function ServicesHero() {\n  const media = await getSiteMedia("services.hero");
+export async function ServicesHero() {
+  const media = await getSiteMedia("services.hero");
   return (
     <section className="relative w-full h-full py-5 bg-popover overflow-hidden p-3">
       <div className="mx-auto max-w-7xl max-h-[85dvh] bg-brand-tertiary overflow-hidden rounded-b-[40px] md:px-6 md:rounded-[80px] border md:border-2 border-secondary">
