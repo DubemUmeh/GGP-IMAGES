@@ -15,6 +15,13 @@
       "when": 1787492712113,
       "tag": "0001_pale_doomsday",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791365847000,
+      "tag": "0002_site_media",
+      "breakpoints": true
     }
   ]
 }
