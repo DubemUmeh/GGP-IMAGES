@@ -43,7 +43,8 @@ import {
 
 const NAV = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },\n  { href: "/admin/media", label: "Site Media", icon: Images },
+  { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
+  { href: "/admin/media", label: "Site Media", icon: ImageIcon },
   { href: "/admin/bookings", label: "Booking", icon: CalendarCheck },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
