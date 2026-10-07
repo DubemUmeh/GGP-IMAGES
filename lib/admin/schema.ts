@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -21,12 +22,8 @@ export const admins = pgTable(
     name: text("name"),
     avatarUrl: text("avatar_url"),
     isActive: boolean("is_active").notNull().default(true),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
     lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
   },
   (table: any) => ({
@@ -38,17 +35,11 @@ export const admins = pgTable(
 
 export const adminSessions = pgTable("admin_sessions", {
   id: uuid("id").defaultRandom().primaryKey(),
-  adminId: uuid("admin_id")
-    .notNull()
-    .references(() => admins.id, { onDelete: "cascade" }),
+  adminId: uuid("admin_id").notNull().references(() => admins.id, { onDelete: "cascade" }),
   tokenHash: text("token_hash").notNull().unique(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  lastSeenAt: timestamp("last_seen_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const galleryItems = pgTable(
@@ -69,31 +60,19 @@ export const galleryItems = pgTable(
     altText: text("alt_text"),
     sortOrder: integer("sort_order").notNull().default(0),
     isPublished: boolean("is_published").notNull().default(false),
-    createdBy: uuid("created_by").references(() => admins.id, {
-      onDelete: "set null",
-    }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
+    createdBy: uuid("created_by").references(() => admins.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table: any) => ({
-    publishedSortIdx: index("idx_gallery_published_sort").on(
-      table.isPublished,
-      table.sortOrder,
-      table.createdAt,
-    ),
+    publishedSortIdx: index("idx_gallery_published_sort").on(table.isPublished, table.sortOrder, table.createdAt),
   }),
 );
 
 export const siteSettings = pgTable("site_settings", {
   key: text("key").primaryKey(),
   value: jsonb("value").notNull(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const bookings = pgTable(
@@ -114,18 +93,11 @@ export const bookings = pgTable(
     designUrls: jsonb("design_urls").$type<string[]>().notNull().default([]),
     status: text("status").notNull().default("new"),
     adminNotes: text("admin_notes"),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (table: any) => ({
-    statusCreatedIdx: index("idx_bookings_status_created").on(
-      table.status,
-      table.createdAt,
-    ),
+    statusCreatedIdx: index("idx_bookings_status_created").on(table.status, table.createdAt),
     emailIdx: index("idx_bookings_email").on(table.customerEmail),
   }),
 );
