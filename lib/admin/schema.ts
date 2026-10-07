@@ -129,3 +129,28 @@ export const bookings = pgTable(
     emailIdx: index("idx_bookings_email").on(table.customerEmail),
   }),
 );
+
+export const siteMediaVersions = pgTable(
+  "site_media_versions",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    slotKey: text("slot_key").notNull(),
+    type: text("type").notNull(),
+    cloudinaryPublicId: text("cloudinary_public_id").notNull().unique(),
+    cloudinaryResourceType: text("cloudinary_resource_type").notNull(),
+    cloudinaryUrl: text("cloudinary_url").notNull(),
+    altText: text("alt_text"),
+    width: integer("width"),
+    height: integer("height"),
+    duration: numeric("duration"),
+    format: text("format"),
+    bytes: integer("bytes"),
+    createdBy: uuid("created_by").references(() => admins.id, { onDelete: "set null" }),
+    isCurrent: boolean("is_current").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table: any) => ({
+    slotCreatedIdx: index("idx_site_media_versions_slot_created").on(table.slotKey, table.createdAt),
+    currentIdx: index("idx_site_media_versions_current").on(table.slotKey).where(sql`${table.isCurrent} = true`),
+  }),
+);
