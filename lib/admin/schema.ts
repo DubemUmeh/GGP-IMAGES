@@ -123,6 +123,6 @@ export const siteMediaVersions = pgTable(
   },
   (table: any) => ({
     slotCreatedIdx: index("idx_site_media_versions_slot_created").on(table.slotKey, table.createdAt),
-    currentIdx: index("idx_site_media_versions_current").on(table.slotKey).where(sql`${table.isCurrent} = true`),
+    currentIdx: uniqueIndex("idx_site_media_versions_current").on(table.slotKey).where(sql`${table.isCurrent} = true`),
   }),
 );
