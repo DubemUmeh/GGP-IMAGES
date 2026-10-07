@@ -93,13 +93,17 @@ export async function getSiteMedia(key: string): Promise<ResolvedSiteMedia> {
   const slot = getMediaSlot(key);
   if (!slot) throw new Error(`Unknown media slot: ${key}`);
 
-  const result = await query<MediaRow>(
-    "select id,slot_key,type,cloudinary_public_id,cloudinary_resource_type,cloudinary_url,alt_text,width,height,duration from site_media_versions where slot_key=$1 and is_current=true limit 1",
-    [key],
-  );
+  try {
+    const result = await query<MediaRow>(
+      "select id,slot_key,type,cloudinary_public_id,cloudinary_resource_type,cloudinary_url,alt_text,width,height,duration from site_media_versions where slot_key=$1 and is_current=true limit 1",
+      [key],
+    );
 
-  const current = result.rows[0];
-  if (current) return rowToMedia(current);
+    const current = result.rows[0];
+    if (current) return rowToMedia(current);
+  } catch (error) {
+    console.error("Unable to resolve managed site media; using default.", error);
+  }
 
   return {
     key: slot.key,
