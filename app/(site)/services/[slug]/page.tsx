@@ -1,15 +1,16 @@
-import Image from "next/image";\nimport { SiteMediaRenderer } from "@/components/media/site-media-renderer";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { JsonLd, absoluteUrl, breadcrumbSchema, buildMetadata, faqSchema, serviceSchema, siteConfig } from "@/lib/seo";
+import { JsonLd, breadcrumbSchema, buildMetadata, faqSchema, serviceSchema } from "@/lib/seo";
 import { coreServices, flattenSubdivisions, getServiceBySlug } from "@/lib/services";
 import { getServiceFaqs } from "@/lib/service-faqs";
 import { ServiceBookingForm } from "@/components/services/service-booking-form";
 import { ArrowCta } from "@/components/ui/motion-kit";
-import { Breadcrumbs } from "@/components/seo/breadcrumbs";\nimport { getMediaPreviewUrl, getSiteMedia } from "@/lib/site-media";
+import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { getMediaPreviewUrl, getSiteMedia } from "@/lib/site-media";
+import { SiteMediaRenderer } from "@/components/media/site-media-renderer";
 
 export function generateStaticParams() {
   return coreServices.map((service) => ({ slug: service.slug }));
@@ -19,7 +20,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const service = getServiceBySlug(slug);
   if (!service) return {};
-  const media = await getSiteMedia("services." + service.slug + ".hero");\n  return buildMetadata({
+
+  const media = await getSiteMedia("services." + service.slug + ".hero");
+
+  return buildMetadata({
     title: `${service.name} in Takoradi | GGP Images`,
     description: `${service.description} Request a quote from GGP Images in Takoradi.`,
     path: `/services/${service.slug}`,
@@ -33,7 +37,8 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
   const service = getServiceBySlug(slug);
   if (!service) notFound();
 
-  const faqs = getServiceFaqs(service);\n  const media = await getSiteMedia("services." + service.slug + ".hero");
+  const faqs = getServiceFaqs(service);
+  const media = await getSiteMedia("services." + service.slug + ".hero");
   const related = coreServices.filter((item) => item.slug !== service.slug).slice(0, 3);
   const crumbs = [
     { name: "Home", path: "/" },
@@ -45,13 +50,20 @@ export default async function ServicePage({ params }: { params: Promise<{ slug: 
     <main>
       <JsonLd data={[
         breadcrumbSchema(crumbs),
-        serviceSchema({ name: service.name, description: service.description, image: getMediaPreviewUrl(media), path: `/services/${service.slug}` }),
+        serviceSchema({
+          name: service.name,
+          description: service.description,
+          image: getMediaPreviewUrl(media),
+          path: `/services/${service.slug}`,
+        }),
         faqSchema(faqs),
       ]} />
       <Breadcrumbs items={crumbs} />
 
       <section className="relative overflow-hidden bg-black/80 px-3 pt-20 pb-2 text-white md:px-6 lg:pt-28 lg:pb-5">
-        <div className="absolute inset-0 opacity-25"><SiteMediaRenderer media={media} priority sizes="100vw" className="h-full w-full object-cover" /></div>
+        <div className="absolute inset-0 opacity-25">
+          <SiteMediaRenderer media={media} priority sizes="100vw" className="h-full w-full object-cover" />
+        </div>
         <div className="absolute inset-0 bg-linear-to-r from-black/30 via-black/20 to-black/10" />
         <div className="relative mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div className="w-full">
