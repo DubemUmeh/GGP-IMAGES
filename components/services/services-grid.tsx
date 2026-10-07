@@ -1,11 +1,11 @@
-import Image from "next/image";
+import Image from "next/image";\nimport { SiteMediaRenderer } from "@/components/media/site-media-renderer";\nimport { getSiteMedia } from "@/lib/site-media";
 import { Badge } from "@/components/ui/badge";
 import { Brush, Printer, Shirt, Package, Megaphone, Sparkles } from "lucide-react";
 
 import Link from "next/link";
 import { coreServices } from "@/lib/services";
 
-export function ServicesGrid() {
+export async function ServicesGrid() {\n  const media = await Promise.all(\n    coreServices.map((service) => getSiteMedia("services." + service.slug + ".hero")),\n  );
   return (
     <section className="mx-auto max-w-7xl px-6 py-16 scroll-smooth" id="services">
       <div className="mx-auto mb-12 max-w-3xl text-center">
@@ -19,7 +19,7 @@ export function ServicesGrid() {
       </div>
 
       <div className="grid auto-rows-87.5 grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {coreServices.map((service, index) => {
+        {coreServices.map((service, index) => {\n          const serviceMedia = media[index];
           const Icon = [Brush, Printer, Shirt, Package, Megaphone, Sparkles][index];
 
           if (index === 0) {
