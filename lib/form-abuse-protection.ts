@@ -24,6 +24,11 @@ export function checkSubmissionRateLimit(
   endpoint: "contact" | "booking",
 ): { allowed: boolean; retryAfterSeconds: number } {
   const now = Date.now();
+  if (rateLimitEntries.size > 1_000) {
+    for (const [entryKey, entry] of rateLimitEntries) {
+      if (entry.resetAt <= now) rateLimitEntries.delete(entryKey);
+    }
+  }
   const key = `${endpoint}:${ip}`;
   const current = rateLimitEntries.get(key);
 
