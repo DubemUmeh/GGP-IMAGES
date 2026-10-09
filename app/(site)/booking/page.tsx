@@ -28,6 +28,7 @@ import {
   parseSubdivisionKey,
 } from "@/lib/services";
 import { todayUTCDateString } from "@/lib/date";
+import { TurnstileField } from "@/components/security/turnstile-field";
 
 const MAX_FILES = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
@@ -55,6 +56,10 @@ export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const [formStartTime, setFormStartTime] = useState(() => Date.now());
 
   // One group per selected core service. GroupedMultiSelectField shows a
   // service heading per group when there's more than one service selected,
@@ -125,18 +130,29 @@ export default function BookingPage() {
       return;
     }
 
+    if (!turnstileToken) {
+      setError("Please complete the security verification and try again.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const body = new FormData();
       selectedServices.forEach((s) => body.append("services", s));
       selectedSubdivisions.forEach((key) => body.append("subdivisions", key));
       Object.entries(form).forEach(([key, value]) => body.append(key, value));
+      body.append("website", honeypot);
+      body.append("formStartTime", String(formStartTime));
+      body.append("cf-turnstile-response", turnstileToken);
       files.forEach((file) => body.append("designs", file));
 
       const res = await fetch("/api/booking", { method: "POST", body });
       const data = await res
         .json()
         .catch(() => ({ message: "Something went wrong." }));
+      setTurnstileToken("");
+      setTurnstileKey((key) => key + 1);
+      setFormStartTime(Date.now());
 
       if (!res.ok) {
         setError(data.message || "Something went wrong. Please try again.");
@@ -145,6 +161,9 @@ export default function BookingPage() {
 
       setSubmitted(true);
     } catch {
+      setTurnstileToken("");
+      setTurnstileKey((key) => key + 1);
+      setFormStartTime(Date.now());
       setError("Network error. Please check your connection and try again.");
     } finally {
       setSubmitting(false);
@@ -226,6 +245,18 @@ export default function BookingPage() {
               <SuccessMessage />
             ) : (
               <>
+                <div className="hidden" aria-hidden="true">
+                  <label htmlFor="website">Leave this field empty</label>
+                  <input
+                    id="website"
+                    name="website"
+                    type="text"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(event) => setHoneypot(event.target.value)}
+                  />
+                </div>
                 <FormSection number="1" title="Choose a Service" />
                 <div className="mb-8">
                   <MultiSelectField
@@ -372,6 +403,14 @@ export default function BookingPage() {
                 </div>
 
                 <div className="mt-8">
+                  <TurnstileField
+                    key={turnstileKey}
+                    action="booking"
+                    onTokenChange={setTurnstileToken}
+                  />
+                </div>
+
+                <div className="mt-8">
                   <TermsPrivacyConsent
                     checked={acceptedTerms}
                     onCheckedChange={(checked) => {
@@ -392,7 +431,7 @@ export default function BookingPage() {
                 <div className="mt-8 flex flex-col gap-4">
                   <button
                     type="submit"
-                    disabled={submitting}
+                    disabled={submitting || !turnstileToken}
                     className="flex items-center justify-center gap-2 rounded-xl bg-secondary px-6 py-4 text-sm font-bold font-manrope text-secondary-foreground shadow-[0_10px_30px_rgba(253,139,0,0.25)] transition-colors hover:bg-secondary/90 disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {submitting ? "Booking..." : "Book Now"}
