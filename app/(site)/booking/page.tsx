@@ -57,6 +57,7 @@ export default function BookingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formStartedAt] = useState(() => Date.now());
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
 
   // One group per selected core service. GroupedMultiSelectField shows a
   // service heading per group when there's more than one service selected,
@@ -153,6 +154,7 @@ export default function BookingPage() {
     } catch {
       setError("Network error. Please check your connection and try again.");
     } finally {
+      setTurnstileResetSignal((value) => value + 1);
       setSubmitting(false);
     }
   }
@@ -382,7 +384,7 @@ export default function BookingPage() {
                     <Label htmlFor="booking-website">Leave this field empty</Label>
                     <Input id="booking-website" name="website" tabIndex={-1} autoComplete="off" />
                   </div>
-                  <TurnstileField action="booking" />
+                  <TurnstileField action="booking" resetSignal={turnstileResetSignal} />
                   <TermsPrivacyConsent
                     checked={acceptedTerms}
                     onCheckedChange={(checked) => {
