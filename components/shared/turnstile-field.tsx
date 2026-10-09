@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef } from "react";
 import Script from "next/script";
 
-const SITE_KEY = "0x4AAAAAAFSUMZyRj5RJ1u1";
+const SITE_KEY = "0x4AAAAAAFSUMZyRj5RJZ1u1";
 
 declare global {
   interface Window {
