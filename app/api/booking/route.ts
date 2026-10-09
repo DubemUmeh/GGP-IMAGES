@@ -3,6 +3,7 @@ import { bookingSchema, sendBookingEmails } from "@/lib/email";
 import { uploadToCloudinary } from "@/lib/admin/cloudinary";
 import { query } from "@/lib/admin/db";
 import { resolveSubdivisionKey } from "@/lib/services";
+import { guardPublicSubmission } from "@/lib/anti-abuse";
 
 const MAX_FILES = 5;
 
@@ -14,6 +15,9 @@ export async function POST(request: Request) {
       { status: 400 },
     );
   }
+
+  const blocked = await guardPublicSubmission(request, Object.fromEntries(form.entries()), { action: "booking", limit: 4 });
+  if (blocked) return blocked;
 
   const files = form
     .getAll("designs")

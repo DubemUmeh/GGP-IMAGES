@@ -28,6 +28,7 @@ import {
   parseSubdivisionKey,
 } from "@/lib/services";
 import { todayUTCDateString } from "@/lib/date";
+import { TurnstileField } from "@/components/shared/turnstile-field";
 
 const MAX_FILES = 5;
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // matches MAX_IMAGE_BYTES server-side
@@ -55,6 +56,8 @@ export default function BookingPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [formStartedAt] = useState(() => Date.now());
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
 
   // One group per selected core service. GroupedMultiSelectField shows a
   // service heading per group when there's more than one service selected,
@@ -127,7 +130,11 @@ export default function BookingPage() {
 
     setSubmitting(true);
     try {
+      const nativeFormData = new FormData(event.currentTarget);
       const body = new FormData();
+      body.append("website", String(nativeFormData.get("website") || ""));
+      body.append("formStartTime", String(formStartedAt));
+      body.append("cf-turnstile-response", String(nativeFormData.get("cf-turnstile-response") || ""));
       selectedServices.forEach((s) => body.append("services", s));
       selectedSubdivisions.forEach((key) => body.append("subdivisions", key));
       Object.entries(form).forEach(([key, value]) => body.append(key, value));
@@ -147,6 +154,7 @@ export default function BookingPage() {
     } catch {
       setError("Network error. Please check your connection and try again.");
     } finally {
+      setTurnstileResetSignal((value) => value + 1);
       setSubmitting(false);
     }
   }
@@ -371,7 +379,12 @@ export default function BookingPage() {
                   </div>
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-8 space-y-4">
+                  <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+                    <Label htmlFor="booking-website">Leave this field empty</Label>
+                    <Input id="booking-website" name="website" tabIndex={-1} autoComplete="off" />
+                  </div>
+                  <TurnstileField action="booking" resetSignal={turnstileResetSignal} />
                   <TermsPrivacyConsent
                     checked={acceptedTerms}
                     onCheckedChange={(checked) => {
