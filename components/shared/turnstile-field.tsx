@@ -76,8 +76,7 @@ export function TurnstileField({
         ref={tokenInputRef}
         type="hidden"
         name="cf-turnstile-response"
-        value=""
-        readOnly
+        defaultValue=""
       />
       <p className="text-xs text-muted-foreground">
         Protected by Cloudflare Turnstile.
