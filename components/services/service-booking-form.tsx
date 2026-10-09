@@ -11,6 +11,7 @@ import type { CoreService } from "@/lib/services";
 import { flattenSubdivisions, buildSubdivisionKey } from "@/lib/services";
 import { siteConfig } from "@/lib/seo";
 import { todayUTCDateString } from "@/lib/date";
+import { TurnstileField } from "@/components/shared/turnstile-field";
 
 export function ServiceBookingForm({ service }: { service: CoreService }) {
   const subdivisions = useMemo(() => flattenSubdivisions(service), [service]);
@@ -21,6 +22,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
   const [pending, setPending] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
+  const [formStartedAt] = useState(() => Date.now());
   const [form, setForm] = useState({
     projectName: service.name,
     quantity: "",
@@ -65,7 +67,11 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
     }
     setConsentError(null);
     setPending(true);
+    const nativeFormData = new FormData(event.currentTarget);
     const body = new FormData();
+    body.append("website", String(nativeFormData.get("website") || ""));
+    body.append("formStartTime", String(formStartedAt));
+    body.append("cf-turnstile-response", String(nativeFormData.get("cf-turnstile-response") || ""));
     body.append("services", service.name);
     selectedSubdivisions.forEach((slug) =>
       body.append("subdivisions", buildSubdivisionKey(service.slug, slug)),
@@ -205,6 +211,12 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
           value={form.description}
           onChange={updateField}
         />
+
+        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+          <Label htmlFor="service-booking-website">Leave this field empty</Label>
+          <Input id="service-booking-website" name="website" tabIndex={-1} autoComplete="off" />
+        </div>
+        <TurnstileField action="booking" />
 
         <TermsPrivacyConsent
           checked={acceptedTerms}
