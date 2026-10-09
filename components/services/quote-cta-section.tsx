@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { MultiSelectField } from "@/components/booking/multi-select";
 import { TermsPrivacyConsent } from "@/components/shared/terms-privacy-consent";
 import { serviceOptions } from "@/lib/services";
+import { TurnstileField } from "@/components/shared/turnstile-field";
 
 const highlights = [
   "Fast turnaround times available",
@@ -22,6 +23,7 @@ export function QuoteCtaSection() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
+  const [formStartedAt] = useState(() => Date.now());
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -36,6 +38,9 @@ export function QuoteCtaSection() {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const payload = {
+      website: String(formData.get("website") || ""),
+      formStartTime: formStartedAt,
+      "cf-turnstile-response": String(formData.get("cf-turnstile-response") || ""),
       name: String(formData.get("name") || ""),
       email: String(formData.get("email") || ""),
       details: String(formData.get("details") || ""),
@@ -134,6 +139,12 @@ export function QuoteCtaSection() {
                   required
                 />
               </div>
+
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+                <Label htmlFor="quote-website">Leave this field empty</Label>
+                <Input id="quote-website" name="website" tabIndex={-1} autoComplete="off" />
+              </div>
+              <TurnstileField action="contact" />
 
               <TermsPrivacyConsent
                 checked={acceptedTerms}
