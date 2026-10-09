@@ -35,3 +35,15 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # GGP-IMAGES
+
+
+## Public form protection
+
+The public contact and booking submission endpoints use Cloudflare Turnstile (Managed mode), hidden honeypot fields, a minimum form completion time, and per-IP request limits. Turnstile tokens are verified server-side with Cloudflare Siteverify; the server checks the expected action and hostname before processing a submission.
+
+Configure these variables in your deployment environment:
+
+- `TURNSTILE_SECRET`: the Turnstile widget secret. Keep it server-side and never expose it as a `NEXT_PUBLIC_*` variable.
+- `TURNSTILE_HOSTNAMES`: comma-separated hostnames accepted by Siteverify, for example `ggpimages.com,www.ggpimages.com`. Add preview hostnames only if you intentionally want those deployments to accept submissions.
+
+The site key is public and is embedded in the shared widget component. The in-memory IP limiter is best-effort and applies per running server instance; for strict cross-instance enforcement, replace it with a shared rate-limit store such as Redis or a database-backed counter.
