@@ -32,24 +32,35 @@ export function TurnstileField({
   resetSignal?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const tokenInputRef = useRef<HTMLInputElement>(null);
   const widgetIdRef = useRef<string | null>(null);
+
+  const clearToken = useCallback(() => {
+    if (tokenInputRef.current) tokenInputRef.current.value = "";
+  }, []);
 
   const renderWidget = useCallback(() => {
     if (!window.turnstile || !containerRef.current || widgetIdRef.current) return;
+
     widgetIdRef.current = window.turnstile.render(containerRef.current, {
       sitekey: SITE_KEY,
       action,
       theme: "auto",
-      callback: () => {},
-      "error-callback": () => {},
-      "expired-callback": () => {},
+      callback: (token) => {
+        if (tokenInputRef.current) tokenInputRef.current.value = token;
+      },
+      "error-callback": clearToken,
+      "expired-callback": clearToken,
     });
-  }, [action]);
+  }, [action, clearToken]);
 
   useEffect(() => {
-    if (resetSignal === 0 || !window.turnstile || !widgetIdRef.current) return;
-    window.turnstile.reset(widgetIdRef.current);
-  }, [resetSignal]);
+    if (resetSignal === 0) return;
+    clearToken();
+    if (window.turnstile && widgetIdRef.current) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
+  }, [resetSignal, clearToken]);
 
   return (
     <div className="space-y-2">
@@ -61,6 +72,13 @@ export function TurnstileField({
         onReady={renderWidget}
       />
       <div ref={containerRef} className="min-h-[65px]" />
+      <input
+        ref={tokenInputRef}
+        type="hidden"
+        name="cf-turnstile-response"
+        value=""
+        readOnly
+      />
       <p className="text-xs text-muted-foreground">
         Protected by Cloudflare Turnstile.
       </p>
