@@ -11,6 +11,7 @@ import type { CoreService } from "@/lib/services";
 import { flattenSubdivisions, buildSubdivisionKey } from "@/lib/services";
 import { siteConfig } from "@/lib/seo";
 import { todayUTCDateString } from "@/lib/date";
+import { TurnstileField } from "@/components/security/turnstile-field";
 
 export function ServiceBookingForm({ service }: { service: CoreService }) {
   const subdivisions = useMemo(() => flattenSubdivisions(service), [service]);
@@ -21,6 +22,10 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
   const [pending, setPending] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const [formStartTime, setFormStartTime] = useState(() => Date.now());
   const [form, setForm] = useState({
     projectName: service.name,
     quantity: "",
@@ -64,6 +69,10 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
       return;
     }
     setConsentError(null);
+    if (!turnstileToken) {
+      setStatus("Please complete the security verification and try again.");
+      return;
+    }
     setPending(true);
     const body = new FormData();
     body.append("services", service.name);
@@ -71,13 +80,20 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
       body.append("subdivisions", buildSubdivisionKey(service.slug, slug)),
     );
     Object.entries(form).forEach(([key, value]) => body.append(key, value));
+    body.append("website", honeypot);
+    body.append("formStartTime", String(formStartTime));
+    body.append("cf-turnstile-response", turnstileToken);
     const response = await fetch("/api/booking", { method: "POST", body });
     const data = await response
       .json()
       .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
+    setTurnstileToken("");
+    setTurnstileKey((key) => key + 1);
+    setFormStartTime(Date.now());
     if (response.ok) {
+      setHoneypot("");
       setForm({
         projectName: service.name,
         quantity: "",
@@ -129,6 +145,18 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
         </a>
       </div>
       <form className="grid gap-5" onSubmit={handleSubmit}>
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(event) => setHoneypot(event.target.value)}
+          />
+        </div>
         <div className="grid gap-5 md:grid-cols-2">
           <div className="space-y-2">
             <Label>Core Service</Label>
@@ -206,6 +234,12 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
           onChange={updateField}
         />
 
+        <TurnstileField
+          key={turnstileKey}
+          action="booking"
+          onTokenChange={setTurnstileToken}
+        />
+
         <TermsPrivacyConsent
           checked={acceptedTerms}
           onCheckedChange={(checked) => {
@@ -217,7 +251,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
         />
 
         <button
-          disabled={pending}
+          disabled={pending || !turnstileToken}
           className="rounded-xl bg-primary py-4 font-semibold font-manrope text-primary-foreground hover:bg-brand-purple-container disabled:opacity-60"
         >
           {pending ? "Sending..." : "Submit booking request"}
