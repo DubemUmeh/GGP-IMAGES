@@ -23,6 +23,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
   const [formStartedAt] = useState(() => Date.now());
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const [form, setForm] = useState({
     projectName: service.name,
     quantity: "",
@@ -82,6 +83,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
       .json()
       .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
+    setTurnstileResetSignal((value) => value + 1);
     setPending(false);
     if (response.ok) {
       setForm({
@@ -216,7 +218,7 @@ export function ServiceBookingForm({ service }: { service: CoreService }) {
           <Label htmlFor="service-booking-website">Leave this field empty</Label>
           <Input id="service-booking-website" name="website" tabIndex={-1} autoComplete="off" />
         </div>
-        <TurnstileField action="booking" />
+        <TurnstileField action="booking" resetSignal={turnstileResetSignal} />
 
         <TermsPrivacyConsent
           checked={acceptedTerms}
