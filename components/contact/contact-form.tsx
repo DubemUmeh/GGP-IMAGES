@@ -18,6 +18,7 @@ export function ContactForm() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
   const [formStartedAt] = useState(() => Date.now());
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,6 +47,7 @@ export function ContactForm() {
     });
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
+    setTurnstileResetSignal((value) => value + 1);
     setPending(false);
     if (response.ok) {
       form.reset();
@@ -102,7 +104,7 @@ export function ContactForm() {
           <Input id="contact-website" name="website" tabIndex={-1} autoComplete="off" />
         </div>
 
-        <TurnstileField action="contact" />
+        <TurnstileField action="contact" resetSignal={turnstileResetSignal} />
 
         <TermsPrivacyConsent
           checked={acceptedTerms}
