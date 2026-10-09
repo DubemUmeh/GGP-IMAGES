@@ -3,15 +3,56 @@ import { bookingSchema, sendBookingEmails } from "@/lib/email";
 import { uploadToCloudinary } from "@/lib/admin/cloudinary";
 import { query } from "@/lib/admin/db";
 import { resolveSubdivisionKey } from "@/lib/services";
+import {
+  checkSubmissionRateLimit,
+  getClientIp,
+  isHoneypotFilled,
+  isSubmissionTooFast,
+  rateLimitResponse,
+  verifyTurnstileToken,
+} from "@/lib/form-abuse-protection";
 
 const MAX_FILES = 5;
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  const rateCheck = checkSubmissionRateLimit(ip, "booking");
+  if (!rateCheck.allowed) {
+    return rateLimitResponse(rateCheck.retryAfterSeconds);
+  }
+
   const form = await request.formData().catch(() => null);
   if (!form) {
     return NextResponse.json(
       { message: "Invalid submission." },
       { status: 400 },
+    );
+  }
+
+  if (
+    isHoneypotFilled(form.get("website")) ||
+    isHoneypotFilled(form.get("confirm_email")) ||
+    isHoneypotFilled(form.get("honeypot"))
+  ) {
+    return NextResponse.json({ message: "Invalid submission." }, { status: 400 });
+  }
+
+  if (isSubmissionTooFast(form.get("formStartTime"))) {
+    return NextResponse.json(
+      { message: "Please take a moment to review your booking and try again." },
+      { status: 400 },
+    );
+  }
+
+  const verification = await verifyTurnstileToken(
+    form.get("cf-turnstile-response") ?? form.get("turnstileToken"),
+    request,
+    "booking",
+  );
+  if (!verification.success) {
+    return NextResponse.json(
+      { message: verification.message || "Security verification failed." },
+      { status: verification.status },
     );
   }
 
