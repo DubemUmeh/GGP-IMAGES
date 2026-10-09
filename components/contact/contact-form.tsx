@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TurnstileField } from "@/components/security/turnstile-field";
 import { LuSend } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,10 @@ export function ContactForm() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const [formStartTime, setFormStartTime] = useState(() => Date.now());
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -24,6 +29,10 @@ export function ContactForm() {
       return;
     }
     setConsentError(null);
+    if (!turnstileToken) {
+      setStatus("Please complete the security verification and try again.");
+      return;
+    }
     setPending(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -33,6 +42,9 @@ export function ContactForm() {
       details: String(formData.get("details") || ""),
       source: "Contact page form",
       services: selectedServices,
+      website: honeypot,
+      formStartTime,
+      "cf-turnstile-response": turnstileToken,
     };
     const response = await fetch("/api/contact", {
       method: "POST",
@@ -42,7 +54,11 @@ export function ContactForm() {
     const data = await response.json().catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
+    setTurnstileToken("");
+    setTurnstileKey((key) => key + 1);
+    setFormStartTime(Date.now());
     if (response.ok) {
+      setHoneypot("");
       form.reset();
       setSelectedServices([]);
       setAcceptedTerms(false);
@@ -54,6 +70,18 @@ export function ContactForm() {
       <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-purple-fixed-dim opacity-20 blur-[80px]" />
       <h2 className="mb-8 text-2xl font-bold font-manrope text-card">Send a Message</h2>
       <form className="space-y-6 text-card" onSubmit={handleSubmit}>
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(event) => setHoneypot(event.target.value)}
+          />
+        </div>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
@@ -104,9 +132,14 @@ export function ContactForm() {
           linkClassName="text-card underline"
         />
 
+        <TurnstileField
+          key={turnstileKey}
+          action="contact"
+          onTokenChange={setTurnstileToken}
+        />
         <Button
           type="submit"
-          disabled={pending}
+          disabled={pending || !turnstileToken}
           className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-6 font-manrope text-primary-foreground hover:-translate-y-1 hover:bg-brand-purple-container hover:shadow-lg"
         >
           {pending ? "Sending..." : "Submit Request"}
