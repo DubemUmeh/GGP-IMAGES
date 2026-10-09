@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { TurnstileField } from "@/components/security/turnstile-field";
 import { LuCircleCheck, LuSend } from "react-icons/lu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,6 +23,10 @@ export function QuoteCtaSection() {
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+  const [formStartTime, setFormStartTime] = useState(() => Date.now());
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -32,6 +37,10 @@ export function QuoteCtaSection() {
       return;
     }
     setConsentError(null);
+    if (!turnstileToken) {
+      setStatus("Please complete the security verification and try again.");
+      return;
+    }
     setPending(true);
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -41,6 +50,9 @@ export function QuoteCtaSection() {
       details: String(formData.get("details") || ""),
       source: "Services quote CTA form",
       services: selectedServices,
+      website: honeypot,
+      formStartTime,
+      "cf-turnstile-response": turnstileToken,
     };
     const response = await fetch("/api/contact", {
       method: "POST",
@@ -52,7 +64,11 @@ export function QuoteCtaSection() {
       .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
     setPending(false);
+    setTurnstileToken("");
+    setTurnstileKey((key) => key + 1);
+    setFormStartTime(Date.now());
     if (response.ok) {
+      setHoneypot("");
       form.reset();
       setSelectedServices([]);
       setAcceptedTerms(false);
@@ -91,6 +107,18 @@ export function QuoteCtaSection() {
               Request a Custom Quote
             </h3>
             <form className="space-y-4" onSubmit={handleSubmit}>
+        <div className="hidden" aria-hidden="true">
+          <label htmlFor="website">Leave this field empty</label>
+          <input
+            id="website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={honeypot}
+            onChange={(event) => setHoneypot(event.target.value)}
+          />
+        </div>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div className="space-y-1">
                   <Label htmlFor="name" className="text-popover-foreground">Full Name</Label>
@@ -145,9 +173,14 @@ export function QuoteCtaSection() {
                 id="quote-cta-terms-consent"
               />
 
+              <TurnstileField
+                key={turnstileKey}
+                action="contact"
+                onTokenChange={setTurnstileToken}
+              />
               <Button
                 type="submit"
-                disabled={pending}
+                disabled={pending || !turnstileToken}
                 className="mt-4 w-full rounded-xl bg-brand-tertiary py-6 font-manrope text-primary-foreground hover:bg-brand-purple-container"
               >
                 {pending ? "Sending..." : "Submit Request"}
