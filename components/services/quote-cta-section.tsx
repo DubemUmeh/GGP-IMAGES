@@ -24,6 +24,7 @@ export function QuoteCtaSection() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [consentError, setConsentError] = useState<string | null>(null);
   const [formStartedAt] = useState(() => Date.now());
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -56,6 +57,7 @@ export function QuoteCtaSection() {
       .json()
       .catch(() => ({ message: "Something went wrong." }));
     setStatus(data.message);
+    setTurnstileResetSignal((value) => value + 1);
     setPending(false);
     if (response.ok) {
       form.reset();
@@ -144,7 +146,7 @@ export function QuoteCtaSection() {
                 <Label htmlFor="quote-website">Leave this field empty</Label>
                 <Input id="quote-website" name="website" tabIndex={-1} autoComplete="off" />
               </div>
-              <TurnstileField action="contact" />
+              <TurnstileField action="contact" resetSignal={turnstileResetSignal} />
 
               <TermsPrivacyConsent
                 checked={acceptedTerms}
